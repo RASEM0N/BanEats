@@ -1,3 +1,4 @@
+import { ENV, IS_DEVELOPMENT, IS_PRODUCTION } from './constants/env';
 import { Module } from '@nestjs/common';
 import { GraphQLModule } from '@nestjs/graphql';
 import { ApolloDriver } from '@nestjs/apollo';
@@ -11,10 +12,10 @@ import * as joi from 'joi';
 	imports: [
 		ConfigModule.forRoot({
 			isGlobal: true,
-			envFilePath: process.env.NODE_ENV === 'dev' ? '.env.dev' : '.env.prod',
-			ignoreEnvFile: process.env.NODE_ENV === 'prod',
+			envFilePath: IS_DEVELOPMENT ? '.env.dev' : '.env.prod',
+			ignoreEnvFile: IS_PRODUCTION,
 			validationSchema: joi.object({
-				NODE_ENV: joi.string().valid('dev', 'prod', 'test').required(),
+				NODE_ENV: joi.string().valid(ENV.dev, ENV.prod, ENV.test).required(),
 				DB_HOST: joi.string().required(),
 				DB_NAME: joi.string().required(),
 				DB_PORT: joi.number().required(),
