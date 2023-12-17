@@ -2,11 +2,12 @@ import { ENV, IS_DEVELOPMENT, IS_PRODUCTION } from './constants/env';
 import { Module } from '@nestjs/common';
 import { GraphQLModule } from '@nestjs/graphql';
 import { ApolloDriver } from '@nestjs/apollo';
-import { RestaurantModule } from './restaurant/restaurant.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { ConfigModule } from '@nestjs/config';
 import type { ApolloDriverConfig } from '@nestjs/apollo';
 import * as joi from 'joi';
+import { RestaurantModule } from './restaurant/restaurant.module';
+import { Restaurant } from './restaurant/entities/restaurant.entity';
 
 @Module({
 	imports: [
@@ -35,8 +36,11 @@ import * as joi from 'joi';
 			port: +process.env.DB_PORT,
 			username: process.env.DB_USERNAME,
 			password: process.env.DB_PASSWORD,
-			synchronize: true,
+
+			// сразу же синхронизируются (добавляются поля там новые)
+			synchronize: !IS_PRODUCTION,
 			logging: true,
+			entities: [Restaurant],
 		}),
 		RestaurantModule,
 	],
