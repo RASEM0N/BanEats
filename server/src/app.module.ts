@@ -17,6 +17,7 @@ import { Restaurant } from './restaurant/entities/restaurant.entity';
 			ignoreEnvFile: IS_PRODUCTION,
 			validationSchema: joi.object({
 				NODE_ENV: joi.string().valid(ENV.dev, ENV.prod, ENV.test).required(),
+				APP_PORT: joi.number().required(),
 				DB_HOST: joi.string().required(),
 				DB_NAME: joi.string().required(),
 				DB_PORT: joi.number().required(),

@@ -4,7 +4,7 @@ import { CreateRestaurantDto } from './dtos/create.dto';
 import { Inject } from '@nestjs/common';
 import { RestaurantService } from './restaurant.service';
 
-@Resolver()
+@Resolver(() => Number)
 export class RestaurantResolver {
 	constructor(@Inject() private readonly restaurantService: RestaurantService) {}
 
