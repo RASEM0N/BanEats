@@ -4,6 +4,8 @@ import { Restaurant } from './entities/restaurant.entity';
 
 @Injectable()
 export class RestaurantService {
+	// https://typeorm.io/active-record-data-mapper
+	// идем по паттерну Data Mapper
 	constructor(
 		@Inject() private readonly restaurantRepository: Repository<Restaurant>,
 	) {}

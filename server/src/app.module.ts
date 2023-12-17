@@ -39,7 +39,7 @@ import { Restaurant } from './restaurant/entities/restaurant.entity';
 
 			// сразу же синхронизируются (добавляются поля там новые)
 			synchronize: !IS_PRODUCTION,
-			logging: true,
+			logging: !IS_PRODUCTION,
 			entities: [Restaurant],
 		}),
 		RestaurantModule,
