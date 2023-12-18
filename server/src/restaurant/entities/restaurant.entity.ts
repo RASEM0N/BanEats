@@ -1,6 +1,13 @@
 import { Field, InputType, ObjectType } from '@nestjs/graphql';
 import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
-import { IsBoolean, IsNumber, IsString, Length } from 'class-validator';
+import {
+	IsBoolean,
+	IsNumber,
+	IsOptional,
+	IsPositive,
+	IsString,
+	Length,
+} from 'class-validator';
 
 // Чтоб использовать OmitType
 // для create.dto т.к. create.dto это InputType
@@ -10,6 +17,7 @@ import { IsBoolean, IsNumber, IsString, Length } from 'class-validator';
 export class Restaurant {
 	@Field(() => Number)
 	@PrimaryGeneratedColumn()
+	@IsPositive()
 	@IsNumber()
 	id: number;
 
@@ -19,8 +27,9 @@ export class Restaurant {
 	@Length(5, 100)
 	name: string;
 
-	@Field(() => Boolean)
-	@Column({ type: 'boolean' })
+	@Field(() => Boolean, { defaultValue: true })
+	@Column({ type: 'boolean', default: true })
+	@IsOptional()
 	@IsBoolean()
 	isVegan: boolean;
 
