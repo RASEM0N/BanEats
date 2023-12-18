@@ -21,4 +21,9 @@ export class CreateRestaurantDto {
 	@IsString()
 	@Length(5, 255)
 	ownersName: string;
+
+	@Field(() => String)
+	@IsString()
+	@Length(5, 100)
+	category: string;
 }
