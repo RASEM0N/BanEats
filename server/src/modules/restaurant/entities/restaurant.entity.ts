@@ -1,26 +1,14 @@
 import { Field, InputType, ObjectType } from '@nestjs/graphql';
-import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
-import {
-	IsBoolean,
-	IsNumber,
-	IsOptional,
-	IsPositive,
-	IsString,
-	Length,
-} from 'class-validator';
+import { Column, Entity } from 'typeorm';
+import { IsBoolean, IsOptional, IsString, Length } from 'class-validator';
+import { CoreEntity } from '@/common/entities/core.entity';
 
 // Чтоб использовать OmitType
 // для create.dto т.к. create.dto это InputType
 @InputType({ isAbstract: true })
 @ObjectType()
 @Entity()
-export class Restaurant {
-	@Field(() => Number)
-	@PrimaryGeneratedColumn()
-	@IsPositive()
-	@IsNumber()
-	id: number;
-
+export class Restaurant extends CoreEntity {
 	@Field(() => String)
 	@Column({ type: 'string' })
 	@IsString()

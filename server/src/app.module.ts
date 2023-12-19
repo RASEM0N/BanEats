@@ -1,13 +1,15 @@
-import { ENV, IS_DEVELOPMENT, IS_PRODUCTION } from './constants/env';
+import { ENV, IS_DEVELOPMENT, IS_PRODUCTION } from '@/constants/env';
+import * as joi from 'joi';
+import type { ApolloDriverConfig } from '@nestjs/apollo';
 import { Module } from '@nestjs/common';
 import { GraphQLModule } from '@nestjs/graphql';
 import { ApolloDriver } from '@nestjs/apollo';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { ConfigModule } from '@nestjs/config';
-import type { ApolloDriverConfig } from '@nestjs/apollo';
-import * as joi from 'joi';
-import { RestaurantModule } from './restaurant/restaurant.module';
-import { Restaurant } from './restaurant/entities/restaurant.entity';
+import { RestaurantModule } from '@/modules/restaurant/restaurant.module';
+import { Restaurant } from '@/modules/restaurant/entities/restaurant.entity';
+import { UserModule } from '@/modules/user/user.module';
+import { User } from '@/modules/user/entities/user.entity';
 
 @Module({
 	imports: [
@@ -41,9 +43,10 @@ import { Restaurant } from './restaurant/entities/restaurant.entity';
 			// сразу же синхронизируются (добавляются поля там новые)
 			synchronize: !IS_PRODUCTION,
 			logging: !IS_PRODUCTION,
-			entities: [Restaurant],
+			entities: [Restaurant, User],
 		}),
 		RestaurantModule,
+		UserModule,
 	],
 })
 export class AppModule {}

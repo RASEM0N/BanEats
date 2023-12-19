@@ -3,7 +3,7 @@ import { Repository } from 'typeorm';
 import { Restaurant } from './entities/restaurant.entity';
 import { CreateRestaurantDto } from './dtos/create.dto';
 import { UpdateRestaurantDto } from './dtos/update.dto';
-import { DefaultCRUD } from '../types/defaultCRUD';
+import { DefaultCRUD } from '@/common/services/default-crud.service';
 
 @Injectable()
 export class RestaurantService implements DefaultCRUD<Restaurant> {
