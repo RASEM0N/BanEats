@@ -9,12 +9,12 @@ import {
 import { Restaurant } from '../entities/restaurant.entity';
 
 @InputType()
-export class UpdateRestaurantInputType extends PartialType(
-	OmitType(Restaurant, ['id']),
+export class UpdateRestaurantInput extends PartialType(
+	OmitType(Restaurant, ['id', 'createdAt', 'updatedAt']),
 ) {}
 
 @ArgsType()
 export class UpdateRestaurantDto extends PickType(Restaurant, ['id']) {
-	@Field(() => UpdateRestaurantInputType)
-	input: UpdateRestaurantInputType;
+	@Field(() => UpdateRestaurantInput)
+	input: UpdateRestaurantInput;
 }
