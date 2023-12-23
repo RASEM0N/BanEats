@@ -34,14 +34,10 @@ export class RestaurantsService implements DefaultCRUD<Restaurant> {
 	}
 
 	async create(dto: CreateRestaurantDto): Promise<Restaurant> {
-		const restaurant = new Restaurant();
-		restaurant.name = dto.name;
-		restaurant.address = dto.address;
-		restaurant.category = dto.category;
-		restaurant.isVegan = dto.isVegan;
-		restaurant.ownersName = dto.ownersName;
-		await this.restaurantRepository.save(dto);
-		return restaurant;
+		const restaurant = this.restaurantRepository.create({
+			...dto,
+		});
+		return await this.restaurantRepository.save(restaurant);
 	}
 
 	async update({ id, input }: UpdateRestaurantDto): Promise<Restaurant> {
