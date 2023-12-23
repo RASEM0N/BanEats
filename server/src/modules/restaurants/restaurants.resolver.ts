@@ -2,12 +2,12 @@ import { Args, Mutation, Query, Resolver } from '@nestjs/graphql';
 import { Restaurant } from './entities/restaurant.entity';
 import { CreateRestaurantDto } from './dtos/create.dto';
 import { Inject } from '@nestjs/common';
-import { RestaurantService } from './restaurant.service';
+import { RestaurantsService } from './restaurants.service';
 import { UpdateRestaurantDto } from './dtos/update.dto';
 
 @Resolver(() => Number)
-export class RestaurantResolver {
-	constructor(@Inject() private readonly restaurantService: RestaurantService) {}
+export class RestaurantsResolver {
+	constructor(@Inject() private readonly restaurantService: RestaurantsService) {}
 
 	@Query(() => [Restaurant])
 	async getAll(): Promise<Restaurant[]> {

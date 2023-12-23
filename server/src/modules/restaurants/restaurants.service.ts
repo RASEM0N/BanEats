@@ -1,12 +1,13 @@
-import { Inject, Injectable, NotFoundException } from '@nestjs/common';
+import { Inject, Injectable } from '@nestjs/common';
 import { Repository } from 'typeorm';
 import { Restaurant } from './entities/restaurant.entity';
 import { CreateRestaurantDto } from './dtos/create.dto';
 import { UpdateRestaurantDto } from './dtos/update.dto';
-import { DefaultCRUD } from '@/common/services/default-crud.service';
+import { DefaultCRUD } from '@/shared/services/default-crud.service';
+import { CustomError } from '@/shared/lib/custom-error';
 
 @Injectable()
-export class RestaurantService implements DefaultCRUD<Restaurant> {
+export class RestaurantsService implements DefaultCRUD<Restaurant> {
 	// https://typeorm.io/active-record-data-mapper
 	// идем по паттерну Data Mapper
 	constructor(
@@ -19,7 +20,10 @@ export class RestaurantService implements DefaultCRUD<Restaurant> {
 		});
 
 		if (!restaurant) {
-			throw new NotFoundException(`Не нашли сущность Restaurant с id: ${id}`);
+			throw new CustomError({
+				errorCode: 400,
+				message: `Не нашли сущность Restaurant с id: ${id}`,
+			});
 		}
 
 		return restaurant;

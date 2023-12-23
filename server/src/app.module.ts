@@ -1,4 +1,4 @@
-import { ENV, IS_DEVELOPMENT, IS_PRODUCTION } from '@/constants/env';
+import { ENV, IS_DEVELOPMENT, IS_PRODUCTION } from '@/shared/constants/env';
 import * as joi from 'joi';
 import type { ApolloDriverConfig } from '@nestjs/apollo';
 import { Module } from '@nestjs/common';
@@ -6,10 +6,10 @@ import { GraphQLModule } from '@nestjs/graphql';
 import { ApolloDriver } from '@nestjs/apollo';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { ConfigModule } from '@nestjs/config';
-import { RestaurantModule } from '@/modules/restaurant/restaurant.module';
-import { Restaurant } from '@/modules/restaurant/entities/restaurant.entity';
-import { UserModule } from '@/modules/user/user.module';
-import { User } from '@/modules/user/entities/user.entity';
+import { RestaurantsModule } from '@/modules/restaurants/restaurants.module';
+import { Restaurant } from '@/modules/restaurants/entities/restaurant.entity';
+import { UsersModule } from '@/modules/users/users.module';
+import { User } from '@/modules/users/entities/user.entity';
 
 @Module({
 	imports: [
@@ -45,8 +45,8 @@ import { User } from '@/modules/user/entities/user.entity';
 			logging: !IS_PRODUCTION,
 			entities: [Restaurant, User],
 		}),
-		RestaurantModule,
-		UserModule,
+		RestaurantsModule,
+		UsersModule,
 	],
 })
 export class AppModule {}

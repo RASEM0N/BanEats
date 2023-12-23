@@ -1,11 +1,11 @@
 import { Args, Mutation, Resolver } from '@nestjs/graphql';
 import { Inject } from '@nestjs/common';
-import { UserService } from './user.service';
+import { UsersService } from './users.service';
 import { CreateUserDto, CreateUserOutput } from './dtos/create.dto';
 
 @Resolver()
-export class UserResolver {
-	constructor(@Inject() private readonly userService: UserService) {}
+export class UsersResolver {
+	constructor(@Inject() private readonly userService: UsersService) {}
 
 	@Mutation(() => CreateUserOutput)
 	async create(@Args() dto: CreateUserDto): Promise<CreateUserOutput> {
