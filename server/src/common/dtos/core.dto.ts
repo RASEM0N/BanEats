@@ -13,7 +13,7 @@ export interface CoreOutput {
 }
 
 export interface CoreOutputWithData<T> extends CoreOutput {
-	data: T;
+	data?: T;
 }
 
 @ObjectType()

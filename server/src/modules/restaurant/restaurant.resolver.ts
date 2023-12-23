@@ -15,10 +15,8 @@ export class RestaurantResolver {
 	}
 
 	@Mutation(() => Restaurant)
-	async create(
-		@Args({ name: 'input' }) input: CreateRestaurantDto,
-	): Promise<Restaurant> {
-		return this.restaurantService.create(input);
+	async create(@Args() dto: CreateRestaurantDto): Promise<Restaurant> {
+		return this.restaurantService.create(dto);
 	}
 
 	@Mutation(() => Restaurant)
