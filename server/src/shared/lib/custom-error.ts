@@ -14,3 +14,14 @@ export class CustomError extends Error {
 		this.description = params.description;
 	}
 }
+
+export const getErrorWithDefault = (
+	error: any,
+	constructorParams: CustomErrorConstructor,
+): CustomError => {
+	if (error instanceof CustomError) {
+		return error;
+	}
+
+	return new CustomError(constructorParams);
+};
