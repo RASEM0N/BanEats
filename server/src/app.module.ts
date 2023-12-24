@@ -14,6 +14,7 @@ import { AuthorizationModule } from '@/modules/authorization/authorization.modul
 import { JwtModule } from '@/modules/jwt/jwt.module';
 import { JwtMiddleware } from '@/modules/jwt/jwt.middleware';
 import { Verification } from '@/modules/users/entities/verification.entity';
+import { MailerModule } from '@/modules/mailer/mailer.module';
 
 @Module({
 	imports: [
@@ -24,15 +25,38 @@ import { Verification } from '@/modules/users/entities/verification.entity';
 			validationSchema: joi.object({
 				NODE_ENV: joi.string().valid(ENV.dev, ENV.prod, ENV.test).required(),
 				APP_PORT: joi.number().required(),
+				// ---
 				DB_HOST: joi.string().required(),
 				DB_NAME: joi.string().required(),
 				DB_PORT: joi.number().required(),
+				// ---
 				DB_USERNAME: joi.string().required(),
 				DB_PASSWORD: joi.string().required(),
+				// ---
 				JWT_SECRET_KEY: joi.string().required(),
 				JWT_EXPIRES: joi.string().required(),
+				// ---
+				MAILER_SERVICE: joi.string().required(),
+				MAILER_AUTH_EMAIL: joi.string().email().required(),
+				MAILER_AUTH_PASSWORD: joi.string().required(),
 			}),
 		}),
+
+		// @TODO надо добавить метод forRootAsync
+		JwtModule.forRoot({
+			secretKey: process.env.JWT_SECRET_KEY,
+			expires: process.env.JWT_SECRET_KEY,
+		}),
+
+		// @TODO надо добавить метод forRootAsync
+		MailerModule.forRoot({
+			service: process.env.MAILER_SERVICE,
+			auth: {
+				user: process.env.MAILER_AUTH_EMAIL,
+				pass: process.env.MAILER_AUTH_PASSWORD,
+			},
+		}),
+
 		GraphQLModule.forRoot<ApolloDriverConfig>({
 			path: '/graphql',
 			driver: ApolloDriver,
@@ -44,6 +68,8 @@ import { Verification } from '@/modules/users/entities/verification.entity';
 				};
 			},
 		}),
+
+		// @TODO заменить на forRootAsync
 		TypeOrmModule.forRoot({
 			type: 'postgres',
 			database: process.env.DB_NAME,
@@ -56,10 +82,6 @@ import { Verification } from '@/modules/users/entities/verification.entity';
 			synchronize: !IS_PRODUCTION,
 			logging: !IS_PRODUCTION,
 			entities: [Restaurant, User, Verification],
-		}),
-		JwtModule.forRoot({
-			secretKey: process.env.JWT_SECRET_KEY,
-			expires: process.env.JWT_SECRET_KEY,
 		}),
 		RestaurantsModule,
 		UsersModule,
