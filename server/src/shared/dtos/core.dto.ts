@@ -12,12 +12,8 @@ export interface CoreOutput {
 	isOk: boolean;
 }
 
-export interface CoreOutputWithData<T> extends CoreOutput {
-	data?: T;
-}
-
 @ObjectType()
-export class CoreDto implements CoreOutput {
+export abstract class CoreDto<T> implements CoreOutput {
 	@Field(() => Number, { nullable: true })
 	errorCode?: number;
 
@@ -26,4 +22,6 @@ export class CoreDto implements CoreOutput {
 
 	@Field(() => Boolean)
 	isOk: boolean;
+
+	abstract data?: T;
 }
