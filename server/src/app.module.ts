@@ -37,6 +37,11 @@ import { JwtMiddleware } from '@/modules/jwt/jwt.middleware';
 			driver: ApolloDriver,
 			autoSchemaFile: true,
 			playground: true,
+			context: ({ req }) => {
+				return {
+					user: req['user'],
+				};
+			},
 		}),
 		TypeOrmModule.forRoot({
 			type: 'postgres',
