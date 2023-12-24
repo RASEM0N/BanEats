@@ -8,7 +8,6 @@ export interface JwtConfig {
 
 // засчет этого не надо будет imports делать
 // для каждого использования JwtService
-@Global()
 @Module({})
 export class JwtModule {
 	static forRoot(config: JwtConfig): DynamicModule {
