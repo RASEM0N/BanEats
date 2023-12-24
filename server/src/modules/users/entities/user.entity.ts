@@ -1,4 +1,4 @@
-import { BeforeInsert, Column, Entity } from 'typeorm';
+import { BeforeInsert, BeforeUpdate, Column, Entity } from 'typeorm';
 import { Field, InputType, ObjectType, registerEnumType } from '@nestjs/graphql';
 import { CoreEntity } from '@/shared/entities/core.entity';
 import { IsEmail, IsEnum, Length } from 'class-validator';
@@ -45,6 +45,7 @@ export class User extends CoreEntity {
 	 * @see https://orkhan.gitbook.io/typeorm/docs/listeners-and-subscribers
 	 */
 	@BeforeInsert()
+	@BeforeUpdate()
 	async hashPassword(): Promise<void> {
 		try {
 			/**
