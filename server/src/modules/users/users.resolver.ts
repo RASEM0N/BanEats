@@ -2,6 +2,7 @@ import { Args, Mutation, Resolver } from '@nestjs/graphql';
 import { Inject } from '@nestjs/common';
 import { UsersService } from './users.service';
 import { CreateUserDto, CreateUserOutput } from './dtos/create.dto';
+import { LoginDto, LoginOutput } from '@/modules/authorization/dtos/login.dto';
 
 @Resolver()
 export class UsersResolver {

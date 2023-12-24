@@ -4,10 +4,13 @@ import { User } from './entities/user.entity';
 import { CreateUserDto } from './dtos/create.dto';
 import { DefaultCRUD } from '@/shared/services/default-crud.service';
 import { CustomError, getErrorWithDefault } from '@/shared/lib/custom-error';
+import { InjectRepository } from '@nestjs/typeorm';
 
 @Injectable()
 export class UsersService implements DefaultCRUD<User> {
-	constructor(@Inject() private readonly userRepository: Repository<User>) {}
+	constructor(
+		@InjectRepository(User) private readonly userRepository: Repository<User>,
+	) {}
 
 	async create({ email, role, password }: CreateUserDto): Promise<User> {
 		try {

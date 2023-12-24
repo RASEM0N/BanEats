@@ -1,17 +1,19 @@
-import { Inject, Injectable } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import { Repository } from 'typeorm';
 import { Restaurant } from './entities/restaurant.entity';
 import { CreateRestaurantDto } from './dtos/create.dto';
 import { UpdateRestaurantDto } from './dtos/update.dto';
 import { DefaultCRUD } from '@/shared/services/default-crud.service';
 import { CustomError } from '@/shared/lib/custom-error';
+import { InjectRepository } from '@nestjs/typeorm';
 
 @Injectable()
 export class RestaurantsService implements DefaultCRUD<Restaurant> {
 	// https://typeorm.io/active-record-data-mapper
 	// идем по паттерну Data Mapper
 	constructor(
-		@Inject() private readonly restaurantRepository: Repository<Restaurant>,
+		@InjectRepository(Restaurant)
+		private readonly restaurantRepository: Repository<Restaurant>,
 	) {}
 
 	async get(id: number): Promise<Restaurant> {
