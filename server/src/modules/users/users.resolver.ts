@@ -5,16 +5,17 @@ import { CreateUserArgs, CreateUserOutput } from './dtos/create.dto';
 import { User } from './entities/user.entity';
 import { AuthorizationGuard } from '@/modules/authorization/guards/authorization.guard';
 import { AuthUserDecorator } from '@/modules/authorization/decorators/authorization-user.decorator';
-import { GetUserArgs, GetUserOutput } from '@/modules/users/dtos/get.dto';
-import { UpdateUserArgs, UpdateUserOutput } from '@/modules/users/dtos/update.dto';
-import {
-	VerifyEmailArgs,
-	VerifyEmailOutput,
-} from '@/modules/users/dtos/verify-email.dto';
+import { GetUserArgs, GetUserOutput } from './dtos/get.dto';
+import { UpdateUserArgs, UpdateUserOutput } from './dtos/update.dto';
+import { VerifyEmailArgs, VerifyEmailOutput } from './dtos/verify-email.dto';
+import { UsersVerifyService } from './users-verify.service';
 
 @Resolver()
 export class UsersResolver {
-	constructor(@Inject() private readonly userService: UsersService) {}
+	constructor(
+		@Inject() private readonly userService: UsersService,
+		@Inject() private readonly userVerifyService: UsersVerifyService,
+	) {}
 
 	@Query(() => User, { name: 'usersMe' })
 	@UseGuards(AuthorizationGuard)
@@ -89,7 +90,7 @@ export class UsersResolver {
 	@Mutation(() => VerifyEmailOutput, { name: 'usersVerifyEmail' })
 	async verifyEmail(@Args() args: VerifyEmailArgs): Promise<VerifyEmailOutput> {
 		try {
-			await this.userService.verifyEmail(args.code);
+			await this.userVerifyService.verifyEmail(args.code);
 			return {
 				isOk: true,
 				data: {},

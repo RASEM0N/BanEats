@@ -7,7 +7,6 @@ import { CustomError, getErrorWithDefault } from '@/shared/lib/custom-error';
 import { InjectRepository } from '@nestjs/typeorm';
 import { UpdateUserArgs } from '@/modules/users/dtos/update.dto';
 import { Verification } from '@/modules/users/entities/verification.entity';
-import { QueryRunner } from 'typeorm/query-runner/QueryRunner';
 
 @Injectable()
 export class UsersService implements DefaultCRUD<User> {
@@ -110,27 +109,6 @@ export class UsersService implements DefaultCRUD<User> {
 			throw getErrorWithDefault(e, {
 				errorCode: 400,
 				message: `Ошибка обновления пользователя с userId: ${userId}`,
-			});
-		}
-	}
-
-	async verifyEmail(code: string): Promise<void> {
-		try {
-			const verification = await this.verificationRepository.findOne({
-				where: { code },
-				relations: ['user'],
-			});
-
-			if (!verification) {
-				throw new Error();
-			}
-
-			verification.user.isVerified = true;
-			await this.userRepository.save(verification.user);
-		} catch (e) {
-			throw getErrorWithDefault(e, {
-				errorCode: 400,
-				message: 'Ошибка подтверждения email',
 			});
 		}
 	}
