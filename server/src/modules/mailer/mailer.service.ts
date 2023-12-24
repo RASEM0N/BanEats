@@ -10,7 +10,7 @@ export class MailerService {
 		this.transport = createTransport({ ...mailerConfig });
 	}
 
-	private async sendEmail(options: MailerSendOptions): Promise<void> {
+	async sendEmail(options: MailerSendOptions): Promise<void> {
 		try {
 			await this.transport.sendMail({ ...options });
 		} catch (e) {

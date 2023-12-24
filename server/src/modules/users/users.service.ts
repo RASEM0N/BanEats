@@ -5,13 +5,15 @@ import { CreateUserArgs } from './dtos/create.dto';
 import { DefaultCRUD } from '@/shared/services/default-crud.service';
 import { CustomError, getErrorWithDefault } from '@/shared/lib/custom-error';
 import { InjectRepository } from '@nestjs/typeorm';
-import { UpdateUserArgs } from '@/modules/users/dtos/update.dto';
-import { Verification } from '@/modules/users/entities/verification.entity';
+import { UpdateUserArgs } from './dtos/update.dto';
+import { Verification } from './entities/verification.entity';
+import { UsersVerifyService } from './users-verify.service';
 
 @Injectable()
 export class UsersService implements DefaultCRUD<User> {
 	constructor(
 		@Inject() private readonly dataSource: DataSource,
+		@Inject() private readonly userVerifyService: UsersVerifyService,
 		@InjectRepository(User) private readonly userRepository: Repository<User>,
 		@InjectRepository(Verification)
 		private readonly verificationRepository: Repository<Verification>,
@@ -46,11 +48,17 @@ export class UsersService implements DefaultCRUD<User> {
 				}),
 			);
 
-			await queryRunner.manager.save(
+			const verification = await queryRunner.manager.save(
 				this.verificationRepository.create({
 					user,
 				}),
 			);
+
+			// Отправляем электронное сообщение с подтверждением почты
+			await this.userVerifyService.sendVerifyEmail({
+				email: user.email,
+				code: verification.code,
+			});
 
 			await queryRunner.commitTransaction();
 			return user;
