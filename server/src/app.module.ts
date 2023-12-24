@@ -10,6 +10,7 @@ import { RestaurantsModule } from '@/modules/restaurants/restaurants.module';
 import { Restaurant } from '@/modules/restaurants/entities/restaurant.entity';
 import { UsersModule } from '@/modules/users/users.module';
 import { User } from '@/modules/users/entities/user.entity';
+import { AuthorizationModule } from '@/modules/authorization/authorization.module';
 
 @Module({
 	imports: [
@@ -47,6 +48,7 @@ import { User } from '@/modules/users/entities/user.entity';
 		}),
 		RestaurantsModule,
 		UsersModule,
+		AuthorizationModule,
 	],
 })
 export class AppModule {}
