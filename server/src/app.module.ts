@@ -1,9 +1,9 @@
 import { ENV, IS_DEVELOPMENT, IS_PRODUCTION } from '@/shared/constants/env';
 import * as joi from 'joi';
 import type { ApolloDriverConfig } from '@nestjs/apollo';
-import { Module } from '@nestjs/common';
-import { GraphQLModule } from '@nestjs/graphql';
 import { ApolloDriver } from '@nestjs/apollo';
+import { MiddlewareConsumer, Module, NestModule, RequestMethod } from '@nestjs/common';
+import { GraphQLModule } from '@nestjs/graphql';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { ConfigModule } from '@nestjs/config';
 import { RestaurantsModule } from '@/modules/restaurants/restaurants.module';
@@ -12,6 +12,7 @@ import { UsersModule } from '@/modules/users/users.module';
 import { User } from '@/modules/users/entities/user.entity';
 import { AuthorizationModule } from '@/modules/authorization/authorization.module';
 import { JwtModule } from '@/modules/jwt/jwt.module';
+import { JwtMiddleware } from '@/modules/jwt/jwt.middleware';
 
 @Module({
 	imports: [
@@ -32,6 +33,7 @@ import { JwtModule } from '@/modules/jwt/jwt.module';
 			}),
 		}),
 		GraphQLModule.forRoot<ApolloDriverConfig>({
+			path: '/graphql',
 			driver: ApolloDriver,
 			autoSchemaFile: true,
 			playground: true,
@@ -58,4 +60,12 @@ import { JwtModule } from '@/modules/jwt/jwt.module';
 		AuthorizationModule,
 	],
 })
-export class AppModule {}
+export class AppModule implements NestModule {
+	configure(consumer: MiddlewareConsumer): void {
+		// Только для graphql накидаем jwtMiddleware
+		consumer.apply(JwtMiddleware).forRoutes({
+			path: '/graphql',
+			method: RequestMethod.POST,
+		});
+	}
+}
