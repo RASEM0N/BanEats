@@ -5,6 +5,7 @@ import { CreateUserArgs } from './dtos/create.dto';
 import { DefaultCRUD } from '@/shared/services/default-crud.service';
 import { CustomError, getErrorWithDefault } from '@/shared/lib/custom-error';
 import { InjectRepository } from '@nestjs/typeorm';
+import { UpdateUserArgs } from '@/modules/users/dtos/update.dto';
 
 @Injectable()
 export class UsersService implements DefaultCRUD<User> {
@@ -66,7 +67,23 @@ export class UsersService implements DefaultCRUD<User> {
 		return this.userRepository.find();
 	}
 
-	update(...args: any): Promise<User> | User {
-		return undefined;
+	async update(userId: number, newInfo: UpdateUserArgs): Promise<User> {
+		try {
+			await this.userRepository.update(
+				{
+					id: userId,
+				},
+				{
+					...newInfo,
+				},
+			);
+
+			return this.get(userId);
+		} catch (e) {
+			throw getErrorWithDefault(e, {
+				errorCode: 400,
+				message: `Ошибка обновления пользователя с userId: ${userId}`,
+			});
+		}
 	}
 }

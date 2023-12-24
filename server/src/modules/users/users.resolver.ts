@@ -6,6 +6,7 @@ import { User } from './entities/user.entity';
 import { AuthorizationGuard } from '@/modules/authorization/authorization.guard';
 import { AuthUserDecorator } from '@/modules/authorization/authorization-user.decorator';
 import { GetUserArgs, GetUserOutput } from '@/modules/users/dtos/get.dto';
+import { UpdateUserArgs, UpdateUserOutput } from '@/modules/users/dtos/update.dto';
 
 @Resolver()
 export class UsersResolver {
@@ -46,6 +47,30 @@ export class UsersResolver {
 				isOk: true,
 				data: {
 					user,
+				},
+			};
+		} catch (e) {
+			return {
+				isOk: false,
+				message: e.message,
+				errorCode: e.errorCode,
+			};
+		}
+	}
+
+	@Mutation(() => UpdateUserOutput, { name: 'usersUpdate' })
+	@UseGuards(AuthorizationGuard)
+	async update(
+		@AuthUserDecorator() user: User,
+		@Args() args: UpdateUserArgs,
+	): Promise<UpdateUserOutput> {
+		try {
+			const updatedUser = await this.userService.update(user.id, args);
+
+			return {
+				isOk: true,
+				data: {
+					user: updatedUser,
 				},
 			};
 		} catch (e) {
