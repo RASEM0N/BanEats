@@ -4,6 +4,7 @@ import { UsersService } from './users.service';
 import { CreateUserDto, CreateUserOutput } from './dtos/create.dto';
 import { User } from './entities/user.entity';
 import { AuthorizationGuard } from '@/modules/authorization/authorization.guard';
+import { AuthUserDecorator } from '@/modules/authorization/authorization-user.decorator';
 
 @Resolver()
 export class UsersResolver {
@@ -11,8 +12,8 @@ export class UsersResolver {
 
 	@Query(() => User, { name: 'usersMe' })
 	@UseGuards(AuthorizationGuard)
-	me(@Context() ctx): User {
-		return ctx.user;
+	me(@AuthUserDecorator() user: User): User {
+		return user;
 	}
 
 	@Mutation(() => CreateUserOutput, { name: 'usersCreate' })
