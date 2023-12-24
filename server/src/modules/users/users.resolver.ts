@@ -1,15 +1,17 @@
 import { Args, Context, Mutation, Query, Resolver } from '@nestjs/graphql';
-import { Inject } from '@nestjs/common';
+import { Inject, UseGuards } from '@nestjs/common';
 import { UsersService } from './users.service';
 import { CreateUserDto, CreateUserOutput } from './dtos/create.dto';
 import { User } from './entities/user.entity';
+import { AuthorizationGuard } from '@/modules/authorization/authorization.guard';
 
 @Resolver()
 export class UsersResolver {
 	constructor(@Inject() private readonly userService: UsersService) {}
 
-	@Query(() => User, { name: 'usersMe', nullable: true })
-	me(@Context() ctx): Promise<User | undefined> {
+	@Query(() => User, { name: 'usersMe' })
+	@UseGuards(AuthorizationGuard)
+	me(@Context() ctx): User {
 		return ctx.user;
 	}
 
