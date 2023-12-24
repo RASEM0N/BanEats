@@ -1,7 +1,9 @@
-import { Column, Entity } from 'typeorm';
+import { BeforeInsert, Column, Entity } from 'typeorm';
 import { Field, InputType, ObjectType, registerEnumType } from '@nestjs/graphql';
 import { CoreEntity } from '@/shared/entities/core.entity';
-import { IsEmail, IsEnum, IsNumberString, Length } from 'class-validator';
+import { IsEmail, IsEnum, Length } from 'class-validator';
+import { hash, genSalt } from 'bcrypt';
+import { InternalServerErrorException } from '@nestjs/common';
 
 enum UserRole {
 	client = 'client',
@@ -38,4 +40,24 @@ export class User extends CoreEntity {
 	@Field(() => Boolean)
 	@Column({ default: false })
 	isVerified: boolean;
+
+	/**
+	 * @see https://orkhan.gitbook.io/typeorm/docs/listeners-and-subscribers
+	 */
+	@BeforeInsert()
+	async hashPassword(): Promise<void> {
+		try {
+			/**
+			 * Technique 1
+			 * @see https://www.npmjs.com/package/bcrypt#usage
+			 */
+			const salt = await genSalt(10);
+			this.password = await hash(this.password, salt);
+		} catch (e) {
+			// TODO надо бы на логгер заменить это бы...
+			// или в общем обработчике лучше сделать
+			console.error(e);
+			throw new InternalServerErrorException();
+		}
+	}
 }
