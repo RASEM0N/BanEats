@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { Repository } from 'typeorm';
 import { User } from './entities/user.entity';
-import { CreateUserDto } from './dtos/create.dto';
+import { CreateUserArgs } from './dtos/create.dto';
 import { DefaultCRUD } from '@/shared/services/default-crud.service';
 import { CustomError, getErrorWithDefault } from '@/shared/lib/custom-error';
 import { InjectRepository } from '@nestjs/typeorm';
@@ -12,7 +12,7 @@ export class UsersService implements DefaultCRUD<User> {
 		@InjectRepository(User) private readonly userRepository: Repository<User>,
 	) {}
 
-	async create({ email, role, password }: CreateUserDto): Promise<User> {
+	async create({ email, role, password }: CreateUserArgs): Promise<User> {
 		try {
 			const existUser = await this.userRepository.findOne({
 				where: { email },

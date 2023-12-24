@@ -9,7 +9,7 @@ export class CreateUserData {
 }
 
 @ArgsType()
-export class CreateUserDto extends PickType(User, ['email', 'password', 'role']) {}
+export class CreateUserArgs extends PickType(User, ['email', 'password', 'role']) {}
 
 @ObjectType()
 export class CreateUserOutput extends CoreDto<CreateUserData> {

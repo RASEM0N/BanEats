@@ -7,7 +7,7 @@ export class LoginDto extends PickType(User, ['email', 'password']) {}
 
 @ObjectType()
 export class LoginOutput extends CoreDto<LoginData> {
-	@Field(() => LoginData)
+	@Field(() => LoginData, { nullable: true })
 	data?: LoginData;
 }
 
