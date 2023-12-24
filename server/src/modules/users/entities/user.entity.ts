@@ -2,7 +2,7 @@ import { BeforeInsert, Column, Entity } from 'typeorm';
 import { Field, InputType, ObjectType, registerEnumType } from '@nestjs/graphql';
 import { CoreEntity } from '@/shared/entities/core.entity';
 import { IsEmail, IsEnum, Length } from 'class-validator';
-import { hash, genSalt } from 'bcrypt';
+import { hash, genSalt, compare } from 'bcrypt';
 import { InternalServerErrorException } from '@nestjs/common';
 
 enum UserRole {
@@ -58,6 +58,14 @@ export class User extends CoreEntity {
 			// или в общем обработчике лучше сделать
 			console.error(e);
 			throw new InternalServerErrorException();
+		}
+	}
+
+	async isValidPassword(password: string): Promise<boolean> {
+		try {
+			return compare(password, this.password);
+		} catch (e) {
+			return false;
 		}
 	}
 }
