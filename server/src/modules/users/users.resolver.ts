@@ -3,8 +3,8 @@ import { Inject, UseGuards } from '@nestjs/common';
 import { UsersService } from './users.service';
 import { CreateUserArgs, CreateUserOutput } from './dtos/create.dto';
 import { User } from './entities/user.entity';
-import { AuthorizationGuard } from '@/modules/authorization/authorization.guard';
-import { AuthUserDecorator } from '@/modules/authorization/authorization-user.decorator';
+import { AuthorizationGuard } from '@/modules/authorization/guards/authorization.guard';
+import { AuthUserDecorator } from '@/modules/authorization/decorators/authorization-user.decorator';
 import { GetUserArgs, GetUserOutput } from '@/modules/users/dtos/get.dto';
 import { UpdateUserArgs, UpdateUserOutput } from '@/modules/users/dtos/update.dto';
 import {
