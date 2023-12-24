@@ -11,6 +11,7 @@ import { Restaurant } from '@/modules/restaurants/entities/restaurant.entity';
 import { UsersModule } from '@/modules/users/users.module';
 import { User } from '@/modules/users/entities/user.entity';
 import { AuthorizationModule } from '@/modules/authorization/authorization.module';
+import { JwtModule } from '@/modules/jwt/jwt.module';
 
 @Module({
 	imports: [
@@ -26,6 +27,8 @@ import { AuthorizationModule } from '@/modules/authorization/authorization.modul
 				DB_PORT: joi.number().required(),
 				DB_USERNAME: joi.string().required(),
 				DB_PASSWORD: joi.string().required(),
+				JWT_SECRET_KEY: joi.string().required(),
+				JWT_EXPIRES: joi.string().required(),
 			}),
 		}),
 		GraphQLModule.forRoot<ApolloDriverConfig>({
@@ -45,6 +48,10 @@ import { AuthorizationModule } from '@/modules/authorization/authorization.modul
 			synchronize: !IS_PRODUCTION,
 			logging: !IS_PRODUCTION,
 			entities: [Restaurant, User],
+		}),
+		JwtModule.forRoot({
+			secretKey: process.env.JWT_SECRET_KEY,
+			expires: process.env.JWT_SECRET_KEY,
 		}),
 		RestaurantsModule,
 		UsersModule,

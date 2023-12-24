@@ -1,14 +1,16 @@
-import { Injectable } from '@nestjs/common';
+import { Inject, Injectable } from '@nestjs/common';
 import { LoginData, LoginDto } from './dtos/login.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { User } from '@/modules/users/entities/user.entity';
 import { Repository } from 'typeorm';
 import { getErrorWithDefault } from '@/shared/lib/custom-error';
+import { JwtService } from '@/modules/jwt/jwt.service';
 
 @Injectable()
 export class AuthorizationService {
 	constructor(
 		@InjectRepository(User) private readonly userRepository: Repository<User>,
+		@Inject() private readonly jwtService: JwtService,
 	) {}
 
 	async login({ email, password }: LoginDto): Promise<LoginData> {
@@ -18,8 +20,7 @@ export class AuthorizationService {
 					email,
 				},
 				select: [
-					// @TODO возможно можно по другому бахнуть
-					// я пока хз как
+					// @TODO возможно можно по другому бахнуть я пока хз как
 					'id',
 					'email',
 					'password',
@@ -34,11 +35,11 @@ export class AuthorizationService {
 				throw new Error();
 			}
 
+			const token = this.jwtService.sign(user.id);
+
 			return {
 				user,
-
-				// тут пустышка пока что
-				token: '',
+				token,
 			};
 		} catch (e) {
 			throw getErrorWithDefault(e, {
