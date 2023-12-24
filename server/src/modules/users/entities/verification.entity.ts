@@ -14,7 +14,7 @@ export class Verification extends CoreEntity {
 	code: string;
 
 	@OneToOne(() => User, {
-		// если Подтверждения удалится то и пользователь тоже
+		// если Пользователь удалится то и подтверждение тоже тоже
 		onDelete: 'CASCADE',
 	})
 	@JoinColumn()

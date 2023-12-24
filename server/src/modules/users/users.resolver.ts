@@ -7,6 +7,10 @@ import { AuthorizationGuard } from '@/modules/authorization/authorization.guard'
 import { AuthUserDecorator } from '@/modules/authorization/authorization-user.decorator';
 import { GetUserArgs, GetUserOutput } from '@/modules/users/dtos/get.dto';
 import { UpdateUserArgs, UpdateUserOutput } from '@/modules/users/dtos/update.dto';
+import {
+	VerifyEmailArgs,
+	VerifyEmailOutput,
+} from '@/modules/users/dtos/verify-email.dto';
 
 @Resolver()
 export class UsersResolver {
@@ -78,6 +82,23 @@ export class UsersResolver {
 				isOk: false,
 				message: e.message,
 				errorCode: e.errorCode,
+			};
+		}
+	}
+
+	@Mutation(() => VerifyEmailOutput)
+	async verifyEmail(@Args() args: VerifyEmailArgs): Promise<VerifyEmailOutput> {
+		try {
+			await this.userService.verifyEmail(args.code);
+			return {
+				isOk: true,
+				data: {},
+			};
+		} catch (e) {
+			return {
+				isOk: false,
+				errorCode: e.errorCode,
+				message: e.message,
 			};
 		}
 	}

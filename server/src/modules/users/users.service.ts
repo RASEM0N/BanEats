@@ -113,4 +113,25 @@ export class UsersService implements DefaultCRUD<User> {
 			});
 		}
 	}
+
+	async verifyEmail(code: string): Promise<void> {
+		try {
+			const verification = await this.verificationRepository.findOne({
+				where: { code },
+				relations: ['user'],
+			});
+
+			if (!verification) {
+				throw new Error();
+			}
+
+			verification.user.isVerified = true;
+			await this.userRepository.save(verification.user);
+		} catch (e) {
+			throw getErrorWithDefault(e, {
+				errorCode: 400,
+				message: 'Ошибка подтверждения email',
+			});
+		}
+	}
 }

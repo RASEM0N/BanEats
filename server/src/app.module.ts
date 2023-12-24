@@ -13,6 +13,7 @@ import { User } from '@/modules/users/entities/user.entity';
 import { AuthorizationModule } from '@/modules/authorization/authorization.module';
 import { JwtModule } from '@/modules/jwt/jwt.module';
 import { JwtMiddleware } from '@/modules/jwt/jwt.middleware';
+import { Verification } from '@/modules/users/entities/verification.entity';
 
 @Module({
 	imports: [
@@ -54,7 +55,7 @@ import { JwtMiddleware } from '@/modules/jwt/jwt.middleware';
 			// сразу же синхронизируются (добавляются поля там новые)
 			synchronize: !IS_PRODUCTION,
 			logging: !IS_PRODUCTION,
-			entities: [Restaurant, User],
+			entities: [Restaurant, User, Verification],
 		}),
 		JwtModule.forRoot({
 			secretKey: process.env.JWT_SECRET_KEY,
