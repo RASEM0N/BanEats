@@ -7,7 +7,7 @@ import { LoginDto, LoginOutput } from '@/modules/authorization/dtos/login.dto';
 export class AuthorizationResolver {
 	constructor(@Inject() private readonly authorizationService: AuthorizationService) {}
 
-	@Mutation(() => LoginOutput)
+	@Mutation(() => LoginOutput, { name: 'authorizationLogin' })
 	async login(@Args() { email, password }: LoginDto): Promise<LoginOutput> {
 		try {
 			const { user, token } = await this.authorizationService.login({

@@ -9,17 +9,17 @@ import { UpdateRestaurantDto } from './dtos/update.dto';
 export class RestaurantsResolver {
 	constructor(@Inject() private readonly restaurantService: RestaurantsService) {}
 
-	@Query(() => [Restaurant])
+	@Query(() => [Restaurant], { name: 'restaurantsGetAll' })
 	async getAll(): Promise<Restaurant[]> {
 		return this.restaurantService.getAll();
 	}
 
-	@Mutation(() => Restaurant)
+	@Mutation(() => Restaurant, { name: 'restaurantsCreate' })
 	async create(@Args() dto: CreateRestaurantDto): Promise<Restaurant> {
 		return this.restaurantService.create(dto);
 	}
 
-	@Mutation(() => Restaurant)
+	@Mutation(() => Restaurant, { name: 'restaurantsUpdate' })
 	async update(@Args() dto: UpdateRestaurantDto): Promise<Restaurant> {
 		return this.restaurantService.update(dto);
 	}
