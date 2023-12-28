@@ -1,11 +1,12 @@
 import { Inject, Injectable } from '@nestjs/common';
 import { getErrorWithDefault } from '@/shared/lib/custom-error';
 import { InjectRepository } from '@nestjs/typeorm';
-import { User } from '@/modules/users/entities/user.entity';
-import { Repository } from 'typeorm';
-import { Verification } from '@/modules/users/entities/verification.entity';
+import { User } from './entities/user.entity';
+import { Verification } from './entities/verification.entity';
 import { MailerService } from '@/modules/mailer/mailer.service';
-import { SendVerifyEmailDto } from '@/modules/users/dtos/send-verify-email.dto';
+import { SendVerifyEmailDto } from './dtos/send-verify-email.dto';
+import { Repository } from 'typeorm';
+import { QueryRunner } from 'typeorm/query-runner/QueryRunner';
 
 @Injectable()
 export class UsersVerifyService {
@@ -15,6 +16,25 @@ export class UsersVerifyService {
 		@InjectRepository(Verification)
 		private readonly verificationRepository: Repository<Verification>,
 	) {}
+
+	async createVerifyWithTransaction(
+		user: User,
+		queryRunner: QueryRunner,
+	): Promise<Verification> {
+		const verification = await queryRunner.manager.save(
+			this.verificationRepository.create({
+				user,
+			}),
+		);
+
+		// Отправляем электронное сообщение с подтверждением почты
+		await this.sendVerifyEmail({
+			email: user.email,
+			code: verification.code,
+		});
+
+		return verification;
+	}
 
 	async verifyEmail(code: string): Promise<void> {
 		try {
