@@ -13,3 +13,4 @@
 - Убрать TODO-шки
 - Прикольны было методы service переделать на rxjs
 - Изменить modules/authorization to modules/auth
+- Добавить подтверждение изменения почты и пароля у User
