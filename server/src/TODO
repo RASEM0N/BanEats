@@ -15,3 +15,4 @@
 - Изменить modules/authorization to modules/auth
 - Добавить подтверждение изменения почты и пароля у User
 - Прогнать test coverage и дописать места, которые не покрыты
+- Написать e2e тесты на GraphQl, resolver
