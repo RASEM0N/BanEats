@@ -1,7 +1,7 @@
 import { Field, InputType, ObjectType } from '@nestjs/graphql';
 import { Column, Entity } from 'typeorm';
 import { IsBoolean, IsOptional, IsString, Length } from 'class-validator';
-import { CoreEntity } from '@/shared/entities/core.entity';
+import { CoreEntity } from '@/shared/modules/entities/core.entity';
 
 // Чтоб использовать OmitType
 // для create.dto т.к. create.dto это InputType

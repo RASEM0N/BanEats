@@ -3,7 +3,7 @@ import { Repository } from 'typeorm';
 import { Restaurant } from './entities/restaurant.entity';
 import { CreateRestaurantDto } from './dtos/create.dto';
 import { UpdateRestaurantDto } from './dtos/update.dto';
-import { DefaultCRUD } from '@/shared/services/default-crud.service';
+import { DefaultCRUD } from '@/shared/modules/services/default-crud.service';
 import { CustomError } from '@/shared/lib/custom-error';
 import { InjectRepository } from '@nestjs/typeorm';
 

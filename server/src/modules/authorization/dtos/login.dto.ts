@@ -1,4 +1,4 @@
-import { CoreDto } from '@/shared/dtos/core.dto';
+import { CoreDto } from '@/shared/modules/dtos/core.dto';
 import { ArgsType, Field, ObjectType, PickType } from '@nestjs/graphql';
 import { User } from '@/modules/users/entities/user.entity';
 

@@ -1,7 +1,7 @@
 import { ArgsType, Field, ObjectType, PickType } from '@nestjs/graphql';
 import { Verification } from '../entities/verification.entity';
-import { CoreDto } from '@/shared/dtos/core.dto';
-import { EmptyData } from '@/shared/dtos/empty.dto';
+import { CoreDto } from '@/shared/modules/dtos/core.dto';
+import { EmptyData } from '@/shared/modules/dtos/empty.dto';
 
 @ArgsType()
 export class VerifyEmailArgs extends PickType(Verification, ['code']) {}

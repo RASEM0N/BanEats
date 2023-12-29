@@ -1,11 +1,11 @@
 import { BeforeInsert, BeforeUpdate, Column, Entity } from 'typeorm';
 import { Field, InputType, ObjectType, registerEnumType } from '@nestjs/graphql';
-import { CoreEntity } from '@/shared/entities/core.entity';
+import { CoreEntity } from '@/shared/modules/entities/core.entity';
 import { IsEmail, IsEnum, Length } from 'class-validator';
 import { hash, genSalt, compare } from 'bcrypt';
 import { InternalServerErrorException } from '@nestjs/common';
 
-enum UserRole {
+export enum UserRole {
 	client = 'client',
 	owner = 'owner',
 	delivery = 'delivery',
@@ -46,7 +46,7 @@ export class User extends CoreEntity {
 	 */
 	@BeforeInsert()
 	@BeforeUpdate()
-	async hashPassword(): Promise<void> {
+	private async hashPassword(): Promise<void> {
 		try {
 			/**
 			 * Technique 1
@@ -62,7 +62,7 @@ export class User extends CoreEntity {
 		}
 	}
 
-	async isValidPassword(password: string): Promise<boolean> {
+	public async isValidPassword(password: string): Promise<boolean> {
 		try {
 			return compare(password, this.password);
 		} catch (e) {
