@@ -90,23 +90,44 @@ export class UsersService implements DefaultCRUD<User> {
 		return this.userRepository.find();
 	}
 
-	async update(userId: number, newInfo: UpdateUserArgs): Promise<User> {
+	async update(userId: number, { email, password }: UpdateUserArgs): Promise<User> {
+		let queryRunner: QueryRunner | undefined;
 		try {
-			await this.userRepository.update(
-				{
-					id: userId,
-				},
-				{
-					...newInfo,
-				},
-			);
+			const user = await this.get(userId);
+			const isChangedEmail = email && user.email !== email;
 
-			return this.get(userId);
+			if (isChangedEmail) {
+				user.email = email;
+				user.isVerified = false;
+			}
+
+			if (password) {
+				user.password = password;
+			}
+
+			queryRunner = this.dataSource.createQueryRunner();
+			await queryRunner.connect();
+			await queryRunner.startTransaction();
+
+			const updatedUser = await queryRunner.manager.save(user);
+			if (isChangedEmail) {
+				await this.userVerifyService.createVerifyWithTransaction(
+					updatedUser,
+					queryRunner,
+				);
+			}
+
+			await queryRunner.commitTransaction();
+
+			return updatedUser;
 		} catch (e) {
+			await queryRunner?.rollbackTransaction();
 			throw getErrorWithDefault(e, {
 				errorCode: 400,
 				message: `Ошибка обновления пользователя с userId: ${userId}`,
 			});
+		} finally {
+			await queryRunner?.release();
 		}
 	}
 }
