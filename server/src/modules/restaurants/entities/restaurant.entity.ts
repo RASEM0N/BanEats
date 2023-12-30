@@ -1,7 +1,8 @@
 import { Field, InputType, ObjectType } from '@nestjs/graphql';
-import { Column, Entity } from 'typeorm';
-import { IsBoolean, IsOptional, IsString, Length } from 'class-validator';
+import { Column, Entity, ManyToOne } from 'typeorm';
+import { IsString, Length } from 'class-validator';
 import { CoreEntity } from '@/shared/modules/entities/core.entity';
+import { RestaurantsCategory } from './restaurants-category.entity';
 
 // Чтоб использовать OmitType
 // для create.dto т.к. create.dto это InputType
@@ -12,32 +13,22 @@ import { CoreEntity } from '@/shared/modules/entities/core.entity';
 })
 export class Restaurant extends CoreEntity {
 	@Field(() => String)
-	@Column({ type: 'string' })
+	@Column()
 	@IsString()
-	@Length(5, 100)
+	@Length(5)
 	name: string;
 
-	@Field(() => Boolean, { defaultValue: true })
-	@Column({ type: 'boolean', default: true })
-	@IsOptional()
-	@IsBoolean()
-	isVegan: boolean;
+	@Field(() => String)
+	@Column()
+	@IsString()
+	coverImage: string;
 
 	@Field(() => String)
-	@Column({ type: 'string' })
+	@Column()
 	@IsString()
-	@Length(5, 255)
 	address: string;
 
-	@Field(() => String)
-	@Column({ type: 'string' })
-	@IsString()
-	@Length(5, 255)
-	ownersName: string;
-
-	@Field(() => String)
-	@Column({ type: 'string' })
-	@IsString()
-	@Length(5, 100)
-	category: string;
+	@Field(() => RestaurantsCategory)
+	@ManyToOne(() => RestaurantsCategory, (category) => category.restaurants)
+	category: RestaurantsCategory;
 }
