@@ -41,8 +41,12 @@ export class RestaurantsResolver {
 		}
 	}
 
+	@AuthRoles([USER_ROLE.owner])
 	@Mutation(() => Restaurant, { name: 'restaurantsUpdate' })
-	async update(@Args() dto: UpdateRestaurantDto): Promise<Restaurant> {
+	async update(
+		@AuthUser() user: User,
+		@Args() dto: UpdateRestaurantDto,
+	): Promise<Restaurant> {
 		return this.restaurantService.update(dto);
 	}
 }
