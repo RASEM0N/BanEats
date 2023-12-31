@@ -1,9 +1,10 @@
-import { BeforeInsert, BeforeUpdate, Column, Entity } from 'typeorm';
+import { BeforeInsert, BeforeUpdate, Column, Entity, OneToMany } from 'typeorm';
 import { Field, InputType, ObjectType, registerEnumType } from '@nestjs/graphql';
 import { CoreEntity } from '@/shared/modules/entities/core.entity';
-import { IsEmail, IsEnum, Length } from 'class-validator';
+import { IsBoolean, IsEmail, IsEnum, Length } from 'class-validator';
 import { hash, genSalt, compare } from 'bcrypt';
 import { InternalServerErrorException } from '@nestjs/common';
+import { Restaurant } from '@/modules/restaurants/entities/restaurant.entity';
 
 export enum UserRole {
 	client = 'client',
@@ -39,7 +40,12 @@ export class User extends CoreEntity {
 
 	@Field(() => Boolean)
 	@Column({ default: false })
+	@IsBoolean()
 	isVerified: boolean;
+
+	@Field(() => [Restaurant])
+	@OneToMany(() => Restaurant, (restaurant) => restaurant.owner)
+	restaurant: Restaurant[];
 
 	/**
 	 * @see https://orkhan.gitbook.io/typeorm/docs/listeners-and-subscribers

@@ -25,7 +25,10 @@ export class RestaurantsCategory {
 	@IsString()
 	address: string;
 
-	@Field(() => [Restaurant])
-	@OneToMany(() => Restaurant, (restaurant) => restaurant.category)
+	@Field(() => [Restaurant], { nullable: true })
+	@OneToMany(() => Restaurant, (restaurant) => restaurant.category, {
+		nullable: true,
+		onDelete: 'SET NULL',
+	})
 	restaurants: Restaurant[];
 }

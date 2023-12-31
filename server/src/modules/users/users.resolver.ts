@@ -3,8 +3,8 @@ import { Inject, UseGuards } from '@nestjs/common';
 import { UsersService } from './users.service';
 import { CreateUserArgs, CreateUserOutput } from './dtos/create.dto';
 import { User } from './entities/user.entity';
-import { AuthorizationGuard } from '@/modules/authorization/guards/authorization.guard';
-import { AuthUserDecorator } from '@/modules/authorization/decorators/authorization-user.decorator';
+import { AuthGuard } from '@/modules/authorization/guards/auth.guard';
+import { AuthUser } from '@/modules/authorization/decorators/auth-user.decorator';
 import { GetUserArgs, GetUserOutput } from './dtos/get.dto';
 import { UpdateUserArgs, UpdateUserOutput } from './dtos/update.dto';
 import { VerifyEmailArgs, VerifyEmailOutput } from './dtos/verify-email.dto';
@@ -18,8 +18,8 @@ export class UsersResolver {
 	) {}
 
 	@Query(() => User, { name: 'usersMe' })
-	@UseGuards(AuthorizationGuard)
-	me(@AuthUserDecorator() user: User): User {
+	@UseGuards(AuthGuard)
+	me(@AuthUser() user: User): User {
 		return user;
 	}
 
@@ -64,9 +64,9 @@ export class UsersResolver {
 	}
 
 	@Mutation(() => UpdateUserOutput, { name: 'usersUpdate' })
-	@UseGuards(AuthorizationGuard)
+	@UseGuards(AuthGuard)
 	async update(
-		@AuthUserDecorator() user: User,
+		@AuthUser() user: User,
 		@Args() args: UpdateUserArgs,
 	): Promise<UpdateUserOutput> {
 		try {
