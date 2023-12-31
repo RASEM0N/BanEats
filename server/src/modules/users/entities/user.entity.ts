@@ -6,13 +6,13 @@ import { hash, genSalt, compare } from 'bcrypt';
 import { InternalServerErrorException } from '@nestjs/common';
 import { Restaurant } from '@/modules/restaurants/entities/restaurant.entity';
 
-export enum UserRole {
+export enum USER_ROLE {
 	client = 'client',
 	owner = 'owner',
 	delivery = 'delivery',
 }
 
-registerEnumType(UserRole, { name: 'UserRole' });
+registerEnumType(USER_ROLE, { name: 'USER_ROLE' });
 
 @InputType({ isAbstract: true })
 @ObjectType()
@@ -30,13 +30,13 @@ export class User extends CoreEntity {
 	@Length(10, 40)
 	password: string;
 
-	@Field(() => UserRole)
+	@Field(() => USER_ROLE)
 	@Column({
 		type: 'enum',
-		enum: UserRole,
+		enum: USER_ROLE,
 	})
-	@IsEnum(UserRole)
-	role: UserRole;
+	@IsEnum(USER_ROLE)
+	role: USER_ROLE;
 
 	@Field(() => Boolean)
 	@Column({ default: false })

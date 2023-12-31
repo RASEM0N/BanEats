@@ -3,7 +3,7 @@ import { GqlExecutionContext } from '@nestjs/graphql';
 import { Reflector } from '@nestjs/core';
 import { META_KEY as USER_ROLE_KEY } from '../decorators/auth-role.decorator';
 import { META_KEY as PUBLIC_KEY } from '../decorators/auth-public.decorator';
-import { User, UserRole } from '@/modules/users/entities/user.entity';
+import { User, USER_ROLE } from '@/modules/users/entities/user.entity';
 
 @Injectable()
 export class AuthGuard implements CanActivate {
@@ -11,7 +11,7 @@ export class AuthGuard implements CanActivate {
 
 	canActivate(context: ExecutionContext): boolean {
 		const isPublic = this.reflector.get<boolean>(PUBLIC_KEY, context.getHandler());
-		const roles = this.reflector.get<UserRole[]>(USER_ROLE_KEY, context.getHandler());
+		const roles = this.reflector.get<USER_ROLE[]>(USER_ROLE_KEY, context.getHandler());
 
 		if (isPublic || !roles.length) {
 			return true;

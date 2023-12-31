@@ -1,11 +1,11 @@
-import { User, UserRole } from '../../entities/user.entity';
+import { User, USER_ROLE } from '../../entities/user.entity';
 
 export type MockUserData = Omit<User, 'isValidPassword'>;
 export const createMockUserData = (data?: Partial<MockUserData>): MockUserData => {
 	return {
 		id: 1,
 		email: 'putin-love@mail.ru',
-		role: UserRole.client,
+		role: USER_ROLE.client,
 		password: '123456',
 		isVerified: true,
 		createdAt: new Date(),
