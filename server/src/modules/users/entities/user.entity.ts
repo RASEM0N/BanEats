@@ -7,6 +7,7 @@ import { InternalServerErrorException } from '@nestjs/common';
 import { Restaurant } from '@/modules/restaurants/entities/restaurant.entity';
 
 export enum USER_ROLE {
+	admin = 'admin',
 	client = 'client',
 	owner = 'owner',
 	delivery = 'delivery',
