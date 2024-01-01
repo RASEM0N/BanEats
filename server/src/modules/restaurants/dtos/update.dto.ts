@@ -1,20 +1,22 @@
-import {
-	ArgsType,
-	Field,
-	InputType,
-	OmitType,
-	PartialType,
-	PickType,
-} from '@nestjs/graphql';
+import { ArgsType, Field, ObjectType, PartialType } from '@nestjs/graphql';
 import { Restaurant } from '../entities/restaurant.entity';
-
-@InputType()
-export class UpdateRestaurantInput extends PartialType(
-	OmitType(Restaurant, ['id', 'createdAt', 'updatedAt']),
-) {}
+import { CreateRestaurantInput } from '@/modules/restaurants/dtos/create.dto';
+import { CoreDto } from '@/shared/modules/dtos/core.dto';
 
 @ArgsType()
-export class UpdateRestaurantDto extends PickType(Restaurant, ['id']) {
-	@Field(() => UpdateRestaurantInput)
-	input: UpdateRestaurantInput;
+export class UpdateRestaurantArgs extends PartialType(CreateRestaurantInput) {
+	@Field(() => Number)
+	restaurantId: number;
+}
+
+@ObjectType()
+export class UpdateRestaurantData {
+	@Field(() => Restaurant)
+	restaurant: Restaurant;
+}
+
+@ObjectType()
+export class UpdateRestaurantOutput extends CoreDto<UpdateRestaurantData> {
+	@Field(() => UpdateRestaurantData, { nullable: true })
+	data?: UpdateRestaurantData;
 }

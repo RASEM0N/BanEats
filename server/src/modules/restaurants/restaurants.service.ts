@@ -2,7 +2,7 @@ import { Inject, Injectable } from '@nestjs/common';
 import { Repository } from 'typeorm';
 import { Restaurant } from './entities/restaurant.entity';
 import { CreateRestaurantInput } from './dtos/create.dto';
-import { UpdateRestaurantDto } from './dtos/update.dto';
+import { UpdateRestaurantArgs } from './dtos/update.dto';
 import { DefaultCRUD } from '@/shared/modules/services/default-crud.service';
 import { CustomError, getErrorWithDefault } from '@/shared/lib/custom-error';
 import { InjectRepository } from '@nestjs/typeorm';
@@ -20,9 +20,7 @@ export class RestaurantsService implements DefaultCRUD<Restaurant> {
 	) {}
 
 	async get(id: number): Promise<Restaurant> {
-		const restaurant = await this.restaurantRepository.findOne({
-			where: { id },
-		});
+		const restaurant = await this.restaurantRepository.findOneBy({ id });
 
 		if (!restaurant) {
 			throw new CustomError({
@@ -60,13 +58,39 @@ export class RestaurantsService implements DefaultCRUD<Restaurant> {
 		}
 	}
 
-	async update({ id, input }: UpdateRestaurantDto): Promise<Restaurant> {
-		const restaurant = await this.get(id);
+	async update(user: User, updateArgs: UpdateRestaurantArgs): Promise<Restaurant> {
+		try {
+			const restaurant = await this.get(updateArgs.restaurantId);
 
-		return this.restaurantRepository.save({
-			id,
-			...restaurant,
-			...input,
-		});
+			if (!restaurant) {
+				throw new CustomError({
+					errorCode: 400,
+					message: 'Не нашли ресторан',
+				});
+			}
+
+			if (user.id !== restaurant.id) {
+				throw new CustomError({
+					errorCode: 400,
+					message: 'Нет прав для обновления данного ресторана',
+				});
+			}
+
+			if (updateArgs.categoryName) {
+				restaurant.category = await this.restaurantCategoryService.create(
+					updateArgs.categoryName,
+				);
+			}
+
+			return this.restaurantRepository.save({
+				id: updateArgs.restaurantId,
+				...updateArgs,
+			});
+		} catch (e) {
+			throw getErrorWithDefault(e, {
+				errorCode: 400,
+				message: 'Ошибка обновления ресторана',
+			});
+		}
 	}
 }
