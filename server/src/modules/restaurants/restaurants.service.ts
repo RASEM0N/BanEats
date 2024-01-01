@@ -8,6 +8,7 @@ import { CustomError, getErrorWithDefault } from '@/shared/lib/custom-error';
 import { InjectRepository } from '@nestjs/typeorm';
 import { User } from '@/modules/users/entities/user.entity';
 import { RestaurantsCategoryService } from './restaurants-category.service';
+import { RestaurantsDeleteArgs } from '@/modules/restaurants/dtos/restaurants-delete.dto';
 
 @Injectable()
 export class RestaurantsService implements DefaultCRUD<Restaurant> {
@@ -97,6 +98,32 @@ export class RestaurantsService implements DefaultCRUD<Restaurant> {
 			throw getErrorWithDefault(e, {
 				errorCode: 400,
 				message: 'Ошибка обновления ресторана',
+			});
+		}
+	}
+
+	async delete(user: User, args: RestaurantsDeleteArgs): Promise<void> {
+		try {
+			const restaurant = await this.restaurantRepository.findOneBy({
+				id: args.restaurantId,
+			});
+
+			if (!restaurant) {
+				return;
+			}
+
+			if (restaurant.ownerId !== user.id) {
+				throw new CustomError({
+					errorCode: 400,
+					message: 'Нет прав на удаление ресторана',
+				});
+			}
+
+			await this.restaurantRepository.delete(args.restaurantId);
+		} catch (e) {
+			throw getErrorWithDefault(e, {
+				errorCode: 400,
+				message: 'Не удалось удалить ресторан',
 			});
 		}
 	}

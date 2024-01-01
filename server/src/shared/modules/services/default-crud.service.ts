@@ -6,4 +6,6 @@ export interface DefaultCRUD<T> {
 	create(...args: any): T | Promise<T>;
 
 	update(...args: any): T | Promise<T>;
+
+	delete(...args: any): Promise<void>;
 }
