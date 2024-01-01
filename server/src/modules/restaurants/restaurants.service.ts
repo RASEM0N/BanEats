@@ -20,7 +20,12 @@ export class RestaurantsService implements DefaultCRUD<Restaurant> {
 	) {}
 
 	async get(id: number): Promise<Restaurant> {
-		const restaurant = await this.restaurantRepository.findOneBy({ id });
+		const restaurant = await this.restaurantRepository.findOne({
+			where: {
+				id,
+			},
+			relations: ['owner'],
+		});
 
 		if (!restaurant) {
 			throw new CustomError({
@@ -60,7 +65,9 @@ export class RestaurantsService implements DefaultCRUD<Restaurant> {
 
 	async update(user: User, updateArgs: UpdateRestaurantArgs): Promise<Restaurant> {
 		try {
-			const restaurant = await this.get(updateArgs.restaurantId);
+			const restaurant = await this.restaurantRepository.findOneBy({
+				id: updateArgs.restaurantId,
+			});
 
 			if (!restaurant) {
 				throw new CustomError({

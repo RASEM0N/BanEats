@@ -6,7 +6,7 @@ import { v4 as uuidv4 } from 'uuid';
 
 @ObjectType()
 @Entity({
-	name: 'verification',
+	name: 'verifications',
 })
 export class Verification extends CoreEntity {
 	@Field(() => String)
@@ -14,8 +14,7 @@ export class Verification extends CoreEntity {
 	code: string;
 
 	@OneToOne(() => User, {
-		// если один из связанных объектов удалится
-		// то и другой удалится
+		// удалим пользователя, удалится и подтверждение с ним
 		onDelete: 'CASCADE',
 	})
 	@JoinColumn()

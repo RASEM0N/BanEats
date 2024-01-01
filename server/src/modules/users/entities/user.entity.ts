@@ -18,7 +18,7 @@ registerEnumType(USER_ROLE, { name: 'USER_ROLE' });
 @InputType({ isAbstract: true })
 @ObjectType()
 @Entity({
-	name: 'user',
+	name: 'users',
 })
 export class User extends CoreEntity {
 	@Field(() => String)
