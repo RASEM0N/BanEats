@@ -26,7 +26,7 @@ export class RestaurantsResolver {
 	}
 
 	@AuthRoles([USER_ROLE.owner])
-	@Mutation(() => Restaurant, { name: 'restaurantsCreate' })
+	@Mutation(() => CreateRestaurantOutput, { name: 'restaurantsCreate' })
 	async create(
 		@AuthUser() user: User,
 		@Args() dto: CreateRestaurantArgs,
@@ -50,7 +50,7 @@ export class RestaurantsResolver {
 	}
 
 	@AuthRoles([USER_ROLE.owner])
-	@Mutation(() => Restaurant, { name: 'restaurantsUpdate' })
+	@Mutation(() => UpdateRestaurantOutput, { name: 'restaurantsUpdate' })
 	async update(
 		@AuthUser() user: User,
 		@Args() updateArgs: UpdateRestaurantArgs,
