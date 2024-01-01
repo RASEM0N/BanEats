@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { Repository } from 'typeorm';
-import { RestaurantsCategory } from './entities/restaurants-category.entity';
+import { RestaurantsCategory } from './entities/category.entity';
 import { InjectRepository } from '@nestjs/typeorm';
 import { DefaultCRUD } from '@/shared/modules/services/default-crud.service';
 import slugify from 'slugify';

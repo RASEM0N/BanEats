@@ -1,11 +1,11 @@
 import { Module } from '@nestjs/common';
-import { AuthorizationService } from '@/modules/authorization/authorization.service';
+import { AuthService } from '@/modules/authorization/auth.service';
 import { APP_GUARD } from '@nestjs/core';
 import { AuthGuard } from '@/modules/authorization/guards/auth.guard';
 
 @Module({
 	providers: [
-		AuthorizationService,
+		AuthService,
 
 		// Глобальный декоратор
 		// https://docs.nestjs.com/security/authentication#enable-authentication-globally
@@ -15,4 +15,4 @@ import { AuthGuard } from '@/modules/authorization/guards/auth.guard';
 		},
 	],
 })
-export class AuthorizationModule {}
+export class AuthModule {}

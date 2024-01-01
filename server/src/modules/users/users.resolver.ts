@@ -1,11 +1,11 @@
 import { Args, Mutation, Query, Resolver } from '@nestjs/graphql';
 import { Inject, UseGuards } from '@nestjs/common';
 import { UsersService } from './users.service';
-import { CreateUserArgs, CreateUserOutput } from './dtos/create.dto';
+import { CreateUserArgs, CreateUserOutput } from './dtos/users-create.dto';
 import { User, USER_ROLE } from './entities/user.entity';
 import { AuthUser } from '@/modules/authorization/decorators/auth-user.decorator';
-import { GetUserArgs, GetUserOutput } from './dtos/get.dto';
-import { UpdateUserArgs, UpdateUserOutput } from './dtos/update.dto';
+import { GetUserArgs, GetUserOutput } from './dtos/users-get.dto';
+import { UpdateUserArgs, UpdateUserOutput } from './dtos/users-update.dto';
 import { VerifyEmailArgs, VerifyEmailOutput } from './dtos/verify-email.dto';
 import { UsersVerifyService } from './users-verify.service';
 import { AuthRoles } from '@/modules/authorization/decorators/auth-role.decorator';

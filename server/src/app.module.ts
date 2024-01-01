@@ -10,12 +10,12 @@ import { RestaurantsModule } from '@/modules/restaurants/restaurants.module';
 import { Restaurant } from '@/modules/restaurants/entities/restaurant.entity';
 import { UsersModule } from '@/modules/users/users.module';
 import { User } from '@/modules/users/entities/user.entity';
-import { AuthorizationModule } from '@/modules/authorization/authorization.module';
+import { AuthModule } from '@/modules/authorization/auth.module';
 import { JwtModule } from '@/modules/jwt/jwt.module';
 import { JwtMiddleware } from '@/modules/jwt/jwt.middleware';
 import { Verification } from '@/modules/users/entities/verification.entity';
 import { MailerModule } from '@/modules/mailer/mailer.module';
-import { RestaurantsCategory } from '@/modules/restaurants/entities/restaurants-category.entity';
+import { RestaurantsCategory } from '@/modules/restaurants/entities/category.entity';
 
 @Module({
 	imports: [
@@ -86,7 +86,7 @@ import { RestaurantsCategory } from '@/modules/restaurants/entities/restaurants-
 		}),
 		RestaurantsModule,
 		UsersModule,
-		AuthorizationModule,
+		AuthModule,
 	],
 })
 export class AppModule implements NestModule {

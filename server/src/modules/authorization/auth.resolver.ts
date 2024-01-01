@@ -1,12 +1,12 @@
 import { Args, Mutation, Resolver } from '@nestjs/graphql';
 import { Inject } from '@nestjs/common';
-import { AuthorizationService } from './authorization.service';
-import { LoginArgs, LoginOutput } from './dtos/login.dto';
+import { AuthService } from './auth.service';
+import { LoginArgs, LoginOutput } from './dtos/auth-login.dto';
 import { AuthPublic } from './decorators/auth-public.decorator';
 
 @Resolver()
-export class AuthorizationResolver {
-	constructor(@Inject() private readonly authorizationService: AuthorizationService) {}
+export class AuthResolver {
+	constructor(@Inject() private readonly authorizationService: AuthService) {}
 
 	@AuthPublic()
 	@Mutation(() => LoginOutput, { name: 'authorizationLogin' })

@@ -1,6 +1,6 @@
 import { ArgsType, Field, ObjectType, PartialType } from '@nestjs/graphql';
 import { Restaurant } from '../entities/restaurant.entity';
-import { CreateRestaurantArgs } from '@/modules/restaurants/dtos/create.dto';
+import { CreateRestaurantArgs } from '@/modules/restaurants/dtos/restaurants-create.dto';
 import { CoreDto } from '@/shared/modules/dtos/core.dto';
 
 @ArgsType()

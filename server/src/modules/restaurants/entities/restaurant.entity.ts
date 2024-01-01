@@ -2,7 +2,7 @@ import { Field, InputType, ObjectType } from '@nestjs/graphql';
 import { Column, Entity, ManyToOne, OneToMany } from 'typeorm';
 import { IsString, Length } from 'class-validator';
 import { CoreEntity } from '@/shared/modules/entities/core.entity';
-import { RestaurantsCategory } from './restaurants-category.entity';
+import { RestaurantsCategory } from './category.entity';
 import { User } from '@/modules/users/entities/user.entity';
 
 // Чтоб использовать OmitType

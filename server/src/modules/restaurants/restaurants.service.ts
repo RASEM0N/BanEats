@@ -1,8 +1,8 @@
 import { Inject, Injectable } from '@nestjs/common';
 import { Repository } from 'typeorm';
 import { Restaurant } from './entities/restaurant.entity';
-import { CreateRestaurantArgs } from './dtos/create.dto';
-import { UpdateRestaurantArgs } from './dtos/update.dto';
+import { CreateRestaurantArgs } from './dtos/restaurants-create.dto';
+import { UpdateRestaurantArgs } from './dtos/restaurants-update.dto';
 import { DefaultCRUD } from '@/shared/modules/services/default-crud.service';
 import { CustomError, getErrorWithDefault } from '@/shared/lib/custom-error';
 import { InjectRepository } from '@nestjs/typeorm';

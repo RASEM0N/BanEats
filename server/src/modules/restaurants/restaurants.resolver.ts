@@ -1,9 +1,9 @@
 import { Args, Mutation, Query, Resolver } from '@nestjs/graphql';
 import { Restaurant } from './entities/restaurant.entity';
-import { CreateRestaurantArgs, CreateRestaurantOutput } from './dtos/create.dto';
+import { CreateRestaurantArgs, CreateRestaurantOutput } from './dtos/restaurants-create.dto';
 import { Inject } from '@nestjs/common';
 import { RestaurantsService } from './restaurants.service';
-import { UpdateRestaurantArgs, UpdateRestaurantOutput } from './dtos/update.dto';
+import { UpdateRestaurantArgs, UpdateRestaurantOutput } from './dtos/restaurants-update.dto';
 import { AuthRoles } from '@/modules/authorization/decorators/auth-role.decorator';
 import { User, USER_ROLE } from '@/modules/users/entities/user.entity';
 import { AuthUser } from '@/modules/authorization/decorators/auth-user.decorator';
