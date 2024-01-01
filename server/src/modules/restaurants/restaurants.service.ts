@@ -1,12 +1,13 @@
-import { Injectable } from '@nestjs/common';
+import { Inject, Injectable } from '@nestjs/common';
 import { Repository } from 'typeorm';
 import { Restaurant } from './entities/restaurant.entity';
 import { CreateRestaurantInput } from './dtos/create.dto';
 import { UpdateRestaurantDto } from './dtos/update.dto';
 import { DefaultCRUD } from '@/shared/modules/services/default-crud.service';
-import { CustomError } from '@/shared/lib/custom-error';
+import { CustomError, getErrorWithDefault } from '@/shared/lib/custom-error';
 import { InjectRepository } from '@nestjs/typeorm';
 import { User } from '@/modules/users/entities/user.entity';
+import { RestaurantsCategoryService } from './restaurants-category.service';
 
 @Injectable()
 export class RestaurantsService implements DefaultCRUD<Restaurant> {
@@ -15,6 +16,7 @@ export class RestaurantsService implements DefaultCRUD<Restaurant> {
 	constructor(
 		@InjectRepository(Restaurant)
 		private readonly restaurantRepository: Repository<Restaurant>,
+		@Inject() private readonly restaurantCategoryService: RestaurantsCategoryService,
 	) {}
 
 	async get(id: number): Promise<Restaurant> {
@@ -37,10 +39,25 @@ export class RestaurantsService implements DefaultCRUD<Restaurant> {
 	}
 
 	async create(user: User, dto: CreateRestaurantInput): Promise<Restaurant> {
-		const restaurant = this.restaurantRepository.create({
-			...dto,
-		});
-		return await this.restaurantRepository.save(restaurant);
+		// @TODO по идее сюда Transaction надо пиздануть
+		// т.к. одно пизданутся может
+		try {
+			const category = await this.restaurantCategoryService.create(
+				dto.categoryName,
+			);
+
+			const restaurant = this.restaurantRepository.create({
+				...dto,
+			});
+
+			restaurant.category = category;
+			return await this.restaurantRepository.save(restaurant);
+		} catch (e) {
+			throw getErrorWithDefault(e, {
+				errorCode: 400,
+				message: 'Ошибка создания ресторана',
+			});
+		}
 	}
 
 	async update({ id, input }: UpdateRestaurantDto): Promise<Restaurant> {

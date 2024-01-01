@@ -10,10 +10,15 @@ import { Restaurant } from './restaurant.entity';
 })
 export class RestaurantsCategory {
 	@Field(() => String)
-	@Column()
+	@Column({ unique: true })
 	@IsString()
 	@Length(5)
 	name: string;
+
+	@Field(() => String)
+	@Column({ unique: true })
+	@IsString()
+	slug: string;
 
 	@Field(() => String)
 	@Column()
