@@ -17,3 +17,4 @@
 - Прогнать test coverage и дописать места, которые не покрыты
 - Написать e2e тесты на GraphQl, resolver
 - errorCode в ответе пользователю сделано как enum, чтоб можно было глянуть, какие именно ошибки вылезают
+- https://stackru.com/questions/62218995/kak-obojti-etu-oshibku-typeorm-entityrepository-ustarel-vmesto-etogo-ispolzujte
