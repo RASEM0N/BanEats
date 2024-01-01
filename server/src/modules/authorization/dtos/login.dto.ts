@@ -3,7 +3,7 @@ import { ArgsType, Field, ObjectType, PickType } from '@nestjs/graphql';
 import { User } from '@/modules/users/entities/user.entity';
 
 @ArgsType()
-export class LoginDto extends PickType(User, ['email', 'password']) {}
+export class LoginArgs extends PickType(User, ['email', 'password']) {}
 
 @ObjectType()
 export class LoginOutput extends CoreDto<LoginData> {

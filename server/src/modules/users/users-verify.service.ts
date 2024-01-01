@@ -4,7 +4,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { User } from './entities/user.entity';
 import { Verification } from './entities/verification.entity';
 import { MailerService } from '@/modules/mailer/mailer.service';
-import { SendVerifyEmailDto } from './dtos/send-verify-email.dto';
+import { SendVerifyEmailArgs } from './dtos/send-verify-email.dto';
 import { Repository } from 'typeorm';
 import { QueryRunner } from 'typeorm/query-runner/QueryRunner';
 
@@ -57,7 +57,7 @@ export class UsersVerifyService {
 		}
 	}
 
-	async sendVerifyEmail({ email, code }: SendVerifyEmailDto): Promise<void> {
+	async sendVerifyEmail({ email, code }: SendVerifyEmailArgs): Promise<void> {
 		try {
 			await this.mailerService.sendEmail({
 				to: email,

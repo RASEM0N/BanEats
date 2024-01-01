@@ -1,7 +1,7 @@
 import { Inject, Injectable } from '@nestjs/common';
 import { Repository } from 'typeorm';
 import { Restaurant } from './entities/restaurant.entity';
-import { CreateRestaurantInput } from './dtos/create.dto';
+import { CreateRestaurantArgs } from './dtos/create.dto';
 import { UpdateRestaurantArgs } from './dtos/update.dto';
 import { DefaultCRUD } from '@/shared/modules/services/default-crud.service';
 import { CustomError, getErrorWithDefault } from '@/shared/lib/custom-error';
@@ -36,7 +36,7 @@ export class RestaurantsService implements DefaultCRUD<Restaurant> {
 		return this.restaurantRepository.find();
 	}
 
-	async create(user: User, dto: CreateRestaurantInput): Promise<Restaurant> {
+	async create(user: User, dto: CreateRestaurantArgs): Promise<Restaurant> {
 		// @TODO по идее сюда Transaction надо пиздануть
 		// т.к. одно пизданутся может
 		try {

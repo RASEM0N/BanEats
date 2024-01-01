@@ -1,4 +1,4 @@
-export interface SendVerifyEmailDto {
+export interface SendVerifyEmailArgs {
 	email: string;
 	code: string;
 }

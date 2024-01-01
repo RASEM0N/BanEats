@@ -1,5 +1,5 @@
 import { Inject, Injectable } from '@nestjs/common';
-import { LoginData, LoginDto } from './dtos/login.dto';
+import { LoginData, LoginArgs } from './dtos/login.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { User } from '@/modules/users/entities/user.entity';
 import { Repository } from 'typeorm';
@@ -13,7 +13,7 @@ export class AuthorizationService {
 		@Inject() private readonly jwtService: JwtService,
 	) {}
 
-	async login({ email, password }: LoginDto): Promise<LoginData> {
+	async login({ email, password }: LoginArgs): Promise<LoginData> {
 		try {
 			const user = await this.userRepository.findOne({
 				where: {

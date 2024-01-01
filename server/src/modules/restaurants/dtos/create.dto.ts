@@ -10,7 +10,7 @@ export class CreateRestaurantData {
 }
 
 @ArgsType()
-export class CreateRestaurantInput extends PickType(Restaurant, [
+export class CreateRestaurantArgs extends PickType(Restaurant, [
 	'name',
 	'address',
 	'coverImage',
