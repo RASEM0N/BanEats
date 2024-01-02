@@ -1,5 +1,5 @@
 import { Inject, Injectable } from '@nestjs/common';
-import { FindManyOptions, FindOptionsWhere, Like, Repository } from 'typeorm';
+import { FindManyOptions, FindOptionsWhere, Raw, Repository } from 'typeorm';
 import { Restaurant } from './entities/restaurant.entity';
 import { CreateRestaurantArgs } from './dtos/restaurants-create.dto';
 import { UpdateRestaurantArgs } from './dtos/restaurants-update.dto';
@@ -173,7 +173,7 @@ export class RestaurantsService implements DefaultCRUD<Restaurant> {
 
 		if (data.query) {
 			where.category = {
-				name: Like(`%${data.query}%`),
+				name: Raw((name) => `${name} ILIKE '%${data.query}%'`),
 			};
 		}
 
