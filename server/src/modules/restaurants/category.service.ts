@@ -6,7 +6,7 @@ import { DefaultCRUD } from '@/shared/modules/services/default-crud.service';
 import slugify from 'slugify';
 
 @Injectable()
-export class RestaurantsCategoryService implements DefaultCRUD<RestaurantsCategory> {
+export class CategoryService implements DefaultCRUD<RestaurantsCategory> {
 	constructor(
 		@InjectRepository(RestaurantsCategory)
 		private readonly restaurantCategoryRepository: Repository<RestaurantsCategory>,
@@ -42,6 +42,10 @@ export class RestaurantsCategoryService implements DefaultCRUD<RestaurantsCatego
 	}
 
 	async update(): Promise<RestaurantsCategory> {
+		return undefined;
+	}
+
+	async delete(): Promise<void> {
 		return undefined;
 	}
 }

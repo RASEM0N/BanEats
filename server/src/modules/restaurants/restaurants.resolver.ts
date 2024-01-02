@@ -94,7 +94,7 @@ export class RestaurantsResolver {
 	}
 
 	@AuthRoles([USER_ROLE.admin])
-	@Mutation(() => EmptyOutput, { name: 'restaurantsDelete ' })
+	@Mutation(() => EmptyOutput, { name: 'restaurantsDelete' })
 	async delete(
 		@AuthUser() user: User,
 		@Args() args: RestaurantsDeleteArgs,
