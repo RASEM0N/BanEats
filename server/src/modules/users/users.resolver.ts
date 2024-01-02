@@ -11,6 +11,7 @@ import { UsersVerifyService } from './users-verify.service';
 import { AuthRoles } from '@/modules/authorization/decorators/auth-role.decorator';
 import { AuthPublic } from '@/modules/authorization/decorators/auth-public.decorator';
 import { EmptyOutput } from '@/shared/modules/dtos/empty.dto';
+import { UsersMeOutput } from '@/modules/users/dtos/users-me.dto';
 
 @Resolver()
 export class UsersResolver {
@@ -19,9 +20,14 @@ export class UsersResolver {
 		@Inject() private readonly userVerifyService: UsersVerifyService,
 	) {}
 
-	@Query(() => User, { name: 'usersMe' })
-	me(@AuthUser() user: User): User {
-		return user;
+	@Query(() => UsersMeOutput, { name: 'usersMe' })
+	me(@AuthUser() user: User): UsersMeOutput {
+		return {
+			isOk: true,
+			data: {
+				user,
+			},
+		};
 	}
 
 	@AuthRoles([USER_ROLE.admin])
