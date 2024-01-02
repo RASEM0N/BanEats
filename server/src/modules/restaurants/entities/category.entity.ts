@@ -20,10 +20,10 @@ export class RestaurantsCategory {
 	@IsString()
 	slug: string;
 
-	@Field(() => String)
-	@Column()
+	@Field(() => String, { nullable: true })
+	@Column({ nullable: true })
 	@IsString()
-	coverImage: string;
+	coverImage?: string;
 
 	@Field(() => String)
 	@Column()
@@ -31,9 +31,6 @@ export class RestaurantsCategory {
 	address: string;
 
 	@Field(() => [Restaurant], { nullable: true })
-	@OneToMany(() => Restaurant, (restaurant) => restaurant.category, {
-		nullable: true,
-		onDelete: 'SET NULL',
-	})
+	@OneToMany(() => Restaurant, (restaurant) => restaurant.category)
 	restaurants: Restaurant[];
 }
