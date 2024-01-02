@@ -1,6 +1,6 @@
 import { ArgsType, Field, ObjectType, PickType } from '@nestjs/graphql';
 import { Restaurant } from '../entities/restaurant.entity';
-import { CoreDto } from '@/shared/modules/dtos/core.dto';
+import { CoreOutput } from '@/shared/modules/dtos/core.dto';
 import { IsString, Length } from 'class-validator';
 
 @ObjectType()
@@ -21,7 +21,7 @@ export class CreateRestaurantArgs extends PickType(Restaurant, [
 	categoryName: string;
 }
 
-export class CreateRestaurantOutput extends CoreDto<CreateRestaurantData> {
+export class CreateRestaurantOutput extends CoreOutput<CreateRestaurantData> {
 	@Field(() => CreateRestaurantData, { nullable: true })
 	data?: CreateRestaurantData;
 }

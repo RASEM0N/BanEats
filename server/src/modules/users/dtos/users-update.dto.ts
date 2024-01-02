@@ -1,6 +1,6 @@
 import { User } from '../entities/user.entity';
 import { ArgsType, Field, ObjectType, PickType } from '@nestjs/graphql';
-import { CoreDto } from '@/shared/modules/dtos/core.dto';
+import { CoreOutput } from '@/shared/modules/dtos/core.dto';
 
 @ObjectType()
 export class UpdateUserData {
@@ -11,7 +11,7 @@ export class UpdateUserData {
 export class UpdateUserArgs extends PickType(User, ['email', 'password']) {}
 
 @ObjectType()
-export class UpdateUserOutput extends CoreDto<UpdateUserData> {
+export class UpdateUserOutput extends CoreOutput<UpdateUserData> {
 	@Field(() => UpdateUserData, { nullable: true })
 	data?: UpdateUserData;
 }

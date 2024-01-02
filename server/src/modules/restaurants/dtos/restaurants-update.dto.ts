@@ -1,7 +1,7 @@
 import { ArgsType, Field, ObjectType, PartialType } from '@nestjs/graphql';
 import { Restaurant } from '../entities/restaurant.entity';
 import { CreateRestaurantArgs } from '@/modules/restaurants/dtos/restaurants-create.dto';
-import { CoreDto } from '@/shared/modules/dtos/core.dto';
+import { CoreOutput } from '@/shared/modules/dtos/core.dto';
 
 @ArgsType()
 export class UpdateRestaurantArgs extends PartialType(CreateRestaurantArgs) {
@@ -16,7 +16,7 @@ export class UpdateRestaurantData {
 }
 
 @ObjectType()
-export class UpdateRestaurantOutput extends CoreDto<UpdateRestaurantData> {
+export class UpdateRestaurantOutput extends CoreOutput<UpdateRestaurantData> {
 	@Field(() => UpdateRestaurantData, { nullable: true })
 	data?: UpdateRestaurantData;
 }

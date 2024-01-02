@@ -1,4 +1,4 @@
-import { CoreDto } from '@/shared/modules/dtos/core.dto';
+import { CoreOutput } from '@/shared/modules/dtos/core.dto';
 import { ArgsType, Field, ObjectType, PickType } from '@nestjs/graphql';
 import { User } from '@/modules/users/entities/user.entity';
 
@@ -6,7 +6,7 @@ import { User } from '@/modules/users/entities/user.entity';
 export class LoginArgs extends PickType(User, ['email', 'password']) {}
 
 @ObjectType()
-export class LoginOutput extends CoreDto<LoginData> {
+export class LoginOutput extends CoreOutput<LoginData> {
 	@Field(() => LoginData, { nullable: true })
 	data?: LoginData;
 }
