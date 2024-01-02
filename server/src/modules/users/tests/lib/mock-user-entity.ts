@@ -10,6 +10,7 @@ export const createMockUserData = (data?: Partial<MockUserData>): MockUserData =
 		isVerified: true,
 		createdAt: new Date(),
 		updatedAt: new Date(),
+		restaurant: [],
 		...data,
 	};
 };

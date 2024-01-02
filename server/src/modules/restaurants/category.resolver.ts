@@ -1,10 +1,14 @@
-import { Parent, Query, ResolveField, Resolver } from '@nestjs/graphql';
+import { Args, Parent, Query, ResolveField, Resolver } from '@nestjs/graphql';
 import { RestaurantsService } from './restaurants.service';
 import { CategoryService } from './category.service';
+import { RestaurantsCategory } from './entities/category.entity';
 import { Inject } from '@nestjs/common';
-import { CategoryGetAllOutput } from './dtos/category-get.dto';
+import {
+	CategoryGetAllOutput,
+	CategoryGetArgs,
+	CategoryGetOutput,
+} from './dtos/category-get.dto';
 import { AuthPublic } from '@/modules/authorization/decorators/auth-public.decorator';
-import { RestaurantsCategory } from '@/modules/restaurants/entities/category.entity';
 
 @Resolver()
 export class CategoryResolver {
@@ -65,6 +69,27 @@ export class CategoryResolver {
 				isOk: true,
 				errorCode: e.errorCode,
 				message: e.message,
+			};
+		}
+	}
+
+	@AuthPublic()
+	@Query(() => CategoryGetOutput, { name: 'restaurantsCategoryGetBySlug' })
+	async getBySlug(@Args() args: CategoryGetArgs): Promise<CategoryGetOutput> {
+		try {
+			const result = await this.categoryService.getWithAllRestaurants(args);
+
+			return {
+				isOk: true,
+				data: {
+					...result,
+				},
+			};
+		} catch (e) {
+			return {
+				isOk: false,
+				message: e.message,
+				errorCode: e.errorCode,
 			};
 		}
 	}

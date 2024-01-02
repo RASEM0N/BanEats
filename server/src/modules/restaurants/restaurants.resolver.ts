@@ -16,6 +16,7 @@ import { User, USER_ROLE } from '@/modules/users/entities/user.entity';
 import { AuthUser } from '@/modules/authorization/decorators/auth-user.decorator';
 import { EmptyOutput } from '@/shared/modules/dtos/empty.dto';
 import { AuthPublic } from '@/modules/authorization/decorators/auth-public.decorator';
+import { PaginationArgs } from '@/shared/modules/dtos/pagination.dto';
 
 @Resolver(() => Number)
 export class RestaurantsResolver {
@@ -23,14 +24,14 @@ export class RestaurantsResolver {
 
 	@AuthPublic()
 	@Query(() => RestaurantsGetAllOutput, { name: 'restaurantsGetAll' })
-	async getAll(): Promise<RestaurantsGetAllOutput> {
+	async getAll(@Args() args: PaginationArgs): Promise<RestaurantsGetAllOutput> {
 		try {
-			const restaurants = await this.restaurantService.getAll();
+			const result = await this.restaurantService.getAll(args);
 
 			return {
 				isOk: true,
 				data: {
-					restaurants,
+					...result,
 				},
 			};
 

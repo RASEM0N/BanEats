@@ -1,6 +1,5 @@
-import { Field, ObjectType } from '@nestjs/graphql';
+import { Field } from '@nestjs/graphql';
 
-@ObjectType()
 export abstract class CoreOutput<T> {
 	@Field(() => Number, { nullable: true })
 	errorCode?: number;

@@ -9,6 +9,11 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { User } from '@/modules/users/entities/user.entity';
 import { CategoryService } from './category.service';
 import { RestaurantsDeleteArgs } from './dtos/restaurants-delete.dto';
+import {
+	RestaurantsGetAllByCategoryArgs,
+	RestaurantsGetAllData,
+} from './dtos/restaurants-get.dto';
+import { PaginationArgs } from '@/shared/modules/dtos/pagination.dto';
 
 @Injectable()
 export class RestaurantsService implements DefaultCRUD<Restaurant> {
@@ -38,8 +43,64 @@ export class RestaurantsService implements DefaultCRUD<Restaurant> {
 		return restaurant;
 	}
 
-	async getAll(): Promise<Restaurant[]> {
-		return this.restaurantRepository.find();
+	async getAll({ page }: PaginationArgs): Promise<RestaurantsGetAllData> {
+		try {
+			const take = 25;
+			const skip = (page - 1) * take;
+
+			const [restaurants, totalCount] =
+				await this.restaurantRepository.findAndCount({
+					take,
+					skip,
+				});
+
+			const totalPages = Math.ceil(totalCount / take);
+
+			return {
+				restaurants,
+				totalPages,
+				totalCount,
+			};
+		} catch (e) {
+			throw getErrorWithDefault(e, {
+				message: 'Ошибка получения списка ресторанов',
+				errorCode: 400,
+			});
+		}
+	}
+
+	async getAllByCategory({
+		category,
+		page,
+	}: RestaurantsGetAllByCategoryArgs): Promise<RestaurantsGetAllData> {
+		try {
+			const take = 25;
+			const skip = (page - 1) * take;
+
+			const [restaurants, totalCount] =
+				await this.restaurantRepository.findAndCount({
+					take,
+					skip,
+					where: {
+						category: {
+							id: category.id,
+						},
+					},
+				});
+
+			const totalPages = Math.ceil(totalCount / take);
+
+			return {
+				restaurants,
+				totalPages,
+				totalCount,
+			};
+		} catch (e) {
+			throw getErrorWithDefault(e, {
+				message: 'Ошибка получения списка ресторанов',
+				errorCode: 400,
+			});
+		}
 	}
 
 	async create(user: User, dto: CreateRestaurantArgs): Promise<Restaurant> {

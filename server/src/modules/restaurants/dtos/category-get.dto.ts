@@ -1,6 +1,10 @@
-import { Field, ObjectType } from '@nestjs/graphql';
+import { ArgsType, Field, ObjectType } from '@nestjs/graphql';
 import { CoreOutput } from '@/shared/modules/dtos/core.dto';
 import { RestaurantsCategory } from '../entities/category.entity';
+import { Restaurant } from '@/modules/restaurants/entities/restaurant.entity';
+import { PaginationArgs, PaginationData } from '@/shared/modules/dtos/pagination.dto';
+
+// -------------
 
 @ObjectType()
 export class CategoryGetAllOutput extends CoreOutput<CategoryGetAllData> {
@@ -12,4 +16,27 @@ export class CategoryGetAllOutput extends CoreOutput<CategoryGetAllData> {
 export class CategoryGetAllData {
 	@Field(() => [RestaurantsCategory])
 	categories: RestaurantsCategory[];
+}
+
+// -------------
+
+@ArgsType()
+export class CategoryGetArgs extends PaginationArgs {
+	@Field(() => String)
+	slug: string;
+}
+
+@ObjectType()
+export class CategoryGetOutput extends CoreOutput<CategoryGetData> {
+	@Field(() => CategoryGetData, { nullable: true })
+	data?: CategoryGetData;
+}
+
+@ObjectType()
+export class CategoryGetData extends PaginationData {
+	@Field(() => RestaurantsCategory)
+	category: RestaurantsCategory;
+
+	@Field(() => [Restaurant])
+	restaurants: Restaurant[];
 }
