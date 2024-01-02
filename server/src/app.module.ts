@@ -16,6 +16,7 @@ import { JwtMiddleware } from '@/modules/jwt/jwt.middleware';
 import { Verification } from '@/modules/users/entities/verification.entity';
 import { MailerModule } from '@/modules/mailer/mailer.module';
 import { RestaurantsCategory } from '@/modules/restaurants/entities/category.entity';
+import { RestaurantDish } from '@/modules/restaurants/entities/dish.entity';
 
 @Module({
 	imports: [
@@ -82,7 +83,13 @@ import { RestaurantsCategory } from '@/modules/restaurants/entities/category.ent
 			// сразу же синхронизируются (добавляются поля там новые)
 			synchronize: !IS_PRODUCTION,
 			logging: !IS_PRODUCTION,
-			entities: [Restaurant, RestaurantsCategory, User, Verification],
+			entities: [
+				Restaurant,
+				RestaurantsCategory,
+				RestaurantDish,
+				Verification,
+				User,
+			],
 		}),
 		RestaurantsModule,
 		UsersModule,
