@@ -4,6 +4,7 @@ import { IsString, Length } from 'class-validator';
 import { CoreEntity } from '@/shared/modules/entities/core.entity';
 import { RestaurantsCategory } from './category.entity';
 import { User } from '@/modules/users/entities/user.entity';
+import { RestaurantDish } from './dish.entity';
 
 // Чтоб использовать OmitType
 // для create.dto т.к. create.dto это InputType
@@ -32,6 +33,10 @@ export class Restaurant extends CoreEntity {
 	@Field(() => RestaurantsCategory)
 	@ManyToOne(() => RestaurantsCategory, (category) => category.restaurants)
 	category: RestaurantsCategory;
+
+	@Field(() => [RestaurantDish])
+	@OneToMany(() => RestaurantDish, (dish) => dish.restaurant)
+	dishes: RestaurantDish[];
 
 	@Field(() => User)
 	@OneToMany(() => User, (user) => user.restaurant, {
