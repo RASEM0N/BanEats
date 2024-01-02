@@ -15,11 +15,13 @@ import { AuthRoles } from '@/modules/authorization/decorators/auth-role.decorato
 import { User, USER_ROLE } from '@/modules/users/entities/user.entity';
 import { AuthUser } from '@/modules/authorization/decorators/auth-user.decorator';
 import { EmptyOutput } from '@/shared/modules/dtos/empty.dto';
+import { AuthPublic } from '@/modules/authorization/decorators/auth-public.decorator';
 
 @Resolver(() => Number)
 export class RestaurantsResolver {
 	constructor(@Inject() private readonly restaurantService: RestaurantsService) {}
 
+	@AuthPublic()
 	@Query(() => RestaurantsGetAllOutput, { name: 'restaurantsGetAll' })
 	async getAll(): Promise<RestaurantsGetAllOutput> {
 		try {
