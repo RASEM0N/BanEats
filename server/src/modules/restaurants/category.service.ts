@@ -58,9 +58,9 @@ export class CategoryService implements DefaultCRUD<RestaurantsCategory> {
 	}: CategoryGetArgs): Promise<CategoryGetData> {
 		try {
 			const category = await this.get(slug);
-			const paginationResult = await this.restaurantService.getAllByCategory({
-				category,
+			const paginationResult = await this.restaurantService.getAll({
 				page,
+				categoryId: category.id,
 			});
 
 			return {
