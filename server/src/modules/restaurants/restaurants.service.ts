@@ -7,8 +7,8 @@ import { DefaultCRUD } from '@/shared/modules/services/default-crud.service';
 import { CustomError, getErrorWithDefault } from '@/shared/lib/custom-error';
 import { InjectRepository } from '@nestjs/typeorm';
 import { User } from '@/modules/users/entities/user.entity';
-import { RestaurantsCategoryService } from './restaurants-category.service';
-import { RestaurantsDeleteArgs } from '@/modules/restaurants/dtos/restaurants-delete.dto';
+import { CategoryService } from './category.service';
+import { RestaurantsDeleteArgs } from './dtos/restaurants-delete.dto';
 
 @Injectable()
 export class RestaurantsService implements DefaultCRUD<Restaurant> {
@@ -17,7 +17,7 @@ export class RestaurantsService implements DefaultCRUD<Restaurant> {
 	constructor(
 		@InjectRepository(Restaurant)
 		private readonly restaurantRepository: Repository<Restaurant>,
-		@Inject() private readonly restaurantCategoryService: RestaurantsCategoryService,
+		@Inject() private readonly restaurantCategoryService: CategoryService,
 	) {}
 
 	async get(id: number): Promise<Restaurant> {
@@ -126,5 +126,13 @@ export class RestaurantsService implements DefaultCRUD<Restaurant> {
 				message: 'Не удалось удалить ресторан',
 			});
 		}
+	}
+
+	async count(categoryId: number): Promise<number> {
+		return this.restaurantRepository.countBy({
+			category: {
+				id: categoryId,
+			},
+		});
 	}
 }
