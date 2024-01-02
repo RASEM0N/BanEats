@@ -130,4 +130,15 @@ export class UsersService implements DefaultCRUD<User> {
 			await queryRunner?.release();
 		}
 	}
+
+	async delete(userId: number): Promise<void> {
+		try {
+			await this.userRepository.delete(userId);
+		} catch (e) {
+			throw new CustomError({
+				errorCode: 400,
+				message: 'Не удалось удалить пользователя',
+			});
+		}
+	}
 }
