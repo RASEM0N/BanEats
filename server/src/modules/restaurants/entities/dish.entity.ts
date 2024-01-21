@@ -5,15 +5,24 @@ import { CoreEntity } from '@/shared/modules/entities/core.entity';
 import { Restaurant } from './restaurant.entity';
 
 @ObjectType()
+export class DishChoice {
+	@Field(() => String)
+	name: string;
+
+	@Field(() => Number, { nullable: true })
+	extra?: number;
+}
+
+@ObjectType()
 export class DishOption {
 	@Field(() => String)
 	name: string;
 
-	@Field(() => [String])
-	choices: string[];
+	@Field(() => [DishChoice], { nullable: true })
+	choices?: DishChoice[];
 
-	@Field(() => Number)
-	extra: number;
+	@Field(() => Number, { nullable: true })
+	extra?: number;
 }
 
 @InputType({ isAbstract: true })
@@ -52,7 +61,7 @@ export class RestaurantDish extends CoreEntity {
 	@RelationId((v: RestaurantDish) => v.restaurant)
 	restaurantId: number;
 
-	@Field(() => DishOption)
-	@Column({ type: 'json' })
-	options: DishOption[];
+	@Field(() => [DishOption], { nullable: true })
+	@Column({ type: 'json', nullable: true })
+	options?: DishOption[];
 }
