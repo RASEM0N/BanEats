@@ -5,6 +5,7 @@ import { CoreEntity } from '@/shared/modules/entities/core.entity';
 import { RestaurantsCategory } from './category.entity';
 import { User } from '@/modules/users/entities/user.entity';
 import { RestaurantDish } from './dish.entity';
+import { Order } from '@/modules/orders/entites/order.entity';
 
 // Чтоб использовать OmitType
 // для create.dto т.к. create.dto это InputType
@@ -44,6 +45,13 @@ export class Restaurant extends CoreEntity {
 		onDelete: 'CASCADE',
 	})
 	owner: User;
+
+	@Field(() => [Order])
+	@OneToMany(() => Order, (order) => order.restaurant, {
+		onDelete: 'SET NULL',
+		nullable: true,
+	})
+	orders: Order[];
 
 	@RelationId((restaurant: Restaurant) => restaurant.owner)
 	ownerId: number;

@@ -17,6 +17,8 @@ import { Verification } from '@/modules/users/entities/verification.entity';
 import { MailerModule } from '@/modules/mailer/mailer.module';
 import { RestaurantsCategory } from '@/modules/restaurants/entities/category.entity';
 import { RestaurantDish } from '@/modules/restaurants/entities/dish.entity';
+import { OrdersModule } from '@/modules/orders/orders.module';
+import { Order } from '@/modules/orders/entites/order.entity';
 
 @Module({
 	imports: [
@@ -88,12 +90,14 @@ import { RestaurantDish } from '@/modules/restaurants/entities/dish.entity';
 				RestaurantsCategory,
 				RestaurantDish,
 				Verification,
+				Order,
 				User,
 			],
 		}),
 		RestaurantsModule,
 		UsersModule,
 		AuthModule,
+		OrdersModule,
 	],
 })
 export class AppModule implements NestModule {
