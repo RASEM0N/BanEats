@@ -1,5 +1,5 @@
 export interface DefaultCRUD<T> {
-	get(...args: any): T | Promise<T>;
+	get(...args: any): T | Promise<T> | unknown;
 
 	getAll(...args: any): T[] | Promise<T[]> | unknown;
 

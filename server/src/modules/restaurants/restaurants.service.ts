@@ -23,6 +23,7 @@ export class RestaurantsService implements DefaultCRUD<Restaurant> {
 
 	async get(id: number): Promise<Restaurant> {
 		const restaurant = await this.restaurantRepository.findOne({
+			relations: ['menu'],
 			where: {
 				id,
 			},

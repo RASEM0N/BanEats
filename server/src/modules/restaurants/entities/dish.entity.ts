@@ -4,6 +4,18 @@ import { IsNumber, IsString, Length } from 'class-validator';
 import { CoreEntity } from '@/shared/modules/entities/core.entity';
 import { Restaurant } from './restaurant.entity';
 
+@ObjectType()
+export class DishOption {
+	@Field(() => String)
+	name: string;
+
+	@Field(() => [String])
+	choices: string[];
+
+	@Field(() => Number)
+	extra: number;
+}
+
 @InputType({ isAbstract: true })
 @ObjectType()
 @Entity({
@@ -39,4 +51,8 @@ export class RestaurantDish extends CoreEntity {
 	@Field(() => Number)
 	@RelationId((v: RestaurantDish) => v.restaurant)
 	restaurantId: number;
+
+	@Field(() => DishOption)
+	@Column({ type: 'json' })
+	options: DishOption[];
 }
