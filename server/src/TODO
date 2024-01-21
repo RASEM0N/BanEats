@@ -19,3 +19,12 @@
 - errorCode в ответе пользователю сделано как enum, чтоб можно было глянуть, какие именно ошибки вылезают
 - https://stackru.com/questions/62218995/kak-obojti-etu-oshibku-typeorm-entityrepository-ustarel-vmesto-etogo-ispolzujte
 - Вместо типа Number лучше юзать Int или Float
+
+- Вместо папки modules лучше сделать модуль Shared, в которой уже будут другие модули: Jwt, Mailer
+- Вместо папки modules лучше сделать модуль Features, в которой уже будут другие модули: Auth, User, Restaurants...
+получится
+
+@Module({
+    imports: [UserModule. UserModule, RestaurantsModule]
+})
+export class FeaturesModule {}
