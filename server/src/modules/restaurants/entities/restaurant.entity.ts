@@ -5,7 +5,7 @@ import { CoreEntity } from '@/shared/modules/entities/core.entity';
 import { RestaurantsCategory } from './category.entity';
 import { User } from '@/modules/users/entities/user.entity';
 import { RestaurantDish } from './dish.entity';
-import { Order } from '@/modules/orders/entites/order.entity';
+import { Order } from '@/modules/orders/entities/order.entity';
 
 // Чтоб использовать OmitType
 // для create.dto т.к. create.dto это InputType
