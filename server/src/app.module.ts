@@ -18,7 +18,8 @@ import { MailerModule } from '@/modules/mailer/mailer.module';
 import { RestaurantsCategory } from '@/modules/restaurants/entities/category.entity';
 import { RestaurantDish } from '@/modules/restaurants/entities/dish.entity';
 import { OrdersModule } from '@/modules/orders/orders.module';
-import { Order } from '@/modules/orders/entites/order.entity';
+import { Order } from '@/modules/orders/entities/order.entity';
+import { OrderItem } from '@/modules/orders/entities/order-item.entity';
 
 @Module({
 	imports: [
@@ -91,6 +92,7 @@ import { Order } from '@/modules/orders/entites/order.entity';
 				RestaurantDish,
 				Verification,
 				Order,
+				OrderItem,
 				User,
 			],
 		}),

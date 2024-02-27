@@ -1,9 +1,10 @@
 import { Field, ObjectType, registerEnumType } from '@nestjs/graphql';
-import { Column, Entity, ManyToMany, ManyToOne } from 'typeorm';
+import { Column, Entity, JoinTable, ManyToMany, ManyToOne } from 'typeorm';
 import { CoreEntity } from '@/shared/modules/entities/core.entity';
 import { Restaurant } from '@/modules/restaurants/entities/restaurant.entity';
 import { User } from '@/modules/users/entities/user.entity';
 import { RestaurantDish } from '@/modules/restaurants/entities/dish.entity';
+import { OrderItem } from '@/modules/orders/entities/order-item.entity';
 
 export enum ORDER_STATUS {
 	pending = 'pending',
@@ -44,6 +45,11 @@ export class Order extends CoreEntity {
 	@ManyToMany(() => RestaurantDish)
 	dish: RestaurantDish;
 
+	@Field(() => [OrderItem])
+	@ManyToMany(() => OrderItem, { eager: true })
+	@JoinTable()
+	items: OrderItem[];
+
 	@Field(() => Number)
 	@Column()
 	total: number;
@@ -52,6 +58,7 @@ export class Order extends CoreEntity {
 	@Column({
 		type: 'enum',
 		enum: ORDER_STATUS,
+		default: ORDER_STATUS.pending,
 	})
 	status: ORDER_STATUS;
 }
