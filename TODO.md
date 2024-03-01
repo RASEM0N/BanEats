@@ -1,3 +1,5 @@
+## Backend
+
 - Надо насчет обработки ошибок придумать чето
 - Надо чтоб не на уровне были папки types, constants, restaurant. Restaurant выделить в отдельную папку
 - Надо бы добавить alias путей импортов
@@ -28,3 +30,8 @@
     imports: [UserModule. UserModule, RestaurantsModule]
 })
 export class FeaturesModule {}
+
+- Подрефакторить... все таки слоистая архитектура... а зависимости между друг другом ёмаё
+
+## Frontend
+- ...
