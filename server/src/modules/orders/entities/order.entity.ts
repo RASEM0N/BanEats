@@ -8,6 +8,7 @@ import { OrderItem } from '@/modules/orders/entities/order-item.entity';
 
 export enum ORDER_STATUS {
 	pending = 'pending',
+	cooked = 'cooked',
 	cooking = 'cooking',
 	pickedUp = 'pickedUp',
 	delivered = 'delivered',

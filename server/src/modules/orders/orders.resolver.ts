@@ -10,7 +10,8 @@ import {
 	GetAllOrdersOutput,
 	GetOrderOutput,
 	GetOrdersArgs,
-} from '@/modules/orders/dtos/orders-get.dto';
+} from './dtos/orders-get.dto';
+import { UpdateOrdersArgs, UpdateOrdersOutput } from './dtos/orders-update.dto';
 
 @Resolver()
 export class OrdersResolver {
@@ -38,10 +39,25 @@ export class OrdersResolver {
 		}
 	}
 
+	@Mutation(() => UpdateOrdersOutput, { name: 'ordersUpdate' })
+	async update(
+		@AuthUser() user: User,
+		@Args() args: UpdateOrdersArgs,
+	): Promise<UpdateOrdersOutput> {
+		const updatedOrder = await this.ordersService.update(user, args);
+
+		return {
+			isOk: true,
+			data: {
+				order: updatedOrder,
+			},
+		};
+	}
+
 	@Query(() => GetAllOrdersOutput, { name: 'orderGetAll' })
 	async getAll(
 		@AuthUser() user: User,
-		args: GetAllOrdersArgs,
+		@Args() args: GetAllOrdersArgs,
 	): Promise<GetAllOrdersOutput> {
 		try {
 			const data = await this.ordersService.getAll(user, args);
@@ -62,11 +78,13 @@ export class OrdersResolver {
 	@Query(() => GetOrderOutput, { name: 'orderGet' })
 	async get(@AuthUser() user: User, args: GetOrdersArgs): Promise<GetOrderOutput> {
 		try {
-			const data = await this.ordersService.get(user, args);
+			const order = await this.ordersService.get(user, args);
 
 			return {
 				isOk: true,
-				data,
+				data: {
+					order,
+				},
 			};
 		} catch (e) {
 			return {

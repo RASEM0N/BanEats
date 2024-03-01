@@ -1,6 +1,6 @@
-import { Inject, Injectable } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Order } from '@/modules/orders/entities/order.entity';
+import { Order, ORDER_STATUS } from '@/modules/orders/entities/order.entity';
 import { Repository } from 'typeorm';
 import { User, USER_ROLE } from '@/modules/users/entities/user.entity';
 import { CreateOrdersArgs, CreateOrdersData } from './dtos/orders-create.dto';
@@ -8,12 +8,8 @@ import { OrderItem } from '@/modules/orders/entities/order-item.entity';
 import { Restaurant } from '@/modules/restaurants/entities/restaurant.entity';
 import { RestaurantDish } from '@/modules/restaurants/entities/dish.entity';
 import { CustomError, getErrorWithDefault } from '@/shared/lib/custom-error';
-import {
-	GetAllOrdersArgs,
-	GetAllOrdersData,
-	GetOrdersArgs,
-	GetOrdersData,
-} from './dtos/orders-get.dto';
+import { GetAllOrdersArgs, GetAllOrdersData, GetOrdersArgs } from './dtos/orders-get.dto';
+import { UpdateOrdersArgs } from '@/modules/orders/dtos/orders-update.dto';
 
 @Injectable()
 export class OrdersService {
@@ -165,7 +161,7 @@ export class OrdersService {
 		};
 	}
 
-	async get(user: User, { id }: GetOrdersArgs): Promise<GetOrdersData> {
+	async get(user: User, { id }: GetOrdersArgs): Promise<Order> {
 		const order = await this.orderRepository.findOneOrFail({
 			relations: ['restaurant'],
 			where: {
@@ -180,8 +176,43 @@ export class OrdersService {
 			});
 		}
 
-		return {
-			order,
-		};
+		return order;
+	}
+
+	async update(user: User, updateArgs: UpdateOrdersArgs): Promise<Order> {
+		const order = await this.get(user, updateArgs);
+		const canEdit = this.canEdit(user, updateArgs.status);
+
+		if (!canEdit) {
+			throw new CustomError({
+				errorCode: 400,
+				message: 'Нет прав на редактирование',
+			});
+		}
+
+		return this.orderRepository.save({
+			...order,
+			status: updateArgs.status,
+		});
+	}
+
+	private canEdit(user: User, newStatus: ORDER_STATUS): boolean {
+		if (user.role === USER_ROLE.admin) {
+			return true;
+		}
+
+		if (user.role === USER_ROLE.client) {
+			return false;
+		}
+
+		if (user.role === USER_ROLE.owner) {
+			return [ORDER_STATUS.cooking, ORDER_STATUS.cooked].includes(newStatus);
+		}
+
+		if (user.role === USER_ROLE.delivery) {
+			return [ORDER_STATUS.delivered, ORDER_STATUS.pickedUp].includes(newStatus);
+		}
+
+		return false;
 	}
 }
