@@ -2,6 +2,9 @@ import { User, USER_ROLE } from '../../entities/user.entity';
 
 export type MockUserData = Omit<User, 'isValidPassword'>;
 export const createMockUserData = (data?: Partial<MockUserData>): MockUserData => {
+	// @TODO
+	// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+	// @ts-ignore
 	return {
 		id: 1,
 		email: 'putin-love@mail.ru',

@@ -5,7 +5,7 @@ import { IsBoolean, IsEmail, IsEnum, Length } from 'class-validator';
 import { hash, genSalt, compare } from 'bcrypt';
 import { InternalServerErrorException } from '@nestjs/common';
 import { Restaurant } from '@/modules/restaurants/entities/restaurant.entity';
-import { Order } from '@/modules/orders/entites/order.entity';
+import { Order } from '@/modules/orders/entities/order.entity';
 
 export enum USER_ROLE {
 	admin = 'admin',

@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Inject, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Order, ORDER_STATUS } from '@/modules/orders/entities/order.entity';
 import { Repository } from 'typeorm';
@@ -10,6 +10,8 @@ import { RestaurantDish } from '@/modules/restaurants/entities/dish.entity';
 import { CustomError, getErrorWithDefault } from '@/shared/lib/custom-error';
 import { GetAllOrdersArgs, GetAllOrdersData, GetOrdersArgs } from './dtos/orders-get.dto';
 import { UpdateOrdersArgs } from '@/modules/orders/dtos/orders-update.dto';
+import { SHARED_COMPONENTS } from '@/shared/modules/shared.module';
+import { PubSub } from 'graphql-subscriptions';
 
 @Injectable()
 export class OrdersService {
@@ -22,6 +24,9 @@ export class OrdersService {
 		private readonly dishRepository: Repository<RestaurantDish>,
 		@InjectRepository(Restaurant)
 		private readonly restaurantRepository: Repository<Restaurant>,
+		// @TODO так не правильно инжектить
+		// хуя Service от GraphQl зависит
+		@Inject(SHARED_COMPONENTS.pubSub) private readonly pubSub: PubSub,
 	) {}
 
 	async create(customer: User, args: CreateOrdersArgs): Promise<CreateOrdersData> {
@@ -169,7 +174,7 @@ export class OrdersService {
 			},
 		});
 
-		if (![order.customer.id, order.driver.id, order.driver.id].includes(id)) {
+		if (!this.canGetOrder(user, order)) {
 			throw new CustomError({
 				errorCode: 400,
 				message: 'Нет прав',
@@ -190,10 +195,16 @@ export class OrdersService {
 			});
 		}
 
-		return this.orderRepository.save({
+		const newOrder = await this.orderRepository.save({
 			...order,
 			status: updateArgs.status,
 		});
+
+		await this.pubSub.publish('pubsub:orders.updateOrder', {
+			order: newOrder,
+		});
+
+		return newOrder;
 	}
 
 	private canEdit(user: User, newStatus: ORDER_STATUS): boolean {
@@ -214,5 +225,13 @@ export class OrdersService {
 		}
 
 		return false;
+	}
+
+	private canGetOrder(user: User, order: Order): boolean {
+		if (user.role === USER_ROLE.admin) {
+			return true;
+		}
+
+		return [order.customer.id, order.driver.id, order.driver.id].includes(user.id);
 	}
 }

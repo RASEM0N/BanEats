@@ -1,4 +1,4 @@
-import { Args, Mutation, Query, Resolver } from '@nestjs/graphql';
+import { Args, Mutation, Query, Resolver, Subscription } from '@nestjs/graphql';
 import { CreateOrdersArgs, CreateOrdersOutput } from './dtos/orders-create.dto';
 import { AuthUser } from '@/modules/authorization/decorators/auth-user.decorator';
 import { User, USER_ROLE } from '@/modules/users/entities/user.entity';
@@ -11,11 +11,21 @@ import {
 	GetOrderOutput,
 	GetOrdersArgs,
 } from './dtos/orders-get.dto';
-import { UpdateOrdersArgs, UpdateOrdersOutput } from './dtos/orders-update.dto';
+import {
+	UpdateOrdersArgs,
+	UpdateOrdersData,
+	UpdateOrdersOutput,
+} from './dtos/orders-update.dto';
+import { Order } from '@/modules/orders/entities/order.entity';
+import { SHARED_COMPONENTS } from '@/shared/modules/shared.module';
+import { PubSub } from 'graphql-subscriptions';
 
 @Resolver()
 export class OrdersResolver {
-	constructor(@Inject() private readonly ordersService: OrdersService) {}
+	constructor(
+		@Inject() private readonly ordersService: OrdersService,
+		@Inject(SHARED_COMPONENTS.pubSub) private readonly pubSub: PubSub,
+	) {}
 
 	@Mutation(() => CreateOrdersOutput, { name: 'ordersCreate' })
 	@AuthRoles([USER_ROLE.client])
@@ -54,7 +64,7 @@ export class OrdersResolver {
 		};
 	}
 
-	@Query(() => GetAllOrdersOutput, { name: 'orderGetAll' })
+	@Query(() => GetAllOrdersOutput, { name: 'ordersGetAll' })
 	async getAll(
 		@AuthUser() user: User,
 		@Args() args: GetAllOrdersArgs,
@@ -75,7 +85,7 @@ export class OrdersResolver {
 		}
 	}
 
-	@Query(() => GetOrderOutput, { name: 'orderGet' })
+	@Query(() => GetOrderOutput, { name: 'ordersGet' })
 	async get(@AuthUser() user: User, args: GetOrdersArgs): Promise<GetOrderOutput> {
 		try {
 			const order = await this.ordersService.get(user, args);
@@ -93,5 +103,21 @@ export class OrdersResolver {
 				errorCode: e.errorCode,
 			};
 		}
+	}
+
+	@Subscription(() => Order, {
+		name: 'subscriptionOrdersUpdate',
+		filter: (
+			{ order }: UpdateOrdersData,
+			_: UpdateOrdersArgs,
+			{ user }: { user: User },
+		) => {
+			return [order.driver.id, order.customer.id, order.restaurant.id].includes(
+				user.id,
+			);
+		},
+	})
+	async orderSubscription() {
+		this.pubSub.asyncIterator('pubsub:orders.updateOrder');
 	}
 }

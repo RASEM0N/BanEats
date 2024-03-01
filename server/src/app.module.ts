@@ -20,6 +20,7 @@ import { RestaurantDish } from '@/modules/restaurants/entities/dish.entity';
 import { OrdersModule } from '@/modules/orders/orders.module';
 import { Order } from '@/modules/orders/entities/order.entity';
 import { OrderItem } from '@/modules/orders/entities/order-item.entity';
+import { SharedModule } from '@/shared/modules/shared.module';
 
 @Module({
 	imports: [
@@ -63,13 +64,16 @@ import { OrderItem } from '@/modules/orders/entities/order-item.entity';
 		}),
 
 		GraphQLModule.forRoot<ApolloDriverConfig>({
+			installSubscriptionHandlers: true,
 			path: '/graphql',
 			driver: ApolloDriver,
 			autoSchemaFile: true,
 			playground: true,
-			context: ({ req }) => {
+			context: ({ req, connection }) => {
 				return {
-					user: req['user'],
+					// т.к. у WS нет Request
+					// и через JWT не проходит
+					authToken: req?.headers['x-jwt'] ?? connection?.context['x-jwt'],
 				};
 			},
 		}),
@@ -100,6 +104,7 @@ import { OrderItem } from '@/modules/orders/entities/order-item.entity';
 		UsersModule,
 		AuthModule,
 		OrdersModule,
+		SharedModule,
 	],
 })
 export class AppModule implements NestModule {
