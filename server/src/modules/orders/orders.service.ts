@@ -99,6 +99,9 @@ export class OrdersService {
 			});
 
 			await this.orderRepository.save(order);
+			await this.pubSub.publish('pubsub:orders.createOrder', {
+				order,
+			});
 
 			return {
 				order,

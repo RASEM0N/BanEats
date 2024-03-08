@@ -117,7 +117,14 @@ export class OrdersResolver {
 			);
 		},
 	})
-	async orderSubscription() {
+	async onUpdate() {
 		this.pubSub.asyncIterator('pubsub:orders.updateOrder');
+	}
+
+	@Subscription(() => Order, {
+		name: 'subscriptionOrdersCreate',
+	})
+	async onCreateOrder() {
+		this.pubSub.asyncIterator('pubsub:orders.createOrder');
 	}
 }
