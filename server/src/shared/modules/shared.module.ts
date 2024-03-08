@@ -9,6 +9,9 @@ export enum SHARED_COMPONENTS {
 
 @Global()
 @Module({
+
+	// я бы этот модуль лучше бы вдругой вынес
+	// в WS
 	providers: [
 		{
 			provide: SHARED_COMPONENTS.pubSub,
