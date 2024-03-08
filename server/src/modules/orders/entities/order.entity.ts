@@ -25,6 +25,9 @@ export class Order extends CoreEntity {
 	@ManyToOne(() => User, (user) => user.orders, {
 		onDelete: 'SET NULL',
 		nullable: true,
+
+		// https://orkhan.gitbook.io/typeorm/docs/eager-and-lazy-relations
+		eager: true,
 	})
 	customer?: User;
 
