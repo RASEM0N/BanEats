@@ -15,13 +15,14 @@ export class RestaurantGetAllArgs extends PaginationArgs {
 }
 
 @ObjectType()
+export class RestaurantsGetAllData extends PaginationData {
+	@Field(() => [Restaurant])
+	restaurants: Restaurant[];
+}
+
+@ObjectType()
 export class RestaurantsGetAllOutput extends CoreOutput<RestaurantsGetAllData> {
 	@Field(() => RestaurantsGetAllData, { nullable: true })
 	data?: RestaurantsGetAllData;
 }
 
-@ObjectType()
-export class RestaurantsGetAllData extends PaginationData {
-	@Field(() => [Restaurant])
-	restaurants: Restaurant[];
-}

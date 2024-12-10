@@ -7,15 +7,15 @@ import { PaginationArgs, PaginationData } from '@/shared/modules/dtos/pagination
 // -------------
 
 @ObjectType()
-export class CategoryGetAllOutput extends CoreOutput<CategoryGetAllData> {
-	@Field(() => CategoryGetAllData, { nullable: true })
-	data?: CategoryGetAllData;
-}
-
-@ObjectType()
 export class CategoryGetAllData {
 	@Field(() => [RestaurantsCategory])
 	categories: RestaurantsCategory[];
+}
+
+@ObjectType()
+export class CategoryGetAllOutput extends CoreOutput<CategoryGetAllData> {
+	@Field(() => CategoryGetAllData, { nullable: true })
+	data?: CategoryGetAllData;
 }
 
 // -------------
@@ -27,16 +27,16 @@ export class CategoryGetArgs extends PaginationArgs {
 }
 
 @ObjectType()
-export class CategoryGetOutput extends CoreOutput<CategoryGetData> {
-	@Field(() => CategoryGetData, { nullable: true })
-	data?: CategoryGetData;
-}
-
-@ObjectType()
 export class CategoryGetData extends PaginationData {
 	@Field(() => RestaurantsCategory)
 	category: RestaurantsCategory;
 
 	@Field(() => [Restaurant])
 	restaurants: Restaurant[];
+}
+
+@ObjectType()
+export class CategoryGetOutput extends CoreOutput<CategoryGetData> {
+	@Field(() => CategoryGetData, { nullable: true })
+	data?: CategoryGetData;
 }
