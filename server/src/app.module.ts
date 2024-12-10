@@ -5,8 +5,8 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 
 import { IS_DEV, IS_PROD } from '@/shared/constants/env';
-import { JwtModule } from '@/core/jwt/jwt.module';
-import { MailerModule } from '@/core/mailer/mailer.module';
+import { JwtModule } from '@ubereats/jwt';
+import { MailerModule } from '@ubereats/mailer';
 import { configDb } from '@/core/db/db.config';
 import { configSchema } from '@/core/config/config.schema';
 import { JWT_OPTIONS, MAILER_OPTIONS } from '@/core/config/config.const';

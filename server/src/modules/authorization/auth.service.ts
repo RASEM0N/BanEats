@@ -4,7 +4,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { User } from '@/modules/users/entities/user.entity';
 import { Repository } from 'typeorm';
 import { getErrorWithDefault } from '@/shared/lib/custom-error';
-import { JwtService } from '@/core/jwt/jwt.service';
+import { JwtService } from '@ubereats/jwt';
 
 @Injectable()
 export class AuthService {

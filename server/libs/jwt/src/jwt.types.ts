@@ -1,5 +1,5 @@
 import { ModuleMetadata } from '@nestjs/common';
-import { JwtConfig } from '@/core/jwt/jwt.module';
+import { JwtConfig } from './jwt.module';
 
 export interface JwtModuleAsyncOptions extends Pick<ModuleMetadata, 'imports'> {
 	inject?: any[];

@@ -1,7 +1,7 @@
 import { Provider } from '@nestjs/common';
-import { JwtService } from '@/core/jwt/jwt.service';
-import { JwtConfig } from '@/core/jwt/jwt.module';
-import { JwtModuleAsyncOptions } from '@/core/jwt/jwt.types';
+import { JwtService } from './jwt.service';
+import { JwtConfig } from './jwt.module';
+import { JwtModuleAsyncOptions } from './jwt.types';
 
 export const JWT_CONFIG = Symbol.for('JWT_CONFIG');
 

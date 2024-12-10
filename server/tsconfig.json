@@ -21,6 +21,18 @@
       "@/*": [
         "src/*"
       ],
+      "@ubereats/mailer": [
+        "libs/mailer/src"
+      ],
+      "@ubereats/mailer/*": [
+        "libs/mailer/src/*"
+      ],
+      "@ubereats/jwt": [
+        "libs/jwt/src"
+      ],
+      "@ubereats/jwt/*": [
+        "libs/jwt/src/*"
+      ]
     }
   }
 }

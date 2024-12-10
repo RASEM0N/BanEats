@@ -5,7 +5,7 @@ import { Verification } from './entities/verification.entity';
 import { UsersResolver } from './users.resolver';
 import { UsersService } from './users.service';
 import { UsersVerifyService } from './users-verify.service';
-import { MailerService } from '@/core/mailer/mailer.service';
+import { MailerService } from '@ubereats/mailer';
 import { DataSource } from 'typeorm';
 import { UserMiddleware } from './middlewares/user.middleware';
 
