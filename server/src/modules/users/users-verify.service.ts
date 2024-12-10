@@ -3,7 +3,7 @@ import { getErrorWithDefault } from '@/shared/lib/custom-error';
 import { InjectRepository } from '@nestjs/typeorm';
 import { User } from './entities/user.entity';
 import { Verification } from './entities/verification.entity';
-import { MailerService } from '@/modules/mailer/mailer.service';
+import { MailerService } from '@/core/mailer/mailer.service';
 import { SendVerifyEmailArgs } from './dtos/verify-send-email.dto';
 import { Repository } from 'typeorm';
 import { QueryRunner } from 'typeorm/query-runner/QueryRunner';

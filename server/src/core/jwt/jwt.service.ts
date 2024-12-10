@@ -1,10 +1,11 @@
 import { Inject, Injectable } from '@nestjs/common';
-import { JwtConfig } from '@/modules/jwt/jwt.module';
 import { JwtPayload, sign, verify } from 'jsonwebtoken';
+import { JwtConfig } from './jwt.module';
+import { JWT_CONFIG } from './jwt.provider';
 
 @Injectable()
 export class JwtService {
-	constructor(@Inject('JWT_CONFIG') private readonly jwtConfig: JwtConfig) {}
+	constructor(@Inject(JWT_CONFIG) private readonly jwtConfig: JwtConfig) {}
 
 	sign(id: any): string {
 		return sign(

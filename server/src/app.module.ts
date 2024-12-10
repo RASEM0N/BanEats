@@ -1,65 +1,54 @@
-import { ENV, IS_DEVELOPMENT, IS_PRODUCTION } from '@/shared/constants/env';
-import * as joi from 'joi';
-import type { ApolloDriverConfig } from '@nestjs/apollo';
-import { ApolloDriver } from '@nestjs/apollo';
+import { ApolloDriverConfig, ApolloDriver } from '@nestjs/apollo';
 import { MiddlewareConsumer, Module, NestModule, RequestMethod } from '@nestjs/common';
 import { GraphQLModule } from '@nestjs/graphql';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { ConfigModule } from '@nestjs/config';
+import { ConfigModule, ConfigService } from '@nestjs/config';
+
+import { IS_DEV, IS_PROD } from '@/shared/constants/env';
+import { JwtModule } from '@/core/jwt/jwt.module';
+import { MailerModule } from '@/core/mailer/mailer.module';
+import { configDb } from '@/core/db/db.config';
+import { configSchema } from '@/core/config/config.schema';
+import { JWT_OPTIONS, MAILER_OPTIONS } from '@/core/config/config.const';
+
 import { RestaurantsModule } from '@/modules/restaurants/restaurants.module';
-import { Restaurant } from '@/modules/restaurants/entities/restaurant.entity';
 import { UsersModule } from '@/modules/users/users.module';
-import { User } from '@/modules/users/entities/user.entity';
 import { AuthModule } from '@/modules/authorization/auth.module';
-import { JwtModule } from '@/modules/jwt/jwt.module';
-import { JwtMiddleware } from '@/modules/jwt/jwt.middleware';
-import { Verification } from '@/modules/users/entities/verification.entity';
-import { MailerModule } from '@/modules/mailer/mailer.module';
-import { RestaurantsCategory } from '@/modules/restaurants/entities/category.entity';
-import { RestaurantDish } from '@/modules/restaurants/entities/dish.entity';
 import { OrdersModule } from '@/modules/orders/orders.module';
-import { Order } from '@/modules/orders/entities/order.entity';
-import { OrderItem } from '@/modules/orders/entities/order-item.entity';
 import { SharedModule } from '@/shared/modules/shared.module';
+import { UserMiddleware } from '@/modules/users/middlewares/user.middleware';
 
 @Module({
 	imports: [
 		ConfigModule.forRoot({
 			isGlobal: true,
-			envFilePath: IS_DEVELOPMENT ? '.env.dev' : '.env.prod',
-			ignoreEnvFile: IS_PRODUCTION,
-			validationSchema: joi.object({
-				NODE_ENV: joi.string().valid(ENV.dev, ENV.prod, ENV.test).required(),
-				APP_PORT: joi.number().required(),
-				// ---
-				DB_HOST: joi.string().required(),
-				DB_NAME: joi.string().required(),
-				DB_PORT: joi.number().required(),
-				// ---
-				DB_USERNAME: joi.string().required(),
-				DB_PASSWORD: joi.string().required(),
-				// ---
-				JWT_SECRET_KEY: joi.string().required(),
-				JWT_EXPIRES: joi.string().required(),
-				// ---
-				MAILER_SERVICE: joi.string().required(),
-				MAILER_AUTH_EMAIL: joi.string().email().required(),
-				MAILER_AUTH_PASSWORD: joi.string().required(),
-			}),
+			envFilePath: IS_DEV ? '.env.dev' : '.env.prod',
+			ignoreEnvFile: IS_PROD,
+			validationSchema: configSchema(),
 		}),
 
-		// @TODO надо добавить метод forRootAsync
-		JwtModule.forRoot({
-			secretKey: process.env.JWT_SECRET_KEY,
-			expires: process.env.JWT_SECRET_KEY,
+		JwtModule.forRootAsync({
+			imports: [ConfigModule],
+			inject: [ConfigService],
+			useFactory: (configService: ConfigService) => {
+				return {
+					expires: configService.get(JWT_OPTIONS.expires),
+					secretKey: configService.get(JWT_OPTIONS.secret_key),
+				};
+			},
 		}),
 
-		// @TODO надо добавить метод forRootAsync
-		MailerModule.forRoot({
-			service: process.env.MAILER_SERVICE,
-			auth: {
-				user: process.env.MAILER_AUTH_EMAIL,
-				pass: process.env.MAILER_AUTH_PASSWORD,
+		MailerModule.forRootAsync({
+			imports: [ConfigModule],
+			inject: [ConfigService],
+			useFactory: (configService: ConfigService) => {
+				return {
+					service: configService.get(MAILER_OPTIONS.service),
+					auth: {
+						user: configService.get(MAILER_OPTIONS.email),
+						pass: configService.get(MAILER_OPTIONS.password),
+					},
+				};
 			},
 		}),
 
@@ -78,41 +67,41 @@ import { SharedModule } from '@/shared/modules/shared.module';
 			},
 		}),
 
-		// @TODO заменить на forRootAsync
-		TypeOrmModule.forRoot({
-			type: 'postgres',
-			database: process.env.DB_NAME,
-			host: process.env.DB_HOST,
-			port: +process.env.DB_PORT,
-			username: process.env.DB_USERNAME,
-			password: process.env.DB_PASSWORD,
-
-			// сразу же синхронизируются (добавляются поля там новые)
-			synchronize: !IS_PRODUCTION,
-			logging: !IS_PRODUCTION,
-			entities: [
-				Restaurant,
-				RestaurantsCategory,
-				RestaurantDish,
-				Verification,
-				Order,
-				OrderItem,
-				User,
-			],
+		TypeOrmModule.forRootAsync({
+			imports: [ConfigModule],
+			inject: [ConfigService],
+			useFactory: async (configService: ConfigService) => {
+				return configDb(configService, [
+					// Restaurant,
+					// RestaurantsCategory,
+					// RestaurantDish,
+					// Verification,
+					// Order,
+					// OrderItem,
+					// User,
+				]);
+			},
 		}),
-		RestaurantsModule,
-		UsersModule,
-		AuthModule,
-		OrdersModule,
-		SharedModule,
+
+		// RestaurantsModule,
+		// UsersModule,
+		// AuthModule,
+		// OrdersModule,
+		// SharedModule,
 	],
 })
 export class AppModule implements NestModule {
 	configure(consumer: MiddlewareConsumer): void {
 		// Только для graphql накидаем jwtMiddleware
-		consumer.apply(JwtMiddleware).forRoutes({
-			path: '/graphql',
-			method: RequestMethod.POST,
-		});
+		consumer
+			.apply
+
+			// @TODO
+			// UserMiddleware
+			()
+			.forRoutes({
+				path: '/graphql',
+				method: RequestMethod.POST,
+			});
 	}
 }

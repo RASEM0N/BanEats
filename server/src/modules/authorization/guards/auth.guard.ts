@@ -5,7 +5,7 @@ import { META_KEY as USER_ROLE_KEY } from '../decorators/auth-role.decorator';
 import { META_KEY as PUBLIC_KEY } from '../decorators/auth-public.decorator';
 import { User, USER_ROLE } from '@/modules/users/entities/user.entity';
 import { UsersService } from '@/modules/users/users.service';
-import { JwtService } from '@/modules/jwt/jwt.service';
+import { JwtService } from '@/core/jwt/jwt.service';
 
 @Injectable()
 export class AuthGuard implements CanActivate {
