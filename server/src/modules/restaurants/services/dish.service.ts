@@ -5,10 +5,10 @@ import { DefaultCRUD } from '@ubereats/common/services';
 import { User } from '@/modules/users/entities/user.entity';
 
 import { RestaurantsService } from './restaurants.service';
-import { RestaurantDish } from './entities/dish.entity';
-import { CreateDishArgs } from './dtos/dish-create.dto';
-import { UpdateDishArgs } from './dtos/dish-update.dto';
-import { DeleteDishArgs } from './dtos/dish-delete.dto';
+import { RestaurantDish } from '../entities/dish.entity';
+import { CreateDishArgs } from '../dtos/dish-create.dto';
+import { UpdateDishArgs } from '../dtos/dish-update.dto';
+import { DeleteDishArgs } from '../dtos/dish-delete.dto';
 import { CustomError, getErrorWithDefault } from '@ubereats/common/error';
 
 @Injectable()

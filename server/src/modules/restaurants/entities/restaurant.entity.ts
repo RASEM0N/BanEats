@@ -11,9 +11,7 @@ import { RestaurantDish } from './dish.entity';
 // для create.dto т.к. create.dto это InputType
 @InputType({ isAbstract: true })
 @ObjectType()
-@Entity({
-	name: 'restaurant',
-})
+@Entity({ name: 'Restaurant' })
 export class Restaurant extends CoreEntity {
 	@Field(() => String)
 	@Column()

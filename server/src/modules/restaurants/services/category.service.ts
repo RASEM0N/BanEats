@@ -1,10 +1,10 @@
 import { Inject, Injectable } from '@nestjs/common';
 import { Repository } from 'typeorm';
-import { RestaurantsCategory } from './entities/category.entity';
+import { RestaurantsCategory } from '../entities/category.entity';
 import { InjectRepository } from '@nestjs/typeorm';
 import { DefaultCRUD } from '@ubereats/common/services';
 import slugify from 'slugify';
-import { CategoryGetArgs, CategoryGetData } from './dtos/category-get.dto';
+import { CategoryGetArgs, CategoryGetData } from '../dtos/category-get.dto';
 import { CustomError, getErrorWithDefault } from '@ubereats/common/error';
 import { RestaurantsService } from './restaurants.service';
 

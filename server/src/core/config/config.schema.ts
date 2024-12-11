@@ -1,4 +1,4 @@
-import joi from 'joi';
+import * as joi from 'joi';
 import {
 	APP_OPTIONS,
 	DB_OPTIONS,
@@ -9,7 +9,13 @@ import { IS_DEV, IS_PROD, IS_TEST } from '@/core/constants/env';
 
 const configShared = {
 	[APP_OPTIONS.port]: joi.number().required(),
-	[DB_OPTIONS.name]: joi.number().required(),
+
+	[DB_OPTIONS.name]: joi.string().required(),
+	[DB_OPTIONS.host]: joi.string().required(),
+	[DB_OPTIONS.port]: joi.string().required(),
+	[DB_OPTIONS.username]: joi.string().required(),
+	[DB_OPTIONS.password]: joi.string().required(),
+
 	[JWT_OPTIONS.secret_key]: joi.string().required(),
 	[JWT_OPTIONS.expires]: joi.string().required(),
 };
@@ -24,10 +30,6 @@ const configTest = {
 
 const configProd = {
 	...configShared,
-	[DB_OPTIONS.host]: joi.string().required(),
-	[DB_OPTIONS.port]: joi.string().required(),
-	[DB_OPTIONS.username]: joi.string().required(),
-	[DB_OPTIONS.password]: joi.string().required(),
 
 	[MAILER_OPTIONS.service]: joi.string().required(),
 	[MAILER_OPTIONS.email]: joi.string().email().required(),

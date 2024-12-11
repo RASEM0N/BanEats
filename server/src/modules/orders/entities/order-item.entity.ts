@@ -13,7 +13,7 @@ export class OrderItemOption {
 }
 
 @ObjectType()
-@Entity()
+@Entity({ name: 'OrderItem' })
 export class OrderItem extends CoreEntity {
 	@Field(() => RestaurantDish)
 	@ManyToOne(() => RestaurantDish, { nullable: true, onDelete: 'CASCADE' })

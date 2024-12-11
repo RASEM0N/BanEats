@@ -23,6 +23,7 @@ export const asyncProviders = ({
 		JwtService,
 		{
 			provide: JWT_CONFIG,
+			inject,
 			useFactory,
 		},
 	];

@@ -4,16 +4,29 @@ import { BaseDataSourceOptions } from 'typeorm/data-source/BaseDataSourceOptions
 import { IS_DEV, IS_PROD, IS_TEST } from '@/core/constants/env';
 import { DB_OPTIONS } from '@/core/config/config.const';
 
+const configShared = (
+	configService: ConfigService,
+	entities: BaseDataSourceOptions['entities'],
+): Partial<DataSourceOptions> => {
+	return {
+		type: 'postgres',
+		database: configService.get<string>(DB_OPTIONS.database),
+		host: configService.get<string>(DB_OPTIONS.host),
+		port: +configService.get<string>(DB_OPTIONS.port),
+		username: configService.get<string>(DB_OPTIONS.username),
+		password: configService.get<string>(DB_OPTIONS.password),
+		entities,
+	};
+};
+
 const configDev = (
 	configService: ConfigService,
 	entities: BaseDataSourceOptions['entities'],
 ): Partial<DataSourceOptions> => {
 	return {
-		type: 'sqlite',
-		database: configService.get<string>(DB_OPTIONS.database),
+		...configShared(configService, entities),
 		synchronize: true,
 		logging: true,
-		entities,
 	};
 };
 
@@ -29,15 +42,9 @@ const configProd = (
 	entities: BaseDataSourceOptions['entities'],
 ): Partial<DataSourceOptions> => {
 	return {
-		type: 'postgres',
-		database: configService.get<string>(DB_OPTIONS.database),
-		host: configService.get<string>(DB_OPTIONS.host),
-		port: +configService.get<string>(DB_OPTIONS.port),
-		username: configService.get<string>(DB_OPTIONS.username),
-		password: configService.get<string>(DB_OPTIONS.password),
+		...configShared(configService, entities),
 		synchronize: false,
 		logging: false,
-		entities,
 	};
 };
 

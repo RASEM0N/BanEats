@@ -10,6 +10,7 @@ import { MailerModule } from '@ubereats/mailer';
 import { configDb } from '@/core/db/db.config';
 import { configSchema } from '@/core/config/config.schema';
 import { JWT_OPTIONS, MAILER_OPTIONS } from '@/core/config/config.const';
+import { AppResolver } from './app.resolver';
 
 import { RestaurantsModule } from '@/modules/restaurants/restaurants.module';
 import { UsersModule } from '@/modules/users/users.module';
@@ -17,8 +18,16 @@ import { AuthModule } from '@/modules/authorization/auth.module';
 import { OrdersModule } from '@/modules/orders/orders.module';
 import { SharedModule } from '@/core/shared.module';
 import { UserMiddleware } from '@/modules/users/middlewares/user.middleware';
+import { Restaurant } from '@/modules/restaurants/entities/restaurant.entity';
+import { RestaurantsCategory } from '@/modules/restaurants/entities/category.entity';
+import { RestaurantDish } from '@/modules/restaurants/entities/dish.entity';
+import { Verification } from '@/modules/users/entities/verification.entity';
+import { Order } from '@/modules/orders/entities/order.entity';
+import { OrderItem } from '@/modules/orders/entities/order-item.entity';
+import { User } from '@/modules/users/entities/user.entity';
 
 @Module({
+	providers: [AppResolver],
 	imports: [
 		ConfigModule.forRoot({
 			isGlobal: true,
@@ -71,14 +80,16 @@ import { UserMiddleware } from '@/modules/users/middlewares/user.middleware';
 			imports: [ConfigModule],
 			inject: [ConfigService],
 			useFactory: async (configService: ConfigService) => {
+				console.log(configDb(configService, []));
+
 				return configDb(configService, [
-					// Restaurant,
-					// RestaurantsCategory,
-					// RestaurantDish,
-					// Verification,
-					// Order,
-					// OrderItem,
-					// User,
+					Restaurant,
+					RestaurantsCategory,
+					RestaurantDish,
+					Verification,
+					Order,
+					OrderItem,
+					User,
 				]);
 			},
 		}),
@@ -93,15 +104,9 @@ import { UserMiddleware } from '@/modules/users/middlewares/user.middleware';
 export class AppModule implements NestModule {
 	configure(consumer: MiddlewareConsumer): void {
 		// Только для graphql накидаем jwtMiddleware
-		consumer
-			.apply
-
-			// @TODO
-			// UserMiddleware
-			()
-			.forRoutes({
-				path: '/graphql',
-				method: RequestMethod.POST,
-			});
+		// consumer.apply(UserMiddleware).forRoutes({
+		// 	path: '/graphql',
+		// 	method: RequestMethod.POST,
+		// });
 	}
 }

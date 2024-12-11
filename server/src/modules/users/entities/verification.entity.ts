@@ -1,13 +1,11 @@
 import { BeforeInsert, Column, Entity, JoinColumn, OneToOne } from 'typeorm';
 import { Field, ObjectType } from '@nestjs/graphql';
 import { CoreEntity } from '@ubereats/common/entities';
-import { User } from '@/modules/users/entities/user.entity';
 import { v4 as uuidv4 } from 'uuid';
+import { User } from './user.entity';
 
 @ObjectType()
-@Entity({
-	name: 'verifications',
-})
+@Entity({ name: 'Rerification' })
 export class Verification extends CoreEntity {
 	@Field(() => String)
 	@Column()

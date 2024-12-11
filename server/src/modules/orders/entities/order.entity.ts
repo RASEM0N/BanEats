@@ -17,9 +17,7 @@ export enum ORDER_STATUS {
 registerEnumType(ORDER_STATUS, { name: 'ORDER_STATUS' });
 
 @ObjectType()
-@Entity({
-	name: 'order',
-})
+@Entity({ name: 'Order' })
 export class Order extends CoreEntity {
 	@Field(() => User, { nullable: true })
 	@ManyToOne(() => User, (user) => user.orders, {
@@ -45,7 +43,7 @@ export class Order extends CoreEntity {
 	})
 	restaurant: Restaurant;
 
-	@Field(() => [RestaurantDish])
+	@Field(() => RestaurantDish)
 	@ManyToMany(() => RestaurantDish)
 	dish: RestaurantDish;
 

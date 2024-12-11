@@ -6,9 +6,7 @@ import { Restaurant } from './restaurant.entity';
 
 @InputType({ isAbstract: true })
 @ObjectType()
-@Entity({
-	name: 'restaurantsCategory',
-})
+@Entity({ name: 'RestaurantsCategory' })
 export class RestaurantsCategory extends CoreEntity {
 	@Field(() => String)
 	@Column({ unique: true })
