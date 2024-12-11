@@ -4,7 +4,7 @@ import { GraphQLModule } from '@nestjs/graphql';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 
-import { IS_DEV, IS_PROD } from '@/shared/constants/env';
+import { IS_DEV, IS_PROD } from '@/core/constants/env';
 import { JwtModule } from '@ubereats/jwt';
 import { MailerModule } from '@ubereats/mailer';
 import { configDb } from '@/core/db/db.config';

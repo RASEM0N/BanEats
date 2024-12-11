@@ -5,7 +5,7 @@ import {
 	JWT_OPTIONS,
 	MAILER_OPTIONS,
 } from '@/core/config/config.const';
-import { IS_DEV, IS_PROD, IS_TEST } from '@/shared/constants/env';
+import { IS_DEV, IS_PROD, IS_TEST } from '@/core/constants/env';
 
 const configShared = {
 	[APP_OPTIONS.port]: joi.number().required(),

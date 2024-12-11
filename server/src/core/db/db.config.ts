@@ -1,7 +1,7 @@
 import { ConfigService } from '@nestjs/config';
 import { DataSourceOptions } from 'typeorm';
 import { BaseDataSourceOptions } from 'typeorm/data-source/BaseDataSourceOptions';
-import { IS_DEV, IS_PROD, IS_TEST } from '@/shared/constants/env';
+import { IS_DEV, IS_PROD, IS_TEST } from '@/core/constants/env';
 import { DB_OPTIONS } from '@/core/config/config.const';
 
 const configDev = (
