@@ -1,5 +1,5 @@
 import { Inject, Injectable } from '@nestjs/common';
-import { getErrorWithDefault } from '@/shared/lib/custom-error';
+import { getErrorWithDefault } from '@ubereats/common/error';
 import { InjectRepository } from '@nestjs/typeorm';
 import { User } from './entities/user.entity';
 import { Verification } from './entities/verification.entity';

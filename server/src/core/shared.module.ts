@@ -1,6 +1,9 @@
 import { PubSub } from 'graphql-subscriptions';
 import { Global, Module } from '@nestjs/common';
 
+// @TODO переименовать надо
+// и думаю заменить на другую библу
+
 const pubSub = new PubSub();
 
 export enum SHARED_COMPONENTS {

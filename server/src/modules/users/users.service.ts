@@ -3,7 +3,7 @@ import { DataSource, Repository } from 'typeorm';
 import { User } from './entities/user.entity';
 import { CreateUserArgs } from './dtos/users-create.dto';
 import { DefaultCRUD } from '@ubereats/common/services';
-import { CustomError, getErrorWithDefault } from '@/shared/lib/custom-error';
+import { CustomError, getErrorWithDefault } from '@ubereats/common/error';
 import { InjectRepository } from '@nestjs/typeorm';
 import { UpdateUserArgs } from './dtos/users-update.dto';
 import { UsersVerifyService } from './users-verify.service';

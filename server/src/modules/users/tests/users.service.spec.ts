@@ -2,14 +2,12 @@ import { UsersService } from '../users.service';
 import { UsersVerifyService } from '../users-verify.service';
 import { testingModule } from './lib/mock-module';
 import { User } from '../entities/user.entity';
-import { MockRepository } from '@/shared/lib/tests/mock-repository';
+import { MockRepository, MockDataSource, MockComponent } from '@ubereats/test';
 import {
 	createMockUserData,
 	MockUserData,
 } from '@/modules/users/tests/lib/mock-user-entity';
-import { CustomError } from '@/shared/lib/custom-error';
-import { MockDataSource } from '@/shared/lib/tests/mock-data-source';
-import { MockComponent } from '@/shared/lib/tests/mock-component';
+import { CustomError } from '@ubereats/common/error';
 
 describe('UsersService', () => {
 	let usersService: UsersService;

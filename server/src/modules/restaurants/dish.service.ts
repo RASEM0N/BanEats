@@ -9,7 +9,7 @@ import { RestaurantDish } from './entities/dish.entity';
 import { CreateDishArgs } from './dtos/dish-create.dto';
 import { UpdateDishArgs } from './dtos/dish-update.dto';
 import { DeleteDishArgs } from './dtos/dish-delete.dto';
-import { CustomError, getErrorWithDefault } from '@/shared/lib/custom-error';
+import { CustomError, getErrorWithDefault } from '@ubereats/common/error';
 
 @Injectable()
 export class DishService implements DefaultCRUD<RestaurantDish> {

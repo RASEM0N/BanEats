@@ -38,6 +38,12 @@
       ],
       "@ubereats/common/*": [
         "libs/common/src/*"
+      ],
+      "@ubereats/test": [
+        "libs/test/src"
+      ],
+      "@ubereats/test/*": [
+        "libs/test/src/*"
       ]
     }
   }

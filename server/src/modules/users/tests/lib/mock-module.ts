@@ -5,13 +5,9 @@ import { UsersService } from '../../users.service';
 import { UsersVerifyService } from '../../users-verify.service';
 import { User } from '../../entities/user.entity';
 import { Verification } from '../../entities/verification.entity';
-import { createMockRepository } from '@/shared/lib/tests/mock-repository';
+import { createMockRepository } from '@ubereats/test/mock-repository';
 import { DataSource } from 'typeorm';
-import {
-	createMockDataSource,
-	MockDataSource,
-} from '@/shared/lib/tests/mock-data-source';
-import { MockComponent } from '@/shared/lib/tests/mock-component';
+import { createMockDataSource, MockDataSource, MockComponent } from '@ubereats/test';
 
 export interface TestingModuleParams {
 	usersService?: MockComponent<UsersService>;

@@ -17,7 +17,7 @@ import {
 	UpdateOrdersOutput,
 } from './dtos/orders-update.dto';
 import { Order } from '@/modules/orders/entities/order.entity';
-import { SHARED_COMPONENTS } from '@/shared/modules/shared.module';
+import { SHARED_COMPONENTS } from '@/core/shared.module';
 import { PubSub } from 'graphql-subscriptions';
 
 @Resolver()

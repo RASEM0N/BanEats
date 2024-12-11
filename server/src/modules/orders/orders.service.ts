@@ -7,10 +7,10 @@ import { CreateOrdersArgs, CreateOrdersData } from './dtos/orders-create.dto';
 import { OrderItem } from '@/modules/orders/entities/order-item.entity';
 import { Restaurant } from '@/modules/restaurants/entities/restaurant.entity';
 import { RestaurantDish } from '@/modules/restaurants/entities/dish.entity';
-import { CustomError, getErrorWithDefault } from '@/shared/lib/custom-error';
+import { CustomError, getErrorWithDefault } from '@ubereats/common/error';
 import { GetAllOrdersArgs, GetAllOrdersData, GetOrdersArgs } from './dtos/orders-get.dto';
 import { UpdateOrdersArgs } from '@/modules/orders/dtos/orders-update.dto';
-import { SHARED_COMPONENTS } from '@/shared/modules/shared.module';
+import { SHARED_COMPONENTS } from '@/core/shared.module';
 import { PubSub } from 'graphql-subscriptions';
 
 @Injectable()

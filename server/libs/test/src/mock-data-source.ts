@@ -1,4 +1,4 @@
-import { MockComponent, MockComponentDeep } from '@/shared/lib/tests/mock-component';
+import { MockComponent, MockComponentDeep } from './mock-component';
 import { QueryRunner } from 'typeorm/query-runner/QueryRunner';
 import { DataSource, EntityManager } from 'typeorm';
 

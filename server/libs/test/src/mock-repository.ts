@@ -1,5 +1,5 @@
 import { Repository } from 'typeorm';
-import { MockComponent } from '@/shared/lib/tests/mock-component';
+import { MockComponent } from './mock-component';
 
 export type MockRepository<Entity> = MockComponent<Repository<Entity>>;
 export const createMockRepository = <Entity>(): MockRepository<Entity> => {
