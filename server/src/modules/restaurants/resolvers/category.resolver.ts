@@ -1,14 +1,15 @@
-import { Args, Parent, Query, ResolveField, Resolver } from '@nestjs/graphql';
-import { RestaurantsService } from './restaurants.service';
-import { CategoryService } from './category.service';
-import { RestaurantsCategory } from './entities/category.entity';
 import { Inject } from '@nestjs/common';
+import { Args, Parent, Query, ResolveField, Resolver } from '@nestjs/graphql';
+import { AuthPublic } from '@/modules/authorization/decorators/auth-public.decorator';
+
+import { RestaurantsService } from '../services/restaurants.service';
+import { CategoryService } from '../services/category.service';
+import { RestaurantsCategory } from '../entities/category.entity';
 import {
 	CategoryGetAllOutput,
 	CategoryGetArgs,
 	CategoryGetOutput,
-} from './dtos/category-get.dto';
-import { AuthPublic } from '@/modules/authorization/decorators/auth-public.decorator';
+} from '../dtos/category-get.dto';
 
 @Resolver()
 export class CategoryResolver {
