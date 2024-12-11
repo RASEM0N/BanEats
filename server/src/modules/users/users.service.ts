@@ -2,7 +2,7 @@ import { Inject, Injectable } from '@nestjs/common';
 import { DataSource, Repository } from 'typeorm';
 import { User } from './entities/user.entity';
 import { CreateUserArgs } from './dtos/users-create.dto';
-import { DefaultCRUD } from '@/shared/modules/services/default-crud.service';
+import { DefaultCRUD } from '@ubereats/common/services';
 import { CustomError, getErrorWithDefault } from '@/shared/lib/custom-error';
 import { InjectRepository } from '@nestjs/typeorm';
 import { UpdateUserArgs } from './dtos/users-update.dto';

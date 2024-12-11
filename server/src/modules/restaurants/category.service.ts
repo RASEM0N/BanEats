@@ -2,7 +2,7 @@ import { Inject, Injectable } from '@nestjs/common';
 import { Repository } from 'typeorm';
 import { RestaurantsCategory } from './entities/category.entity';
 import { InjectRepository } from '@nestjs/typeorm';
-import { DefaultCRUD } from '@/shared/modules/services/default-crud.service';
+import { DefaultCRUD } from '@ubereats/common/services';
 import slugify from 'slugify';
 import { CategoryGetArgs, CategoryGetData } from './dtos/category-get.dto';
 import { CustomError, getErrorWithDefault } from '@/shared/lib/custom-error';

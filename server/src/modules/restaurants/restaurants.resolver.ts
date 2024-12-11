@@ -14,9 +14,8 @@ import { RestaurantsGetAllOutput } from './dtos/restaurants-get.dto';
 import { AuthRoles } from '@/modules/authorization/decorators/auth-role.decorator';
 import { User, USER_ROLE } from '@/modules/users/entities/user.entity';
 import { AuthUser } from '@/modules/authorization/decorators/auth-user.decorator';
-import { EmptyOutput } from '@/shared/modules/dtos/empty.dto';
+import { EmptyOutput, PaginationArgs } from '@ubereats/common/dtos';
 import { AuthPublic } from '@/modules/authorization/decorators/auth-public.decorator';
-import { PaginationArgs } from '@/shared/modules/dtos/pagination.dto';
 
 @Resolver(() => Number)
 export class RestaurantsResolver {

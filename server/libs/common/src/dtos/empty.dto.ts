@@ -1,5 +1,5 @@
 import { Field, ObjectType } from '@nestjs/graphql';
-import { CoreOutput } from '@/shared/modules/dtos/core.dto';
+import { CoreOutput } from '@ubereats/common/dtos';
 
 @ObjectType()
 export class EmptyData {}

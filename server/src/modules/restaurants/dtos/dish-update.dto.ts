@@ -1,6 +1,6 @@
 import { ArgsType, Field, ObjectType, PickType } from '@nestjs/graphql';
 import { RestaurantDish } from '../entities/dish.entity';
-import { CoreOutput } from '@/shared/modules/dtos/core.dto';
+import { CoreOutput } from '@ubereats/common/dtos';
 
 @ArgsType()
 export class UpdateDishArgs extends PickType(RestaurantDish, [

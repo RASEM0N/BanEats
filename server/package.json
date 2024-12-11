@@ -88,7 +88,8 @@
     ],
     "moduleNameMapper": {
       "^@ubereats/mailer(|/.*)$": "<rootDir>/libs/mailer/src/$1",
-      "^@ubereats/jwt(|/.*)$": "<rootDir>/libs/jwt/src/$1"
+      "^@ubereats/jwt(|/.*)$": "<rootDir>/libs/jwt/src/$1",
+      "^@ubereats/common(|/.*)$": "<rootDir>/libs/common/src/$1"
     }
   }
 }

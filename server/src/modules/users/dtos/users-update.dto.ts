@@ -1,6 +1,6 @@
 import { User } from '../entities/user.entity';
 import { ArgsType, Field, ObjectType, PickType } from '@nestjs/graphql';
-import { CoreOutput } from '@/shared/modules/dtos/core.dto';
+import { CoreOutput } from '@ubereats/common/dtos';
 
 @ObjectType()
 export class UpdateUserData {

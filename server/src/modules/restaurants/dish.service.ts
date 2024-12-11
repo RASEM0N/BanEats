@@ -1,7 +1,7 @@
 import { Inject, Injectable } from '@nestjs/common';
 import { Repository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
-import { DefaultCRUD } from '@/shared/modules/services/default-crud.service';
+import { DefaultCRUD } from '@ubereats/common/services';
 import { User } from '@/modules/users/entities/user.entity';
 
 import { RestaurantsService } from './restaurants.service';

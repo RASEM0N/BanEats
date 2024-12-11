@@ -1,4 +1,4 @@
-import { CoreOutput } from '@/shared/modules/dtos/core.dto';
+import { CoreOutput } from '@ubereats/common/dtos';
 import { ArgsType, Field, ObjectType, PickType } from '@nestjs/graphql';
 import { User } from '@/modules/users/entities/user.entity';
 

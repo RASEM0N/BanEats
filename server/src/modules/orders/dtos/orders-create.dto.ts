@@ -1,5 +1,5 @@
 import { ArgsType, Field, ObjectType } from '@nestjs/graphql';
-import { CoreOutput } from '@/shared/modules/dtos/core.dto';
+import { CoreOutput } from '@ubereats/common/dtos';
 import { Order } from '../entities/order.entity';
 import { OrderItemOption } from '../entities/order-item.entity';
 

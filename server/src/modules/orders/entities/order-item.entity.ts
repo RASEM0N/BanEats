@@ -1,6 +1,6 @@
-import { Field, InputType, ObjectType } from '@nestjs/graphql';
+import { Field, ObjectType } from '@nestjs/graphql';
 import { Column, Entity, ManyToOne } from 'typeorm';
-import { CoreEntity } from '@/shared/modules/entities/core.entity';
+import { CoreEntity } from '@ubereats/common/entities';
 import { RestaurantDish } from '@/modules/restaurants/entities/dish.entity';
 
 @ObjectType()

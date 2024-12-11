@@ -32,6 +32,12 @@
       ],
       "@ubereats/jwt/*": [
         "libs/jwt/src/*"
+      ],
+      "@ubereats/common": [
+        "libs/common/src"
+      ],
+      "@ubereats/common/*": [
+        "libs/common/src/*"
       ]
     }
   }

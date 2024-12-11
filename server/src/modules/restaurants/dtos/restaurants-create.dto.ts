@@ -1,6 +1,6 @@
 import { ArgsType, Field, ObjectType, PickType } from '@nestjs/graphql';
 import { Restaurant } from '../entities/restaurant.entity';
-import { CoreOutput } from '@/shared/modules/dtos/core.dto';
+import { CoreOutput } from '@ubereats/common/dtos';
 import { IsString, Length } from 'class-validator';
 
 @ObjectType()
