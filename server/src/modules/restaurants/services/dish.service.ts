@@ -15,7 +15,7 @@ import { CustomError, getErrorWithDefault } from '@ubereats/common/error';
 export class DishService implements DefaultCRUD<RestaurantDish> {
 	constructor(
 		@InjectRepository(RestaurantDish)
-		private readonly dishService: Repository<RestaurantDish>,
+		private readonly dish: Repository<RestaurantDish>,
 		private readonly restaurantService: RestaurantService,
 	) {}
 
@@ -39,8 +39,8 @@ export class DishService implements DefaultCRUD<RestaurantDish> {
 				});
 			}
 
-			return this.dishService.save(
-				this.dishService.create({
+			return this.dish.save(
+				this.dish.create({
 					...args,
 					restaurant,
 				}),
@@ -55,7 +55,7 @@ export class DishService implements DefaultCRUD<RestaurantDish> {
 
 	async update(user: User, args: UpdateDishArgs): Promise<RestaurantDish> {
 		try {
-			const dish = await this.dishService.findOne({
+			const dish = await this.dish.findOne({
 				relations: ['restaurant'],
 				where: {
 					id: args.dishId,
@@ -76,7 +76,7 @@ export class DishService implements DefaultCRUD<RestaurantDish> {
 				});
 			}
 
-			return this.dishService.save({
+			return this.dish.save({
 				id: args.dishId,
 				...dish,
 				...args,
@@ -91,7 +91,7 @@ export class DishService implements DefaultCRUD<RestaurantDish> {
 
 	async delete(user: User, args: DeleteDishArgs): Promise<void> {
 		try {
-			const dish = await this.dishService.findOne({
+			const dish = await this.dish.findOne({
 				relations: ['restaurant'],
 				where: {
 					id: args.dishId,
@@ -112,7 +112,7 @@ export class DishService implements DefaultCRUD<RestaurantDish> {
 				});
 			}
 
-			await this.dishService.delete(dish.id);
+			await this.dish.delete(dish.id);
 		} catch (e) {
 			throw getErrorWithDefault(e, {
 				message: 'Ошибка удаления блюда',

@@ -9,13 +9,13 @@ import { JwtService } from '@ubereats/jwt';
 @Injectable()
 export class AuthService {
 	constructor(
-		@InjectRepository(User) private readonly userRepository: Repository<User>,
+		@InjectRepository(User) private readonly user: Repository<User>,
 		@Inject(JwtService) private readonly jwtService: JwtService,
 	) {}
 
 	async login({ email, password }: LoginArgs): Promise<LoginData> {
 		try {
-			const user = await this.userRepository.findOne({
+			const user = await this.user.findOne({
 				where: {
 					email,
 				},

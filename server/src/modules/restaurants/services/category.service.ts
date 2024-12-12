@@ -12,7 +12,7 @@ import { RestaurantService } from './restaurant.service';
 export class CategoryService implements DefaultCRUD<RestaurantsCategory> {
 	constructor(
 		@InjectRepository(RestaurantsCategory)
-		private readonly restaurantCategoryRepository: Repository<RestaurantsCategory>,
+		private readonly category: Repository<RestaurantsCategory>,
 		private readonly restaurantService: RestaurantService,
 	) {}
 
@@ -20,7 +20,7 @@ export class CategoryService implements DefaultCRUD<RestaurantsCategory> {
 		const name = categoryName.trim().toLowerCase();
 		const slug = slugify(name);
 
-		const category = await this.restaurantCategoryRepository.findOneBy({
+		const category = await this.category.findOneBy({
 			slug,
 		});
 
@@ -28,17 +28,17 @@ export class CategoryService implements DefaultCRUD<RestaurantsCategory> {
 			return category;
 		}
 
-		const createdCategory = this.restaurantCategoryRepository.create({
+		const createdCategory = this.category.create({
 			name,
 			slug,
 		});
 
-		await this.restaurantCategoryRepository.save(createdCategory);
+		await this.category.save(createdCategory);
 		return createdCategory;
 	}
 
 	async get(slug: string): Promise<RestaurantsCategory> {
-		const restaurant = await this.restaurantCategoryRepository.findOneBy({
+		const restaurant = await this.category.findOneBy({
 			slug,
 		});
 
@@ -76,7 +76,7 @@ export class CategoryService implements DefaultCRUD<RestaurantsCategory> {
 	}
 
 	async getAll(): Promise<RestaurantsCategory[]> {
-		return this.restaurantCategoryRepository.find();
+		return this.category.find();
 	}
 
 	async update(): Promise<RestaurantsCategory> {

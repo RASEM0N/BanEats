@@ -17,13 +17,13 @@ import { PubSub } from 'graphql-subscriptions';
 export class OrderService {
 	constructor(
 		@InjectRepository(Order)
-		private readonly orderRepository: Repository<Order>,
+		private readonly order: Repository<Order>,
 		@InjectRepository(OrderItem)
-		private readonly orderItemRepository: Repository<OrderItem>,
+		private readonly orderItem: Repository<OrderItem>,
 		@InjectRepository(RestaurantDish)
-		private readonly dishRepository: Repository<RestaurantDish>,
+		private readonly dish: Repository<RestaurantDish>,
 		@InjectRepository(Restaurant)
-		private readonly restaurantRepository: Repository<Restaurant>,
+		private readonly restaurant: Repository<Restaurant>,
 		// @TODO так не правильно инжектить
 		// хуя Service от GraphQl зависит
 		@Inject(SHARED_COMPONENTS.pubSub) private readonly pubSub: PubSub,
@@ -31,7 +31,7 @@ export class OrderService {
 
 	async create(customer: User, args: CreateOrdersArgs): Promise<CreateOrdersData> {
 		try {
-			const restaurant = await this.restaurantRepository.findOneOrFail({
+			const restaurant = await this.restaurant.findOneOrFail({
 				where: {
 					id: args.restaurantId,
 				},
@@ -42,7 +42,7 @@ export class OrderService {
 
 			// @TODO вынести в метод, а то помойка пиздец
 			for (const item of args.items) {
-				const dish = await this.dishRepository.findOneOrFail({
+				const dish = await this.dish.findOneOrFail({
 					where: {
 						id: item.dishId,
 					},
@@ -72,15 +72,15 @@ export class OrderService {
 					}
 
 					dishFinalPrice += dishChoice.extra;
-					const orderItem = this.orderItemRepository.create({
+					const orderItem = this.orderItem.create({
 						dish,
 						options: item.options,
 					});
-					await this.orderItemRepository.save(orderItem);
+					await this.orderItem.save(orderItem);
 					orderItems.push(orderItem);
 				}
 
-				const order = await this.orderRepository.create({
+				const order = await this.order.create({
 					customer,
 					restaurant,
 					total: dishFinalPrice,
@@ -88,17 +88,17 @@ export class OrderService {
 				});
 
 				orderFinalPrice += dishFinalPrice;
-				await this.orderRepository.save(order);
+				await this.order.save(order);
 			}
 
-			const order = this.orderRepository.create({
+			const order = this.order.create({
 				customer,
 				restaurant,
 				total: orderFinalPrice,
 				items: orderItems,
 			});
 
-			await this.orderRepository.save(order);
+			await this.order.save(order);
 			await this.pubSub.publish('pubsub:orders.createOrder', {
 				order,
 			});
@@ -117,7 +117,7 @@ export class OrderService {
 	// https://orkhan.gitbook.io/typeorm/docs/find-options
 	async getAll(user: User, { status }: GetAllOrdersArgs): Promise<GetAllOrdersData> {
 		if (user.role === USER_ROLE.client) {
-			const orders = await this.orderRepository.find({
+			const orders = await this.order.find({
 				where: {
 					customer: {
 						id: user.id,
@@ -132,7 +132,7 @@ export class OrderService {
 		}
 
 		if (user.role === USER_ROLE.delivery) {
-			const orders = await this.orderRepository.find({
+			const orders = await this.order.find({
 				where: {
 					driver: {
 						id: user.id,
@@ -147,7 +147,7 @@ export class OrderService {
 		}
 
 		if (user.role === USER_ROLE.owner) {
-			const restaurants = await this.restaurantRepository.find({
+			const restaurants = await this.restaurant.find({
 				where: {
 					owner: {
 						id: user.id,
@@ -170,7 +170,7 @@ export class OrderService {
 	}
 
 	async get(user: User, { id }: GetOrdersArgs): Promise<Order> {
-		const order = await this.orderRepository.findOneOrFail({
+		const order = await this.order.findOneOrFail({
 			relations: ['restaurant'],
 			where: {
 				id,
@@ -198,7 +198,7 @@ export class OrderService {
 			});
 		}
 
-		const newOrder = await this.orderRepository.save({
+		const newOrder = await this.order.save({
 			...order,
 			status: updateArgs.status,
 		});

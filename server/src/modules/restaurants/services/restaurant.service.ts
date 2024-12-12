@@ -15,14 +15,14 @@ import { RestaurantGetAllArgs, RestaurantsGetAllData } from '../dtos/restaurant-
 export class RestaurantService implements DefaultCRUD<Restaurant> {
 	constructor(
 		@InjectRepository(Restaurant)
-		private readonly restaurantRepository: Repository<Restaurant>,
+		private readonly restaurant: Repository<Restaurant>,
 
 		// @TODO расскоментить
 		// private readonly categoryService: CategoryService,
 	) {}
 
 	async get(id: number): Promise<Restaurant> {
-		const restaurant = await this.restaurantRepository.findOne({
+		const restaurant = await this.restaurant.findOne({
 			relations: ['menu'],
 			where: {
 				id,
@@ -50,7 +50,7 @@ export class RestaurantService implements DefaultCRUD<Restaurant> {
 				...args,
 			});
 			const [restaurants, totalCount] =
-				await this.restaurantRepository.findAndCount(paginationOptions);
+				await this.restaurant.findAndCount(paginationOptions);
 
 			const totalPages = Math.ceil(totalCount / take);
 
@@ -77,12 +77,12 @@ export class RestaurantService implements DefaultCRUD<Restaurant> {
 			// 	dto.categoryName,
 			// );
 
-			const restaurant = this.restaurantRepository.create({
+			const restaurant = this.restaurant.create({
 				...dto,
 			});
 
 			restaurant.category = undefined;
-			return await this.restaurantRepository.save(restaurant);
+			return await this.restaurant.save(restaurant);
 		} catch (e) {
 			throw getErrorWithDefault(e, {
 				errorCode: 400,
@@ -93,7 +93,7 @@ export class RestaurantService implements DefaultCRUD<Restaurant> {
 
 	async update(user: User, updateArgs: UpdateRestaurantArgs): Promise<Restaurant> {
 		try {
-			const restaurant = await this.restaurantRepository.findOneBy({
+			const restaurant = await this.restaurant.findOneBy({
 				id: updateArgs.restaurantId,
 			});
 
@@ -117,7 +117,7 @@ export class RestaurantService implements DefaultCRUD<Restaurant> {
 				// );
 			}
 
-			return this.restaurantRepository.save({
+			return this.restaurant.save({
 				id: updateArgs.restaurantId,
 				...updateArgs,
 			});
@@ -131,7 +131,7 @@ export class RestaurantService implements DefaultCRUD<Restaurant> {
 
 	async delete(user: User, args: RestaurantsDeleteArgs): Promise<void> {
 		try {
-			const restaurant = await this.restaurantRepository.findOneBy({
+			const restaurant = await this.restaurant.findOneBy({
 				id: args.restaurantId,
 			});
 
@@ -146,7 +146,7 @@ export class RestaurantService implements DefaultCRUD<Restaurant> {
 				});
 			}
 
-			await this.restaurantRepository.delete(args.restaurantId);
+			await this.restaurant.delete(args.restaurantId);
 		} catch (e) {
 			throw getErrorWithDefault(e, {
 				errorCode: 400,
@@ -156,7 +156,7 @@ export class RestaurantService implements DefaultCRUD<Restaurant> {
 	}
 
 	async count(categoryId: number): Promise<number> {
-		return this.restaurantRepository.countBy({
+		return this.restaurant.countBy({
 			category: {
 				id: categoryId,
 			},

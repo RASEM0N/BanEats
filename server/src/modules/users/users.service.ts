@@ -14,7 +14,7 @@ export class UsersService implements DefaultCRUD<User> {
 	constructor(
 		private readonly dataSource: DataSource,
 		private readonly userVerifyService: UsersVerifyService,
-		@InjectRepository(User) private readonly userRepository: Repository<User>,
+		@InjectRepository(User) private readonly user: Repository<User>,
 	) {}
 
 	async create({ email, role, password }: CreateUserArgs): Promise<User> {
@@ -24,7 +24,7 @@ export class UsersService implements DefaultCRUD<User> {
 		 */
 		let queryRunner: QueryRunner | undefined;
 		try {
-			const existUser = await this.userRepository.findOne({
+			const existUser = await this.user.findOne({
 				where: { email },
 			});
 
@@ -40,7 +40,7 @@ export class UsersService implements DefaultCRUD<User> {
 			await queryRunner.startTransaction();
 
 			const user = await queryRunner.manager.save(
-				this.userRepository.create({
+				this.user.create({
 					email,
 					role,
 					password,
@@ -66,7 +66,7 @@ export class UsersService implements DefaultCRUD<User> {
 
 	async get(userId: number): Promise<User> {
 		try {
-			const user = await this.userRepository.findOne({
+			const user = await this.user.findOne({
 				where: { id: userId },
 			});
 
@@ -87,7 +87,7 @@ export class UsersService implements DefaultCRUD<User> {
 	}
 
 	async getAll(): Promise<User[]> {
-		return this.userRepository.find();
+		return this.user.find();
 	}
 
 	async update(userId: number, { email, password }: UpdateUserArgs): Promise<User> {
@@ -133,7 +133,7 @@ export class UsersService implements DefaultCRUD<User> {
 
 	async delete(userId: number): Promise<void> {
 		try {
-			await this.userRepository.delete(userId);
+			await this.user.delete(userId);
 		} catch (e) {
 			throw new CustomError({
 				errorCode: 400,

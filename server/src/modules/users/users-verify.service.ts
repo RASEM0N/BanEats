@@ -12,9 +12,9 @@ import { QueryRunner } from 'typeorm/query-runner/QueryRunner';
 export class UsersVerifyService {
 	constructor(
 		private readonly mailerService: MailerService,
-		@InjectRepository(User) private readonly userRepository: Repository<User>,
+		@InjectRepository(User) private readonly user: Repository<User>,
 		@InjectRepository(Verification)
-		private readonly verificationRepository: Repository<Verification>,
+		private readonly verification: Repository<Verification>,
 	) {}
 
 	async createVerifyWithTransaction(
@@ -22,7 +22,7 @@ export class UsersVerifyService {
 		queryRunner: QueryRunner,
 	): Promise<Verification> {
 		const verification = await queryRunner.manager.save(
-			this.verificationRepository.create({
+			this.verification.create({
 				user,
 			}),
 		);
@@ -38,7 +38,7 @@ export class UsersVerifyService {
 
 	async verifyEmail(code: string): Promise<void> {
 		try {
-			const verification = await this.verificationRepository.findOne({
+			const verification = await this.verification.findOne({
 				where: { code },
 				relations: ['user'],
 			});
@@ -48,7 +48,7 @@ export class UsersVerifyService {
 			}
 
 			verification.user.isVerified = true;
-			await this.userRepository.save(verification.user);
+			await this.user.save(verification.user);
 		} catch (e) {
 			throw getErrorWithDefault(e, {
 				errorCode: 400,
