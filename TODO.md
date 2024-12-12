@@ -3,6 +3,9 @@
   - конечные данные
   - название graphql методов
 
+## Именнование
+- надо проименовать все типы в GraphQL @InputType(), @ObjectType, @Args...
+
 
 ## Backend
 
