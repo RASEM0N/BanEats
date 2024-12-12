@@ -1,29 +1,29 @@
 import { Args, Mutation, Query, Resolver, Subscription } from '@nestjs/graphql';
-import { CreateOrdersArgs, CreateOrdersOutput } from './dtos/orders-create.dto';
+import { CreateOrdersArgs, CreateOrdersOutput } from './dtos/order-create.dto';
 import { AuthUser } from '@/modules/authorization/decorators/auth-user.decorator';
 import { User, USER_ROLE } from '@/modules/users/entities/user.entity';
 import { AuthRoles } from '@/modules/authorization/decorators/auth-role.decorator';
-import { OrdersService } from './orders.service';
+import { OrderService } from './order.service';
 import { Inject } from '@nestjs/common';
 import {
 	GetAllOrdersArgs,
 	GetAllOrdersOutput,
 	GetOrderOutput,
 	GetOrdersArgs,
-} from './dtos/orders-get.dto';
+} from './dtos/order-get.dto';
 import {
 	UpdateOrdersArgs,
 	UpdateOrdersData,
 	UpdateOrdersOutput,
-} from './dtos/orders-update.dto';
+} from './dtos/order-update.dto';
 import { Order } from '@/modules/orders/entities/order.entity';
 import { SHARED_COMPONENTS } from '@/core/shared.module';
 import { PubSub } from 'graphql-subscriptions';
 
 @Resolver()
-export class OrdersResolver {
+export class OrderResolver {
 	constructor(
-		private readonly ordersService: OrdersService,
+		private readonly ordersService: OrderService,
 		@Inject(SHARED_COMPONENTS.pubSub) private readonly pubSub: PubSub,
 	) {}
 

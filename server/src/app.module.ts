@@ -15,7 +15,7 @@ import { AppResolver } from './app.resolver';
 import { RestaurantsModule } from '@/modules/restaurants/restaurants.module';
 import { UsersModule } from '@/modules/users/users.module';
 import { AuthModule } from '@/modules/authorization/auth.module';
-import { OrdersModule } from '@/modules/orders/orders.module';
+import { OrderModule } from '@/modules/orders/order.module';
 import { SharedModule } from '@/core/shared.module';
 import { UserMiddleware } from '@/modules/users/middlewares/user.middleware';
 import { Restaurant } from '@/modules/restaurants/entities/restaurant.entity';
@@ -93,7 +93,7 @@ import { User } from '@/modules/users/entities/user.entity';
 		}),
 		SharedModule,
 		AuthModule,
-		OrdersModule,
+		OrderModule,
 		UsersModule,
 		RestaurantsModule,
 	],

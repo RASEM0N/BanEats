@@ -3,18 +3,18 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Order, ORDER_STATUS } from '@/modules/orders/entities/order.entity';
 import { Repository } from 'typeorm';
 import { User, USER_ROLE } from '@/modules/users/entities/user.entity';
-import { CreateOrdersArgs, CreateOrdersData } from './dtos/orders-create.dto';
+import { CreateOrdersArgs, CreateOrdersData } from './dtos/order-create.dto';
 import { OrderItem } from '@/modules/orders/entities/order-item.entity';
 import { Restaurant } from '@/modules/restaurants/entities/restaurant.entity';
 import { RestaurantDish } from '@/modules/restaurants/entities/dish.entity';
 import { CustomError, getErrorWithDefault } from '@ubereats/common/error';
-import { GetAllOrdersArgs, GetAllOrdersData, GetOrdersArgs } from './dtos/orders-get.dto';
-import { UpdateOrdersArgs } from '@/modules/orders/dtos/orders-update.dto';
+import { GetAllOrdersArgs, GetAllOrdersData, GetOrdersArgs } from './dtos/order-get.dto';
+import { UpdateOrdersArgs } from '@/modules/orders/dtos/order-update.dto';
 import { SHARED_COMPONENTS } from '@/core/shared.module';
 import { PubSub } from 'graphql-subscriptions';
 
 @Injectable()
-export class OrdersService {
+export class OrderService {
 	constructor(
 		@InjectRepository(Order)
 		private readonly orderRepository: Repository<Order>,
