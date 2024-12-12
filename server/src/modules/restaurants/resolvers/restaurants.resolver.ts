@@ -105,7 +105,6 @@ export class RestaurantsResolver {
 
 			return {
 				isOk: true,
-				data: {},
 			};
 		} catch (e) {
 			return {

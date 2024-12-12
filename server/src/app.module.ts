@@ -94,9 +94,9 @@ import { User } from '@/modules/users/entities/user.entity';
 			},
 		}),
 
+		AuthModule,
 		// RestaurantsModule,
 		// UsersModule,
-		// AuthModule,
 		// OrdersModule,
 		// SharedModule,
 	],

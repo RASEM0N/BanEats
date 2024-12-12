@@ -101,7 +101,6 @@ export class UsersResolver {
 			await this.userVerifyService.verifyEmail(args.code);
 			return {
 				isOk: true,
-				data: {},
 			};
 		} catch (e) {
 			return {

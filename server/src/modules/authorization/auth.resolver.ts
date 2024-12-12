@@ -6,7 +6,7 @@ import { AuthPublic } from './decorators/auth-public.decorator';
 
 @Resolver()
 export class AuthResolver {
-	constructor(@Inject() private readonly authorizationService: AuthService) {}
+	constructor(@Inject(AuthService) private readonly authorizationService: AuthService) {}
 
 	@AuthPublic()
 	@Mutation(() => LoginOutput, { name: 'authorizationLogin' })

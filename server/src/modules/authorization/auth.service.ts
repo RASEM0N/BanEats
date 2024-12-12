@@ -10,7 +10,7 @@ import { JwtService } from '@ubereats/jwt';
 export class AuthService {
 	constructor(
 		@InjectRepository(User) private readonly userRepository: Repository<User>,
-		@Inject() private readonly jwtService: JwtService,
+		@Inject(JwtService) private readonly jwtService: JwtService,
 	) {}
 
 	async login({ email, password }: LoginArgs): Promise<LoginData> {

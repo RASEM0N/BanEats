@@ -70,7 +70,6 @@ export class DishResolver {
 			await this.dishService.delete(user, args);
 			return {
 				isOk: true,
-				data: {},
 			};
 		} catch (e) {
 			return {
