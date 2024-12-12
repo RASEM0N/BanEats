@@ -93,20 +93,19 @@ import { User } from '@/modules/users/entities/user.entity';
 				]);
 			},
 		}),
-
+		SharedModule,
 		AuthModule,
 		OrdersModule,
+		UsersModule,
 		// RestaurantsModule,
-		// UsersModule,
-		SharedModule,
 	],
 })
 export class AppModule implements NestModule {
 	configure(consumer: MiddlewareConsumer): void {
 		// Только для graphql накидаем jwtMiddleware
-		// consumer.apply(UserMiddleware).forRoutes({
-		// 	path: '/graphql',
-		// 	method: RequestMethod.POST,
-		// });
+		consumer.apply(UserMiddleware).forRoutes({
+			path: '/graphql',
+			method: RequestMethod.POST,
+		});
 	}
 }

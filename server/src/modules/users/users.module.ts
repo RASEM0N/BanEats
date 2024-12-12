@@ -5,13 +5,19 @@ import { Verification } from './entities/verification.entity';
 import { UsersResolver } from './users.resolver';
 import { UsersService } from './users.service';
 import { UsersVerifyService } from './users-verify.service';
-import { MailerService } from '@ubereats/mailer';
-import { DataSource } from 'typeorm';
 import { UserMiddleware } from './middlewares/user.middleware';
 
 @Module({
-	imports: [TypeOrmModule.forFeature([User, Verification]), MailerService, DataSource],
-	providers: [UsersResolver, UsersService, UsersVerifyService],
-	exports: [UserMiddleware],
+	imports: [TypeOrmModule.forFeature([User, Verification])],
+	providers: [
+		UsersResolver,
+		UsersService,
+		UsersVerifyService,
+		UserMiddleware,
+	],
+	exports: [
+		UsersService,
+		UserMiddleware
+	],
 })
 export class UsersModule {}

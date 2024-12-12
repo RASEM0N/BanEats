@@ -1,5 +1,4 @@
 import { Args, Mutation, Query, Resolver } from '@nestjs/graphql';
-import { Inject } from '@nestjs/common';
 import { UsersService } from './users.service';
 import { CreateUserArgs, CreateUserOutput } from './dtos/users-create.dto';
 import { User, USER_ROLE } from './entities/user.entity';
@@ -10,14 +9,14 @@ import { VerifyEmailArgs } from './dtos/verify-email.dto';
 import { UsersVerifyService } from './users-verify.service';
 import { AuthRoles } from '@/modules/authorization/decorators/auth-role.decorator';
 import { AuthPublic } from '@/modules/authorization/decorators/auth-public.decorator';
-import { EmptyOutput } from '@ubereats/common/dtos';
+import { CoreOutputWithoutData } from '@ubereats/common/dtos';
 import { UsersMeOutput } from '@/modules/users/dtos/users-me.dto';
 
 @Resolver()
 export class UsersResolver {
 	constructor(
-		 private readonly userService: UsersService,
-		 private readonly userVerifyService: UsersVerifyService,
+		private readonly userService: UsersService,
+		private readonly userVerifyService: UsersVerifyService,
 	) {}
 
 	@Query(() => UsersMeOutput, { name: 'usersMe' })
@@ -95,8 +94,8 @@ export class UsersResolver {
 		}
 	}
 
-	@Mutation(() => EmptyOutput, { name: 'usersVerifyEmail' })
-	async verifyEmail(@Args() args: VerifyEmailArgs): Promise<EmptyOutput> {
+	@Mutation(() => CoreOutputWithoutData, { name: 'usersVerifyEmail' })
+	async verifyEmail(@Args() args: VerifyEmailArgs): Promise<CoreOutputWithoutData> {
 		try {
 			await this.userVerifyService.verifyEmail(args.code);
 			return {

@@ -4,6 +4,7 @@ import { CoreOutput } from '@ubereats/common/dtos';
 
 @ObjectType()
 export class UpdateUserData {
+	@Field(() => User)
 	user: User;
 }
 

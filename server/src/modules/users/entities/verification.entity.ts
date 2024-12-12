@@ -5,7 +5,7 @@ import { v4 as uuidv4 } from 'uuid';
 import { User } from './user.entity';
 
 @ObjectType()
-@Entity({ name: 'Rerification' })
+@Entity({ name: 'Verification' })
 export class Verification extends CoreEntity {
 	@Field(() => String)
 	@Column()
