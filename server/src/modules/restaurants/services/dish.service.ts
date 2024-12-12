@@ -4,7 +4,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { DefaultCRUD } from '@ubereats/common/services';
 import { User } from '@/modules/users/entities/user.entity';
 
-import { RestaurantsService } from './restaurants.service';
+import { RestaurantService } from './restaurant.service';
 import { RestaurantDish } from '../entities/dish.entity';
 import { CreateDishArgs } from '../dtos/dish-create.dto';
 import { UpdateDishArgs } from '../dtos/dish-update.dto';
@@ -16,7 +16,7 @@ export class DishService implements DefaultCRUD<RestaurantDish> {
 	constructor(
 		@InjectRepository(RestaurantDish)
 		private readonly dishService: Repository<RestaurantDish>,
-		private readonly restaurantService: RestaurantsService,
+		private readonly restaurantService: RestaurantService,
 	) {}
 
 	async get(): Promise<RestaurantDish> {

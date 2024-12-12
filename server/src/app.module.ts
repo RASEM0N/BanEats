@@ -12,7 +12,7 @@ import { configSchema } from '@/core/config/config.schema';
 import { JWT_OPTIONS, MAILER_OPTIONS } from '@/core/config/config.const';
 import { AppResolver } from './app.resolver';
 
-import { RestaurantsModule } from '@/modules/restaurants/restaurants.module';
+import { RestaurantModule } from '@/modules/restaurants/restaurant.module';
 import { UsersModule } from '@/modules/users/users.module';
 import { AuthModule } from '@/modules/authorization/auth.module';
 import { OrderModule } from '@/modules/orders/order.module';
@@ -95,7 +95,7 @@ import { User } from '@/modules/users/entities/user.entity';
 		AuthModule,
 		OrderModule,
 		UsersModule,
-		RestaurantsModule,
+		RestaurantModule,
 	],
 })
 export class AppModule implements NestModule {

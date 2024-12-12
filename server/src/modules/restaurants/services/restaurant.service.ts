@@ -1,24 +1,24 @@
 import { Inject, Injectable } from '@nestjs/common';
 import { FindManyOptions, FindOptionsWhere, Raw, Repository } from 'typeorm';
 import { Restaurant } from '../entities/restaurant.entity';
-import { CreateRestaurantArgs } from '../dtos/restaurants-create.dto';
-import { UpdateRestaurantArgs } from '../dtos/restaurants-update.dto';
+import { CreateRestaurantArgs } from '../dtos/restaurant-create.dto';
+import { UpdateRestaurantArgs } from '../dtos/restaurant-update.dto';
 import { DefaultCRUD } from '@ubereats/common/services';
 import { CustomError, getErrorWithDefault } from '@ubereats/common/error';
 import { InjectRepository } from '@nestjs/typeorm';
 import { User } from '@/modules/users/entities/user.entity';
 import { CategoryService } from './category.service';
-import { RestaurantsDeleteArgs } from '../dtos/restaurants-delete.dto';
-import { RestaurantGetAllArgs, RestaurantsGetAllData } from '../dtos/restaurants-get.dto';
+import { RestaurantsDeleteArgs } from '../dtos/restaurant-delete.dto';
+import { RestaurantGetAllArgs, RestaurantsGetAllData } from '../dtos/restaurant-get.dto';
 
 @Injectable()
-export class RestaurantsService implements DefaultCRUD<Restaurant> {
-	// https://typeorm.io/active-record-data-mapper
-	// идем по паттерну Data Mapper
+export class RestaurantService implements DefaultCRUD<Restaurant> {
 	constructor(
 		@InjectRepository(Restaurant)
 		private readonly restaurantRepository: Repository<Restaurant>,
-		// private readonly restaurantCategoryService: CategoryService,
+
+		// @TODO расскоментить
+		// private readonly categoryService: CategoryService,
 	) {}
 
 	async get(id: number): Promise<Restaurant> {
@@ -70,8 +70,10 @@ export class RestaurantsService implements DefaultCRUD<Restaurant> {
 	async create(user: User, dto: CreateRestaurantArgs): Promise<Restaurant> {
 		// @TODO по идее сюда Transaction надо пиздануть
 		// т.к. одно пизданутся может
+
+		// @TODO
 		try {
-			// const category = await this.restaurantCategoryService.create(
+			// const category = await this.categoryService.create(
 			// 	dto.categoryName,
 			// );
 
@@ -110,7 +112,7 @@ export class RestaurantsService implements DefaultCRUD<Restaurant> {
 			}
 
 			if (updateArgs.categoryName) {
-				// restaurant.category = await this.restaurantCategoryService.create(
+				// restaurant.category = await this.categoryService.create(
 				// 	updateArgs.categoryName,
 				// );
 			}

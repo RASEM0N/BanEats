@@ -8,18 +8,18 @@ import { User, USER_ROLE } from '@/modules/users/entities/user.entity';
 import {
 	CreateRestaurantArgs,
 	CreateRestaurantOutput,
-} from '../dtos/restaurants-create.dto';
-import { RestaurantsService } from '../services/restaurants.service';
+} from '../dtos/restaurant-create.dto';
+import { RestaurantService } from '../services/restaurant.service';
 import {
 	UpdateRestaurantArgs,
 	UpdateRestaurantOutput,
-} from '../dtos/restaurants-update.dto';
-import { RestaurantsDeleteArgs } from '../dtos/restaurants-delete.dto';
-import { RestaurantsGetAllOutput } from '../dtos/restaurants-get.dto';
+} from '../dtos/restaurant-update.dto';
+import { RestaurantsDeleteArgs } from '../dtos/restaurant-delete.dto';
+import { RestaurantsGetAllOutput } from '../dtos/restaurant-get.dto';
 
 @Resolver(() => Number)
-export class RestaurantsResolver {
-	constructor(private readonly restaurantService: RestaurantsService) {}
+export class RestaurantResolver {
+	constructor(private readonly restaurantService: RestaurantService) {}
 
 	@AuthPublic()
 	@Query(() => RestaurantsGetAllOutput, { name: 'restaurantsGetAll' })

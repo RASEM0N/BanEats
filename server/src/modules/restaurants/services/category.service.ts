@@ -6,14 +6,14 @@ import { DefaultCRUD } from '@ubereats/common/services';
 import slugify from 'slugify';
 import { CategoryGetArgs, CategoryGetData } from '../dtos/category-get.dto';
 import { CustomError, getErrorWithDefault } from '@ubereats/common/error';
-import { RestaurantsService } from './restaurants.service';
+import { RestaurantService } from './restaurant.service';
 
 @Injectable()
 export class CategoryService implements DefaultCRUD<RestaurantsCategory> {
 	constructor(
 		@InjectRepository(RestaurantsCategory)
 		private readonly restaurantCategoryRepository: Repository<RestaurantsCategory>,
-		private readonly restaurantService: RestaurantsService,
+		private readonly restaurantService: RestaurantService,
 	) {}
 
 	async create(categoryName: string): Promise<RestaurantsCategory> {

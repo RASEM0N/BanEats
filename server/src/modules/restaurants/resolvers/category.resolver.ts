@@ -1,7 +1,7 @@
 import { Args, Parent, Query, ResolveField, Resolver } from '@nestjs/graphql';
 import { AuthPublic } from '@/modules/authorization/decorators/auth-public.decorator';
 
-import { RestaurantsService } from '../services/restaurants.service';
+import { RestaurantService } from '../services/restaurant.service';
 import { CategoryService } from '../services/category.service';
 import { RestaurantsCategory } from '../entities/category.entity';
 import {
@@ -14,7 +14,7 @@ import {
 @Resolver(() => RestaurantsCategory)
 export class CategoryResolver {
 	constructor(
-		private readonly restaurantService: RestaurantsService,
+		private readonly restaurantService: RestaurantService,
 		private readonly categoryService: CategoryService,
 	) {}
 
