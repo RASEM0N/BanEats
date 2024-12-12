@@ -21,6 +21,7 @@ export class CreateRestaurantArgs extends PickType(Restaurant, [
 	categoryName: string;
 }
 
+@ObjectType()
 export class CreateRestaurantOutput extends CoreOutput<CreateRestaurantData> {
 	@Field(() => CreateRestaurantData, { nullable: true })
 	data?: CreateRestaurantData;

@@ -1,6 +1,5 @@
-import { Inject } from '@nestjs/common';
 import { Args, Mutation, Query, Resolver } from '@nestjs/graphql';
-import { EmptyOutput, PaginationArgs } from '@ubereats/common/dtos';
+import { CoreOutputWithoutData, PaginationArgs } from '@ubereats/common/dtos';
 import { AuthRoles } from '@/modules/authorization/decorators/auth-role.decorator';
 import { AuthUser } from '@/modules/authorization/decorators/auth-user.decorator';
 import { AuthPublic } from '@/modules/authorization/decorators/auth-public.decorator';
@@ -20,7 +19,7 @@ import { RestaurantsGetAllOutput } from '../dtos/restaurants-get.dto';
 
 @Resolver(() => Number)
 export class RestaurantsResolver {
-	constructor( private readonly restaurantService: RestaurantsService) {}
+	constructor(private readonly restaurantService: RestaurantsService) {}
 
 	@AuthPublic()
 	@Query(() => RestaurantsGetAllOutput, { name: 'restaurantsGetAll' })
@@ -95,11 +94,11 @@ export class RestaurantsResolver {
 	}
 
 	@AuthRoles([USER_ROLE.admin])
-	@Mutation(() => EmptyOutput, { name: 'restaurantsDelete' })
+	@Mutation(() => CoreOutputWithoutData, { name: 'restaurantsDelete' })
 	async delete(
 		@AuthUser() user: User,
 		@Args() args: RestaurantsDeleteArgs,
-	): Promise<EmptyOutput> {
+	): Promise<CoreOutputWithoutData> {
 		try {
 			await this.restaurantService.delete(user, args);
 

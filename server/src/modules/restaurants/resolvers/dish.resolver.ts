@@ -3,7 +3,7 @@ import { Args, Mutation, Resolver } from '@nestjs/graphql';
 import { AuthRoles } from '@/modules/authorization/decorators/auth-role.decorator';
 import { AuthUser } from '@/modules/authorization/decorators/auth-user.decorator';
 import { User, USER_ROLE } from '@/modules/users/entities/user.entity';
-import { EmptyOutput } from '@ubereats/common/dtos';
+import { CoreOutputWithoutData } from '@ubereats/common/dtos';
 
 import { DeleteDishArgs } from '../dtos/dish-delete.dto';
 import { DishService } from '../services/dish.service';
@@ -61,11 +61,11 @@ export class DishResolver {
 	}
 
 	@AuthRoles([USER_ROLE.admin])
-	@Mutation(() => EmptyOutput, { name: 'restaurantDishDelete' })
+	@Mutation(() => CoreOutputWithoutData, { name: 'restaurantDishDelete' })
 	async delete(
 		@AuthUser() user: User,
 		@Args() args: DeleteDishArgs,
-	): Promise<EmptyOutput> {
+	): Promise<CoreOutputWithoutData> {
 		try {
 			await this.dishService.delete(user, args);
 			return {

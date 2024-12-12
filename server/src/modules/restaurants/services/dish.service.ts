@@ -16,7 +16,7 @@ export class DishService implements DefaultCRUD<RestaurantDish> {
 	constructor(
 		@InjectRepository(RestaurantDish)
 		private readonly dishService: Repository<RestaurantDish>,
-		 private readonly restaurantService: RestaurantsService,
+		private readonly restaurantService: RestaurantsService,
 	) {}
 
 	async get(): Promise<RestaurantDish> {
@@ -32,6 +32,8 @@ export class DishService implements DefaultCRUD<RestaurantDish> {
 			const restaurant = await this.restaurantService.get(args.restaurantId);
 
 			if (restaurant.ownerId !== user.id) {
+
+				// @TODO 400 не надо обрабатывать
 				throw new CustomError({
 					message: 'К данному ресторану нет доступа',
 					errorCode: 400,

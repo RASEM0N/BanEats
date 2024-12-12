@@ -18,7 +18,7 @@ export class RestaurantsService implements DefaultCRUD<Restaurant> {
 	constructor(
 		@InjectRepository(Restaurant)
 		private readonly restaurantRepository: Repository<Restaurant>,
-		 private readonly restaurantCategoryService: CategoryService,
+		// private readonly restaurantCategoryService: CategoryService,
 	) {}
 
 	async get(id: number): Promise<Restaurant> {
@@ -71,15 +71,15 @@ export class RestaurantsService implements DefaultCRUD<Restaurant> {
 		// @TODO по идее сюда Transaction надо пиздануть
 		// т.к. одно пизданутся может
 		try {
-			const category = await this.restaurantCategoryService.create(
-				dto.categoryName,
-			);
+			// const category = await this.restaurantCategoryService.create(
+			// 	dto.categoryName,
+			// );
 
 			const restaurant = this.restaurantRepository.create({
 				...dto,
 			});
 
-			restaurant.category = category;
+			restaurant.category = undefined;
 			return await this.restaurantRepository.save(restaurant);
 		} catch (e) {
 			throw getErrorWithDefault(e, {
@@ -110,9 +110,9 @@ export class RestaurantsService implements DefaultCRUD<Restaurant> {
 			}
 
 			if (updateArgs.categoryName) {
-				restaurant.category = await this.restaurantCategoryService.create(
-					updateArgs.categoryName,
-				);
+				// restaurant.category = await this.restaurantCategoryService.create(
+				// 	updateArgs.categoryName,
+				// );
 			}
 
 			return this.restaurantRepository.save({

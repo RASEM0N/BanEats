@@ -80,8 +80,6 @@ import { User } from '@/modules/users/entities/user.entity';
 			imports: [ConfigModule],
 			inject: [ConfigService],
 			useFactory: async (configService: ConfigService) => {
-				console.log(configDb(configService, []));
-
 				return configDb(configService, [
 					Restaurant,
 					RestaurantsCategory,
@@ -97,7 +95,7 @@ import { User } from '@/modules/users/entities/user.entity';
 		AuthModule,
 		OrdersModule,
 		UsersModule,
-		// RestaurantsModule,
+		RestaurantsModule,
 	],
 })
 export class AppModule implements NestModule {

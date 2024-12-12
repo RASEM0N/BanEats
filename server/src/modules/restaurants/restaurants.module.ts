@@ -16,10 +16,10 @@ import { RestaurantDish } from './entities/dish.entity';
 	],
 	providers: [
 		RestaurantsResolver,
-		RestaurantsService,
 		CategoryResolver,
-		CategoryService,
 		DishResolver,
+		RestaurantsService,
+		CategoryService,
 		DishService,
 	],
 })

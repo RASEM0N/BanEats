@@ -1,4 +1,3 @@
-import { Inject } from '@nestjs/common';
 import { Args, Parent, Query, ResolveField, Resolver } from '@nestjs/graphql';
 import { AuthPublic } from '@/modules/authorization/decorators/auth-public.decorator';
 
@@ -11,11 +10,12 @@ import {
 	CategoryGetOutput,
 } from '../dtos/category-get.dto';
 
-@Resolver()
+// @TODO надо понять зачем блять это делать
+@Resolver(() => RestaurantsCategory)
 export class CategoryResolver {
 	constructor(
-		 private readonly restaurantService: RestaurantsService,
-		 private readonly categoryService: CategoryService,
+		private readonly restaurantService: RestaurantsService,
+		private readonly categoryService: CategoryService,
 	) {}
 
 	/**
@@ -24,7 +24,8 @@ export class CategoryResolver {
 	 * только если мы попросим
 	 * @see https://docs.nestjs.com/graphql/resolvers#schema-first-resolver
 	 */
-	@Resolver(() => RestaurantsCategory)
+	// @TODO
+	// @Resolver(() => RestaurantsCategory)
 	@ResolveField(() => Number)
 
 	// Parent получаем из @Resolver, который может как на методе
