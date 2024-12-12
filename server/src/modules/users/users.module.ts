@@ -9,15 +9,7 @@ import { UserMiddleware } from './middlewares/user.middleware';
 
 @Module({
 	imports: [TypeOrmModule.forFeature([User, Verification])],
-	providers: [
-		UsersResolver,
-		UsersService,
-		UsersVerifyService,
-		UserMiddleware,
-	],
-	exports: [
-		UsersService,
-		UserMiddleware
-	],
+	providers: [UsersResolver, UsersService, UsersVerifyService, UserMiddleware],
+	exports: [UsersService, UserMiddleware],
 })
 export class UsersModule {}

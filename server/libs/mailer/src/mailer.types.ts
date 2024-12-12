@@ -7,7 +7,7 @@ export type MailerConfig = SMTPTransport.Options;
 export type MailerSendOptions = Mail.Options;
 export type MailerTransport = ReturnType<typeof createTransport>;
 
-export interface MailerModuleAsyncOptions extends Pick<ModuleMetadata, 'imports'>{
+export interface MailerModuleAsyncOptions extends Pick<ModuleMetadata, 'imports'> {
 	inject?: any[];
 	useFactory?: (...args: any[]) => Promise<MailerConfig> | MailerConfig;
 }

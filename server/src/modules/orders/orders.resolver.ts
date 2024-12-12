@@ -23,7 +23,7 @@ import { PubSub } from 'graphql-subscriptions';
 @Resolver()
 export class OrdersResolver {
 	constructor(
-		 private readonly ordersService: OrdersService,
+		private readonly ordersService: OrdersService,
 		@Inject(SHARED_COMPONENTS.pubSub) private readonly pubSub: PubSub,
 	) {}
 

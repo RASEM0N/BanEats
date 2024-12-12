@@ -6,8 +6,8 @@ import { JwtService } from '@ubereats/jwt';
 @Injectable()
 export class UserMiddleware implements NestMiddleware {
 	constructor(
-		 private readonly userService: UsersService,
-		 private readonly jwtService: JwtService,
+		private readonly userService: UsersService,
+		private readonly jwtService: JwtService,
 	) {}
 
 	async use(req: Request, res: Response, next: NextFunction): Promise<void> {

@@ -25,4 +25,3 @@ export class RestaurantsGetAllOutput extends CoreOutput<RestaurantsGetAllData> {
 	@Field(() => RestaurantsGetAllData, { nullable: true })
 	data?: RestaurantsGetAllData;
 }
-

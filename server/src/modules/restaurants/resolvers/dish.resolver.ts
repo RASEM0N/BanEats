@@ -12,7 +12,7 @@ import { UpdateDishArgs, UpdateDishOutput } from '../dtos/dish-update.dto';
 
 @Resolver()
 export class DishResolver {
-	constructor( private readonly dishService: DishService) {}
+	constructor(private readonly dishService: DishService) {}
 
 	@AuthRoles([USER_ROLE.admin])
 	@Mutation(() => CreateDishOutput, { name: 'restaurantDishCreate' })

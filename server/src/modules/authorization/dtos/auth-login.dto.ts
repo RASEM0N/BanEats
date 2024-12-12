@@ -19,5 +19,3 @@ export class LoginOutput extends CoreOutput<LoginData> {
 	@Field(() => LoginData, { nullable: true })
 	data?: LoginData;
 }
-
-

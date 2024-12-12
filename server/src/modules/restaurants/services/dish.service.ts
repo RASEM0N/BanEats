@@ -32,7 +32,6 @@ export class DishService implements DefaultCRUD<RestaurantDish> {
 			const restaurant = await this.restaurantService.get(args.restaurantId);
 
 			if (restaurant.ownerId !== user.id) {
-
 				// @TODO 400 не надо обрабатывать
 				throw new CustomError({
 					message: 'К данному ресторану нет доступа',
