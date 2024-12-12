@@ -95,10 +95,10 @@ import { User } from '@/modules/users/entities/user.entity';
 		}),
 
 		AuthModule,
+		OrdersModule,
 		// RestaurantsModule,
 		// UsersModule,
-		// OrdersModule,
-		// SharedModule,
+		SharedModule,
 	],
 })
 export class AppModule implements NestModule {

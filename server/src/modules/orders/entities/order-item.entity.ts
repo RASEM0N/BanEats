@@ -1,8 +1,14 @@
-import { Field, ObjectType } from '@nestjs/graphql';
+import { Field, InputType, ObjectType } from '@nestjs/graphql';
 import { Column, Entity, ManyToOne } from 'typeorm';
 import { CoreEntity } from '@ubereats/common/entities';
 import { RestaurantDish } from '@/modules/restaurants/entities/dish.entity';
 
+// Чтоб ошикби не было
+// ибо InputType и ObjectType с таким именем получается тогда
+
+// Schema must contain uniquely named types
+// but contains multiple types named "OrderItemOption"
+@InputType('OrderItemOptionInputType')
 @ObjectType()
 export class OrderItemOption {
 	@Field(() => String)

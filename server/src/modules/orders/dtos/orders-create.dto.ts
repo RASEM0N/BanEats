@@ -1,9 +1,9 @@
-import { ArgsType, Field, ObjectType } from '@nestjs/graphql';
+import { ArgsType, Field, InputType, ObjectType } from '@nestjs/graphql';
 import { CoreOutput } from '@ubereats/common/dtos';
 import { Order } from '../entities/order.entity';
 import { OrderItemOption } from '../entities/order-item.entity';
 
-@ArgsType()
+@InputType()
 export class CreateOrderItemArgs {
 	@Field(() => Number)
 	dishId: number;
