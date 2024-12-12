@@ -14,8 +14,8 @@ import {
 @Resolver()
 export class CategoryResolver {
 	constructor(
-		@Inject() private readonly restaurantService: RestaurantsService,
-		@Inject() private readonly categoryService: CategoryService,
+		 private readonly restaurantService: RestaurantsService,
+		 private readonly categoryService: CategoryService,
 	) {}
 
 	/**

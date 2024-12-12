@@ -18,7 +18,7 @@ export class RestaurantsService implements DefaultCRUD<Restaurant> {
 	constructor(
 		@InjectRepository(Restaurant)
 		private readonly restaurantRepository: Repository<Restaurant>,
-		@Inject() private readonly restaurantCategoryService: CategoryService,
+		 private readonly restaurantCategoryService: CategoryService,
 	) {}
 
 	async get(id: number): Promise<Restaurant> {

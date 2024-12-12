@@ -11,7 +11,7 @@ import { QueryRunner } from 'typeorm/query-runner/QueryRunner';
 @Injectable()
 export class UsersVerifyService {
 	constructor(
-		@Inject() private readonly mailerService: MailerService,
+		 private readonly mailerService: MailerService,
 		@InjectRepository(User) private readonly userRepository: Repository<User>,
 		@InjectRepository(Verification)
 		private readonly verificationRepository: Repository<Verification>,

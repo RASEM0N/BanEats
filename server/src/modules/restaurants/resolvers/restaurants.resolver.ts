@@ -20,7 +20,7 @@ import { RestaurantsGetAllOutput } from '../dtos/restaurants-get.dto';
 
 @Resolver(() => Number)
 export class RestaurantsResolver {
-	constructor(@Inject() private readonly restaurantService: RestaurantsService) {}
+	constructor( private readonly restaurantService: RestaurantsService) {}
 
 	@AuthPublic()
 	@Query(() => RestaurantsGetAllOutput, { name: 'restaurantsGetAll' })

@@ -13,7 +13,7 @@ export class CategoryService implements DefaultCRUD<RestaurantsCategory> {
 	constructor(
 		@InjectRepository(RestaurantsCategory)
 		private readonly restaurantCategoryRepository: Repository<RestaurantsCategory>,
-		@Inject() private readonly restaurantService: RestaurantsService,
+		 private readonly restaurantService: RestaurantsService,
 	) {}
 
 	async create(categoryName: string): Promise<RestaurantsCategory> {

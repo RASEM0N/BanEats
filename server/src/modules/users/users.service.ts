@@ -12,8 +12,8 @@ import { QueryRunner } from 'typeorm/query-runner/QueryRunner';
 @Injectable()
 export class UsersService implements DefaultCRUD<User> {
 	constructor(
-		@Inject() private readonly dataSource: DataSource,
-		@Inject() private readonly userVerifyService: UsersVerifyService,
+		 private readonly dataSource: DataSource,
+		 private readonly userVerifyService: UsersVerifyService,
 		@InjectRepository(User) private readonly userRepository: Repository<User>,
 	) {}
 

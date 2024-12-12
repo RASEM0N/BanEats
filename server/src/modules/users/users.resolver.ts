@@ -16,8 +16,8 @@ import { UsersMeOutput } from '@/modules/users/dtos/users-me.dto';
 @Resolver()
 export class UsersResolver {
 	constructor(
-		@Inject() private readonly userService: UsersService,
-		@Inject() private readonly userVerifyService: UsersVerifyService,
+		 private readonly userService: UsersService,
+		 private readonly userVerifyService: UsersVerifyService,
 	) {}
 
 	@Query(() => UsersMeOutput, { name: 'usersMe' })
