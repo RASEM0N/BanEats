@@ -1,8 +1,8 @@
 import { Test } from '@nestjs/testing';
 import { getRepositoryToken } from '@nestjs/typeorm';
 import { MailerService } from '@ubereats/mailer';
-import { UsersService } from '../../users.service';
-import { UsersVerifyService } from '../../users-verify.service';
+import { UserService } from '../../user.service';
+import { UserVerifyService } from '../../user-verify.service';
 import { User } from '../../entities/user.entity';
 import { Verification } from '../../entities/verification.entity';
 import { createMockRepository } from '@ubereats/test/mock-repository';
@@ -10,8 +10,8 @@ import { DataSource } from 'typeorm';
 import { createMockDataSource, MockDataSource, MockComponent } from '@ubereats/test';
 
 export interface TestingModuleParams {
-	usersService?: MockComponent<UsersService>;
-	usersVerifyService?: MockComponent<UsersVerifyService>;
+	usersService?: MockComponent<UserService>;
+	usersVerifyService?: MockComponent<UserVerifyService>;
 }
 
 export const testingModule = async ({
@@ -21,12 +21,12 @@ export const testingModule = async ({
 	const module = await Test.createTestingModule({
 		providers: [
 			{
-				provide: UsersService,
-				useValue: usersService ?? UsersService,
+				provide: UserService,
+				useValue: usersService ?? UserService,
 			},
 			{
-				provide: UsersVerifyService,
-				useValue: usersVerifyService ?? UsersVerifyService,
+				provide: UserVerifyService,
+				useValue: usersVerifyService ?? UserVerifyService,
 			},
 			{
 				provide: getRepositoryToken(User),
@@ -50,10 +50,10 @@ export const testingModule = async ({
 	}).compile();
 
 	return {
-		userService: module.get<UsersService | MockComponent<UsersService>>(UsersService),
+		userService: module.get<UserService | MockComponent<UserService>>(UserService),
 		usersVerifyService: module.get<
-			UsersVerifyService | MockComponent<UsersVerifyService>
-		>(UsersVerifyService),
+			UserVerifyService | MockComponent<UserVerifyService>
+		>(UserVerifyService),
 		userRepository: module.get(getRepositoryToken(User)),
 		userVerifyRepository: module.get(getRepositoryToken(Verification)),
 		mailerService: module.get(MailerService),

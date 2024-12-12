@@ -5,10 +5,10 @@ import { AuthGuard } from '@/modules/authorization/guards/auth.guard';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { User } from '@/modules/users/entities/user.entity';
 import { AuthResolver } from '@/modules/authorization/auth.resolver';
-import { UsersModule } from '@/modules/users/users.module';
+import { UserModule } from '@/modules/users/user.module';
 
 @Module({
-	imports: [UsersModule, TypeOrmModule.forFeature([User])],
+	imports: [UserModule, TypeOrmModule.forFeature([User])],
 	providers: [
 		AuthService,
 		AuthResolver,

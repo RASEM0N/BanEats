@@ -1,19 +1,19 @@
 import { Inject, Injectable } from '@nestjs/common';
 import { DataSource, Repository } from 'typeorm';
 import { User } from './entities/user.entity';
-import { CreateUserArgs } from './dtos/users-create.dto';
+import { CreateUserArgs } from './dtos/user-create.dto';
 import { DefaultCRUD } from '@ubereats/common/services';
 import { CustomError, getErrorWithDefault } from '@ubereats/common/error';
 import { InjectRepository } from '@nestjs/typeorm';
-import { UpdateUserArgs } from './dtos/users-update.dto';
-import { UsersVerifyService } from './users-verify.service';
+import { UpdateUserArgs } from './dtos/user-update.dto';
+import { UserVerifyService } from './user-verify.service';
 import { QueryRunner } from 'typeorm/query-runner/QueryRunner';
 
 @Injectable()
-export class UsersService implements DefaultCRUD<User> {
+export class UserService implements DefaultCRUD<User> {
 	constructor(
 		private readonly dataSource: DataSource,
-		private readonly userVerifyService: UsersVerifyService,
+		private readonly userVerifyService: UserVerifyService,
 		@InjectRepository(User) private readonly user: Repository<User>,
 	) {}
 

@@ -1,5 +1,5 @@
-import { UsersService } from '../users.service';
-import { UsersVerifyService } from '../users-verify.service';
+import { UserService } from '../user.service';
+import { UserVerifyService } from '../user-verify.service';
 import { testingModule } from './lib/mock-module';
 import { User } from '../entities/user.entity';
 import { MockRepository, MockDataSource, MockComponent } from '@ubereats/test';
@@ -10,8 +10,8 @@ import {
 import { CustomError } from '@ubereats/common/error';
 
 describe('UsersService', () => {
-	let usersService: UsersService;
-	let usersVerifyService: MockComponent<UsersVerifyService>;
+	let usersService: UserService;
+	let usersVerifyService: MockComponent<UserVerifyService>;
 	let usersRepository: MockRepository<User>;
 	let dataSource: MockDataSource;
 
@@ -76,9 +76,9 @@ describe('UsersService', () => {
 
 		dataSource = components.dataSource;
 		usersRepository = components.userRepository;
-		usersService = components.userService as UsersService;
+		usersService = components.userService as UserService;
 		usersVerifyService =
-			components.usersVerifyService as MockComponent<UsersVerifyService>;
+			components.usersVerifyService as MockComponent<UserVerifyService>;
 	});
 
 	describe('get', () => {

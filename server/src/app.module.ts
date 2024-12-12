@@ -13,7 +13,7 @@ import { JWT_OPTIONS, MAILER_OPTIONS } from '@/core/config/config.const';
 import { AppResolver } from './app.resolver';
 
 import { RestaurantModule } from '@/modules/restaurants/restaurant.module';
-import { UsersModule } from '@/modules/users/users.module';
+import { UserModule } from '@/modules/users/user.module';
 import { AuthModule } from '@/modules/authorization/auth.module';
 import { OrderModule } from '@/modules/orders/order.module';
 import { SharedModule } from '@/core/shared.module';
@@ -94,7 +94,7 @@ import { User } from '@/modules/users/entities/user.entity';
 		SharedModule,
 		AuthModule,
 		OrderModule,
-		UsersModule,
+		UserModule,
 		RestaurantModule,
 	],
 })

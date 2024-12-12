@@ -4,12 +4,12 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { User } from './entities/user.entity';
 import { Verification } from './entities/verification.entity';
 import { MailerService } from '@ubereats/mailer';
-import { SendVerifyEmailArgs } from './dtos/verify-send-email.dto';
+import { SendVerifyEmailArgs } from './dtos/user-verify-send-email.dto';
 import { Repository } from 'typeorm';
 import { QueryRunner } from 'typeorm/query-runner/QueryRunner';
 
 @Injectable()
-export class UsersVerifyService {
+export class UserVerifyService {
 	constructor(
 		private readonly mailerService: MailerService,
 		@InjectRepository(User) private readonly user: Repository<User>,
