@@ -56,38 +56,15 @@ export class CategoryResolver {
 	@AuthPublic()
 	@Query(() => CategoryGetAllOutput, { name: 'RestaurantCategoryGetAll' })
 	async getAll(): Promise<CategoryGetAllOutput> {
-		try {
-			const categories = await this.categoryService.getAll();
+		const categories = await this.categoryService.getAll();
 
-			return {
-				data: {
-					categories,
-				},
-			};
-		} catch (e) {
-			return {
-				errorCode: e.errorCode,
-				message: e.message,
-			};
-		}
+		return { data: { categories } };
 	}
 
 	@AuthPublic()
 	@Query(() => CategoryGetOutput, { name: 'RestaurantCategoryGetBySlug' })
 	async getBySlug(@Args() args: CategoryGetArgs): Promise<CategoryGetOutput> {
-		try {
-			const result = await this.categoryService.getWithAllRestaurants(args);
-
-			return {
-				data: {
-					...result,
-				},
-			};
-		} catch (e) {
-			return {
-				message: e.message,
-				errorCode: e.errorCode,
-			};
-		}
+		const result = await this.categoryService.getWithAllRestaurants(args);
+		return { data: { ...result } };
 	}
 }

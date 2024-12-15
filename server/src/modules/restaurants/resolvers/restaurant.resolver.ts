@@ -24,23 +24,8 @@ export class RestaurantResolver {
 	@AuthPublic()
 	@Query(() => RestaurantsGetAllOutput, { name: 'RestaurantGetAll' })
 	async getAll(@Args() args: PaginationArgs): Promise<RestaurantsGetAllOutput> {
-		try {
-			const result = await this.restaurantService.getAll(args);
-
-			return {
-				data: {
-					...result,
-				},
-			};
-
-			// @TODO это по должно быть в общем обратчике,
-			// а то копипаст получается все время
-		} catch (e) {
-			return {
-				message: e.message,
-				errorCode: e.errorCode,
-			};
-		}
+		const result = await this.restaurantService.getAll(args);
+		return { data: { ...result }, };
 	}
 
 	@Roles([USER_ROLE.owner])
@@ -49,20 +34,9 @@ export class RestaurantResolver {
 		@AuthUser() user: User,
 		@Args() dto: CreateRestaurantArgs,
 	): Promise<CreateRestaurantOutput> {
-		try {
-			const restaurant = await this.restaurantService.create(user, dto);
+		const restaurant = await this.restaurantService.create(user, dto);
 
-			return {
-				data: {
-					restaurant,
-				},
-			};
-		} catch (e) {
-			return {
-				message: e.message,
-				errorCode: e.errorCode,
-			};
-		}
+		return { data: { restaurant } };
 	}
 
 	@Roles([USER_ROLE.owner])
@@ -71,20 +45,9 @@ export class RestaurantResolver {
 		@AuthUser() user: User,
 		@Args() updateArgs: UpdateRestaurantArgs,
 	): Promise<UpdateRestaurantOutput> {
-		try {
-			const restaurant = await this.restaurantService.update(user, updateArgs);
+		const restaurant = await this.restaurantService.update(user, updateArgs);
 
-			return {
-				data: {
-					restaurant,
-				},
-			};
-		} catch (e) {
-			return {
-				message: e.message,
-				errorCode: e.errorCode,
-			};
-		}
+		return { data: { restaurant } };
 	}
 
 	@Roles([USER_ROLE.admin])
@@ -93,15 +56,7 @@ export class RestaurantResolver {
 		@AuthUser() user: User,
 		@Args() args: RestaurantsDeleteArgs,
 	): Promise<CoreOutputWithoutData> {
-		try {
-			await this.restaurantService.delete(user, args);
-
-			return {};
-		} catch (e) {
-			return {
-				message: e.message,
-				errorCode: e.errorCode,
-			};
-		}
+		await this.restaurantService.delete(user, args);
+		return {};
 	}
 }

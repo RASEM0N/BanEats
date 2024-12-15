@@ -33,18 +33,8 @@ export class OrderResolver {
 		@AuthUser() user: User,
 		@Args() args: CreateOrdersArgs,
 	): Promise<CreateOrdersOutput> {
-		try {
-			const data = await this.ordersService.create(user, args);
-
-			return {
-				data,
-			};
-		} catch (e) {
-			return {
-				message: e.message,
-				errorCode: e.errorCode,
-			};
-		}
+		const data = await this.ordersService.create(user, args);
+		return { data };
 	}
 
 	@Mutation(() => UpdateOrdersOutput, { name: 'OrderUpdate' })
@@ -53,12 +43,7 @@ export class OrderResolver {
 		@Args() args: UpdateOrdersArgs,
 	): Promise<UpdateOrdersOutput> {
 		const updatedOrder = await this.ordersService.update(user, args);
-
-		return {
-			data: {
-				order: updatedOrder,
-			},
-		};
+		return { data: { order: updatedOrder } };
 	}
 
 	@Query(() => GetAllOrdersOutput, { name: 'OrderGetAll' })
@@ -66,36 +51,14 @@ export class OrderResolver {
 		@AuthUser() user: User,
 		@Args() args: GetAllOrdersArgs,
 	): Promise<GetAllOrdersOutput> {
-		try {
-			const data = await this.ordersService.getAll(user, args);
-
-			return {
-				data,
-			};
-		} catch (e) {
-			return {
-				message: e.message,
-				errorCode: e.errorCode,
-			};
-		}
+		const data = await this.ordersService.getAll(user, args);
+		return { data };
 	}
 
 	@Query(() => GetOrderOutput, { name: 'OrderGet' })
 	async get(@AuthUser() user: User, args: GetOrdersArgs): Promise<GetOrderOutput> {
-		try {
-			const order = await this.ordersService.get(user, args);
-
-			return {
-				data: {
-					order,
-				},
-			};
-		} catch (e) {
-			return {
-				message: e.message,
-				errorCode: e.errorCode,
-			};
-		}
+		const order = await this.ordersService.get(user, args);
+		return { data: { order } };
 	}
 
 	@Subscription(() => Order, {

@@ -21,49 +21,21 @@ export class UserResolver {
 
 	@Query(() => UsersMeOutput, { name: 'UserMe' })
 	me(@AuthUser() user: User): UsersMeOutput {
-		return {
-			data: {
-				user,
-			},
-		};
+		return { data: { user } };
 	}
 
 	@Roles([USER_ROLE.admin])
 	@Query(() => GetUserOutput, { name: 'UserGetOne' })
 	async get(@Args() { id }: GetUserArgs): Promise<GetUserOutput> {
-		try {
-			const user = await this.userService.get(id);
-
-			return {
-				data: {
-					user,
-				},
-			};
-		} catch (e) {
-			return {
-				errorCode: e.errorCode,
-				message: e.message,
-			};
-		}
+		const user = await this.userService.get(id);
+		return { data: { user } };
 	}
 
 	@AuthPublic()
 	@Mutation(() => CreateUserOutput, { name: 'UserCreate' })
 	async create(@Args() args: CreateUserArgs): Promise<CreateUserOutput> {
-		try {
-			const user = await this.userService.create(args);
-
-			return {
-				data: {
-					user,
-				},
-			};
-		} catch (e) {
-			return {
-				message: e.message,
-				errorCode: e.errorCode,
-			};
-		}
+		const user = await this.userService.create(args);
+		return { data: { user } };
 	}
 
 	@Mutation(() => UpdateUserOutput, { name: 'UserUpdate' })
@@ -71,32 +43,13 @@ export class UserResolver {
 		@AuthUser() user: User,
 		@Args() args: UpdateUserArgs,
 	): Promise<UpdateUserOutput> {
-		try {
-			const updatedUser = await this.userService.update(user.id, args);
-
-			return {
-				data: {
-					user: updatedUser,
-				},
-			};
-		} catch (e) {
-			return {
-				message: e.message,
-				errorCode: e.errorCode,
-			};
-		}
+		const updatedUser = await this.userService.update(user.id, args);
+		return { data: { user: updatedUser } };
 	}
 
 	@Mutation(() => CoreOutputWithoutData, { name: 'UserVerifyEmail' })
 	async verifyEmail(@Args() args: VerifyEmailArgs): Promise<CoreOutputWithoutData> {
-		try {
-			await this.userVerifyService.verifyEmail(args.code);
-			return {};
-		} catch (e) {
-			return {
-				errorCode: e.errorCode,
-				message: e.message,
-			};
-		}
+		await this.userVerifyService.verifyEmail(args.code);
+		return {};
 	}
 }

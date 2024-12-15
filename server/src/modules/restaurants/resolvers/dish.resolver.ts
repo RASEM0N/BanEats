@@ -19,19 +19,8 @@ export class DishResolver {
 		@AuthUser() user: User,
 		@Args() args: CreateDishArgs,
 	): Promise<CreateDishOutput> {
-		try {
-			const dish = await this.dishService.create(user, args);
-			return {
-				data: {
-					dish,
-				},
-			};
-		} catch (e) {
-			return {
-				message: e.message,
-				errorCode: e.errorCode,
-			};
-		}
+		const dish = await this.dishService.create(user, args);
+		return { data: { dish } };
 	}
 
 	@Roles([USER_ROLE.admin])
@@ -40,19 +29,8 @@ export class DishResolver {
 		@AuthUser() user: User,
 		@Args() args: UpdateDishArgs,
 	): Promise<UpdateDishOutput> {
-		try {
-			const dish = await this.dishService.update(user, args);
-			return {
-				data: {
-					dish,
-				},
-			};
-		} catch (e) {
-			return {
-				message: e.message,
-				errorCode: e.errorCode,
-			};
-		}
+		const dish = await this.dishService.update(user, args);
+		return { data: { dish } };
 	}
 
 	@Roles([USER_ROLE.admin])
@@ -61,14 +39,7 @@ export class DishResolver {
 		@AuthUser() user: User,
 		@Args() args: DeleteDishArgs,
 	): Promise<CoreOutputWithoutData> {
-		try {
-			await this.dishService.delete(user, args);
-			return {};
-		} catch (e) {
-			return {
-				message: e.message,
-				errorCode: e.errorCode,
-			};
-		}
+		await this.dishService.delete(user, args);
+		return {};
 	}
 }

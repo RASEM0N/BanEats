@@ -10,23 +10,11 @@ export class AuthResolver {
 	@AuthPublic()
 	@Mutation(() => LoginOutput, { name: 'AuthLogin' })
 	async login(@Args() { email, password }: LoginArgs): Promise<LoginOutput> {
-		try {
-			const { user, token } = await this.authorizationService.login({
-				email,
-				password,
-			});
+		const { user, token } = await this.authorizationService.login({
+			email,
+			password,
+		});
 
-			return {
-				data: {
-					user,
-					token,
-				},
-			};
-		} catch (e) {
-			return {
-				message: e.message,
-				errorCode: e.errorCode,
-			};
-		}
+		return { data: { user, token } };
 	}
 }
