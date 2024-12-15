@@ -6,10 +6,11 @@ import { CatchEverythingFilter } from '@/core/filters/catch-everything.filter';
 
 async function bootstrap() {
 	const app = await NestFactory.create(AppModule);
-	const { httpAdapter } = app.get(HttpAdapterHost);
-
 	app.use(morgan('dev'));
-	app.useGlobalFilters(new CatchEverythingFilter(httpAdapter));
+
+	// @TODO Вырубил на время
+	// const { httpAdapter } = app.get(HttpAdapterHost);
+	// app.useGlobalFilters(new CatchEverythingFilter(httpAdapter));
 	app.useGlobalPipes(new ValidationPipe());
 
 	await app.listen(process.env.APP_PORT);

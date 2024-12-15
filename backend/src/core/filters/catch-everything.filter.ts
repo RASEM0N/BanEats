@@ -1,7 +1,11 @@
-import { ArgumentsHost, HttpException } from '@nestjs/common';
+import { ArgumentsHost, Catch, HttpException } from '@nestjs/common';
 import { BaseExceptionFilter } from '@nestjs/core';
 import { UberEastsException } from '@ubereats/common/error';
 
+// @TODO пока что вырубил его
+// - он нормально работает для http запросов
+// - для gql (хотя там под капотом http) работает через пизду
+@Catch()
 export class CatchEverythingFilter extends BaseExceptionFilter {
 	catch(exception: any, host: ArgumentsHost) {
 		const { httpAdapter } = this.httpAdapterHost;

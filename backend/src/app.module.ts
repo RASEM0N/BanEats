@@ -1,5 +1,11 @@
 import { ApolloDriverConfig, ApolloDriver } from '@nestjs/apollo';
-import { MiddlewareConsumer, Module, NestModule, RequestMethod } from '@nestjs/common';
+import {
+	ForbiddenException,
+	MiddlewareConsumer,
+	Module,
+	NestModule,
+	RequestMethod,
+} from '@nestjs/common';
 import { GraphQLModule } from '@nestjs/graphql';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { ConfigModule, ConfigService } from '@nestjs/config';
@@ -24,6 +30,7 @@ import { Verification } from '@/modules/users/entities/verification.entity';
 import { Order } from '@/modules/orders/entities/order.entity';
 import { OrderItem } from '@/modules/orders/entities/order-item.entity';
 import { User } from '@/modules/users/entities/user.entity';
+import { AppResolver } from '@/app.resolver';
 
 @Module({
 	imports: [
@@ -72,6 +79,26 @@ import { User } from '@/modules/users/entities/user.entity';
 					authToken: req?.headers['x-jwt'] ?? connection?.context['x-jwt'],
 				};
 			},
+			formatError: (formattedError, error: any) => {
+				// @TODO надо проработать
+				return {
+					message: formattedError.message,
+					statusCode:
+						error.errorCode ??
+						error.getStatus?.() ??
+						error.originalError?.errorCode ??
+						error.originalError?.getStatus?.() ??
+						null,
+					path: formattedError.path,
+
+					// ...(IS_DEV
+					// 	? {
+					// 			extensions: formattedError.extensions,
+					// 			locations: formattedError.locations,
+					// 		}
+					// 	: {}),
+				};
+			},
 		}),
 
 		TypeOrmModule.forRootAsync({
@@ -95,6 +122,7 @@ import { User } from '@/modules/users/entities/user.entity';
 		UserModule,
 		RestaurantModule,
 	],
+	providers: [AppResolver],
 })
 export class AppModule implements NestModule {
 	configure(consumer: MiddlewareConsumer): void {
