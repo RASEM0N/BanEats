@@ -13,7 +13,7 @@ export class CategoryService implements DefaultCRUD<RestaurantsCategory> {
 	constructor(
 		@InjectRepository(RestaurantsCategory)
 		private readonly category: Repository<RestaurantsCategory>,
-		private readonly restaurantService: RestaurantService,
+		// private readonly restaurantService: RestaurantService,
 	) {}
 
 	async create(categoryName: string): Promise<RestaurantsCategory> {
@@ -50,29 +50,6 @@ export class CategoryService implements DefaultCRUD<RestaurantsCategory> {
 		}
 
 		return restaurant;
-	}
-
-	async getWithAllRestaurants({
-		slug,
-		page,
-	}: CategoryGetArgs): Promise<CategoryGetData> {
-		try {
-			const category = await this.get(slug);
-			const paginationResult = await this.restaurantService.getAll({
-				page,
-				categoryId: category.id,
-			});
-
-			return {
-				category,
-				...paginationResult,
-			};
-		} catch (e) {
-			throw getErrorWithDefault(e, {
-				message: 'Ошибка получения категории',
-				errorCode: 400,
-			});
-		}
 	}
 
 	async getAll(): Promise<RestaurantsCategory[]> {

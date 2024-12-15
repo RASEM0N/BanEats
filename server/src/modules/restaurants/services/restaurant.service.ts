@@ -10,15 +10,17 @@ import { User } from '@/modules/users/entities/user.entity';
 import { CategoryService } from './category.service';
 import { RestaurantsDeleteArgs } from '../dto/restaurant-delete.dto';
 import { RestaurantGetAllArgs, RestaurantsGetAllData } from '../dto/restaurant-get.dto';
+import {
+	CategoryGetArgs,
+	CategoryGetData,
+} from '@/modules/restaurants/dto/category-get.dto';
 
 @Injectable()
 export class RestaurantService implements DefaultCRUD<Restaurant> {
 	constructor(
 		@InjectRepository(Restaurant)
 		private readonly restaurant: Repository<Restaurant>,
-
-		// @TODO расскоментить
-		// private readonly categoryService: CategoryService,
+		@Inject(CategoryService) private readonly categoryService: CategoryService,
 	) {}
 
 	async get(id: number): Promise<Restaurant> {
@@ -40,119 +42,85 @@ export class RestaurantService implements DefaultCRUD<Restaurant> {
 	}
 
 	async getAll(args: RestaurantGetAllArgs): Promise<RestaurantsGetAllData> {
-		try {
-			const take = 25;
-			const skip = (args.page - 1) * take;
+		const take = 25;
+		const skip = (args.page - 1) * take;
 
-			const paginationOptions = this.paginationOptions({
-				take,
-				skip,
-				...args,
-			});
-			const [restaurants, totalCount] =
-				await this.restaurant.findAndCount(paginationOptions);
+		const paginationOptions = this.paginationOptions({
+			take,
+			skip,
+			...args,
+		});
+		const [restaurants, totalCount] =
+			await this.restaurant.findAndCount(paginationOptions);
 
-			const totalPages = Math.ceil(totalCount / take);
+		const totalPages = Math.ceil(totalCount / take);
 
-			return {
-				restaurants,
-				totalPages,
-				totalCount,
-			};
-		} catch (e) {
-			throw getErrorWithDefault(e, {
-				message: 'Ошибка получения списка рестаранов',
-				errorCode: 400,
-			});
-		}
+		return {
+			restaurants,
+			totalPages,
+			totalCount,
+		};
 	}
 
 	async create(user: User, dto: CreateRestaurantArgs): Promise<Restaurant> {
-		// @TODO по идее сюда Transaction надо пиздануть
-		// т.к. одно пизданутся может
+		const category = await this.categoryService.create(dto.categoryName);
 
-		// @TODO
-		try {
-			// const category = await this.categoryService.create(
-			// 	dto.categoryName,
-			// );
+		const restaurant = this.restaurant.create({
+			...dto,
+		});
 
-			const restaurant = this.restaurant.create({
-				...dto,
-			});
-
-			restaurant.category = undefined;
-			return await this.restaurant.save(restaurant);
-		} catch (e) {
-			throw getErrorWithDefault(e, {
-				errorCode: 400,
-				message: 'Ошибка создания ресторана',
-			});
-		}
+		restaurant.category = category;
+		return await this.restaurant.save(restaurant);
 	}
 
 	async update(user: User, updateArgs: UpdateRestaurantArgs): Promise<Restaurant> {
-		try {
-			const restaurant = await this.restaurant.findOneBy({
-				id: updateArgs.restaurantId,
-			});
+		const restaurant = await this.restaurant.findOneBy({
+			id: updateArgs.restaurantId,
+		});
 
-			if (!restaurant) {
-				throw new CustomError({
-					errorCode: 400,
-					message: 'Не нашли ресторан',
-				});
-			}
-
-			if (user.id !== restaurant.id) {
-				throw new CustomError({
-					errorCode: 400,
-					message: 'Нет прав для обновления данного ресторана',
-				});
-			}
-
-			if (updateArgs.categoryName) {
-				// restaurant.category = await this.categoryService.create(
-				// 	updateArgs.categoryName,
-				// );
-			}
-
-			return this.restaurant.save({
-				id: updateArgs.restaurantId,
-				...updateArgs,
-			});
-		} catch (e) {
-			throw getErrorWithDefault(e, {
+		if (!restaurant) {
+			throw new CustomError({
 				errorCode: 400,
-				message: 'Ошибка обновления ресторана',
+				message: 'Не нашли ресторан',
 			});
 		}
+
+		if (user.id !== restaurant.id) {
+			throw new CustomError({
+				errorCode: 400,
+				message: 'Нет прав для обновления данного ресторана',
+			});
+		}
+
+		if (updateArgs.categoryName) {
+			restaurant.category = await this.categoryService.create(
+				updateArgs.categoryName,
+			);
+		}
+
+		return this.restaurant.save({
+			id: updateArgs.restaurantId,
+			...updateArgs,
+		});
 	}
 
 	async delete(user: User, args: RestaurantsDeleteArgs): Promise<void> {
-		try {
-			const restaurant = await this.restaurant.findOneBy({
-				id: args.restaurantId,
-			});
+		const restaurant = await this.restaurant.findOneBy({
+			id: args.restaurantId,
+		});
 
-			if (!restaurant) {
-				return;
-			}
+		if (!restaurant) {
+			return;
+		}
 
-			if (restaurant.ownerId !== user.id) {
-				throw new CustomError({
-					errorCode: 400,
-					message: 'Нет прав на удаление ресторана',
-				});
-			}
-
-			await this.restaurant.delete(args.restaurantId);
-		} catch (e) {
-			throw getErrorWithDefault(e, {
+		if (restaurant.ownerId !== user.id) {
+			throw new CustomError({
 				errorCode: 400,
-				message: 'Не удалось удалить ресторан',
+				message: 'Нет прав на удаление ресторана',
 			});
 		}
+
+		await this.restaurant.delete(args.restaurantId);
 	}
 
 	async count(categoryId: number): Promise<number> {
@@ -184,6 +152,22 @@ export class RestaurantService implements DefaultCRUD<Restaurant> {
 			skip: data.skip,
 			take: data.take,
 			where,
+		};
+	}
+
+	async getCategoryWithAllRestaurants({
+		slug,
+		page,
+	}: CategoryGetArgs): Promise<CategoryGetData> {
+		const category = await this.categoryService.get(slug);
+		const paginationResult = await this.getAll({
+			page,
+			categoryId: category.id,
+		});
+
+		return {
+			category,
+			...paginationResult,
 		};
 	}
 }
