@@ -1,15 +1,15 @@
 import { Inject, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Order, ORDER_STATUS } from '@/modules/orders/entities/order.entity';
+import { Order, ORDER_STATUS } from '../entities/order.entity';
+import { OrderItem } from '../entities/order-item.entity';
 import { Repository } from 'typeorm';
 import { User, USER_ROLE } from '@/modules/users/entities/user.entity';
-import { CreateOrdersArgs, CreateOrdersData } from './dto/order-create.dto';
-import { OrderItem } from '@/modules/orders/entities/order-item.entity';
+import { CreateOrdersArgs, CreateOrdersData } from '../dto/order-create.dto';
 import { Restaurant } from '@/modules/restaurants/entities/restaurant.entity';
 import { RestaurantDish } from '@/modules/restaurants/entities/dish.entity';
 import { CustomError, getErrorWithDefault } from '@ubereats/common/error';
-import { GetAllOrdersArgs, GetAllOrdersData, GetOrdersArgs } from './dto/order-get.dto';
-import { UpdateOrdersArgs } from '@/modules/orders/dto/order-update.dto';
+import { GetAllOrdersArgs, GetAllOrdersData, GetOrdersArgs } from '../dto/order-get.dto';
+import { UpdateOrdersArgs } from '../dto/order-update.dto';
 import { SHARED_COMPONENTS } from '@/core/shared.module';
 import { PubSub } from 'graphql-subscriptions';
 

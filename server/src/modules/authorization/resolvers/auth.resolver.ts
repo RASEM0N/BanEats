@@ -1,7 +1,7 @@
 import { Args, Mutation, Resolver } from '@nestjs/graphql';
-import { AuthService } from './auth.service';
-import { LoginArgs, LoginOutput } from './dto/auth-login.dto';
-import { AuthPublic } from './decorators/auth-public.decorator';
+import { AuthService } from '../services/auth.service';
+import { LoginArgs, LoginOutput } from '../dto/auth-login.dto';
+import { AuthPublic } from '../decorators/auth-public.decorator';
 
 @Resolver()
 export class AuthResolver {
