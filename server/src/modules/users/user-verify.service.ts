@@ -4,7 +4,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { User } from './entities/user.entity';
 import { Verification } from './entities/verification.entity';
 import { MailerService } from '@ubereats/mailer';
-import { SendVerifyEmailArgs } from './dtos/user-verify-send-email.dto';
+import { SendVerifyEmailArgs } from './dto/user-verify-send-email.dto';
 import { Repository } from 'typeorm';
 import { QueryRunner } from 'typeorm/query-runner/QueryRunner';
 

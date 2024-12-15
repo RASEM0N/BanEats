@@ -8,7 +8,7 @@ import {
 	CategoryGetAllOutput,
 	CategoryGetArgs,
 	CategoryGetOutput,
-} from '../dtos/category-get.dto';
+} from '../dto/category-get.dto';
 
 // @TODO надо понять зачем блять это делать
 @Resolver(() => RestaurantsCategory)

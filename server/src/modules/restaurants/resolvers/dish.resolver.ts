@@ -4,10 +4,10 @@ import { AuthUser } from '@/modules/authorization/decorators/auth-user.decorator
 import { User, USER_ROLE } from '@/modules/users/entities/user.entity';
 import { CoreOutputWithoutData } from '@ubereats/common/dtos';
 
-import { DeleteDishArgs } from '../dtos/dish-delete.dto';
+import { DeleteDishArgs } from '../dto/dish-delete.dto';
 import { DishService } from '../services/dish.service';
-import { CreateDishArgs, CreateDishOutput } from '../dtos/dish-create.dto';
-import { UpdateDishArgs, UpdateDishOutput } from '../dtos/dish-update.dto';
+import { CreateDishArgs, CreateDishOutput } from '../dto/dish-create.dto';
+import { UpdateDishArgs, UpdateDishOutput } from '../dto/dish-update.dto';
 
 @Resolver()
 export class DishResolver {

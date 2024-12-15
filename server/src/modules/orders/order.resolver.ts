@@ -1,5 +1,5 @@
 import { Args, Mutation, Query, Resolver, Subscription } from '@nestjs/graphql';
-import { CreateOrdersArgs, CreateOrdersOutput } from './dtos/order-create.dto';
+import { CreateOrdersArgs, CreateOrdersOutput } from './dto/order-create.dto';
 import { AuthUser } from '@/modules/authorization/decorators/auth-user.decorator';
 import { User, USER_ROLE } from '@/modules/users/entities/user.entity';
 import { Roles } from '@/modules/authorization/decorators/role.decorator';
@@ -10,12 +10,12 @@ import {
 	GetAllOrdersOutput,
 	GetOrderOutput,
 	GetOrdersArgs,
-} from './dtos/order-get.dto';
+} from './dto/order-get.dto';
 import {
 	UpdateOrdersArgs,
 	UpdateOrdersData,
 	UpdateOrdersOutput,
-} from './dtos/order-update.dto';
+} from './dto/order-update.dto';
 import { Order } from '@/modules/orders/entities/order.entity';
 import { SHARED_COMPONENTS } from '@/core/shared.module';
 import { PubSub } from 'graphql-subscriptions';

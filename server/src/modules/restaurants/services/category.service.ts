@@ -4,7 +4,7 @@ import { RestaurantsCategory } from '../entities/category.entity';
 import { InjectRepository } from '@nestjs/typeorm';
 import { DefaultCRUD } from '@ubereats/common/services';
 import slugify from 'slugify';
-import { CategoryGetArgs, CategoryGetData } from '../dtos/category-get.dto';
+import { CategoryGetArgs, CategoryGetData } from '../dto/category-get.dto';
 import { CustomError, getErrorWithDefault } from '@ubereats/common/error';
 import { RestaurantService } from './restaurant.service';
 

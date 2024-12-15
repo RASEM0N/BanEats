@@ -1,11 +1,11 @@
 import { Inject, Injectable } from '@nestjs/common';
 import { DataSource, Repository } from 'typeorm';
 import { User } from './entities/user.entity';
-import { CreateUserArgs } from './dtos/user-create.dto';
+import { CreateUserArgs } from './dto/user-create.dto';
 import { DefaultCRUD } from '@ubereats/common/services';
 import { CustomError, getErrorWithDefault } from '@ubereats/common/error';
 import { InjectRepository } from '@nestjs/typeorm';
-import { UpdateUserArgs } from './dtos/user-update.dto';
+import { UpdateUserArgs } from './dto/user-update.dto';
 import { UserVerifyService } from './user-verify.service';
 import { QueryRunner } from 'typeorm/query-runner/QueryRunner';
 

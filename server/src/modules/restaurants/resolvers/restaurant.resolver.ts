@@ -8,14 +8,14 @@ import { User, USER_ROLE } from '@/modules/users/entities/user.entity';
 import {
 	CreateRestaurantArgs,
 	CreateRestaurantOutput,
-} from '../dtos/restaurant-create.dto';
+} from '../dto/restaurant-create.dto';
 import { RestaurantService } from '../services/restaurant.service';
 import {
 	UpdateRestaurantArgs,
 	UpdateRestaurantOutput,
-} from '../dtos/restaurant-update.dto';
-import { RestaurantsDeleteArgs } from '../dtos/restaurant-delete.dto';
-import { RestaurantsGetAllOutput } from '../dtos/restaurant-get.dto';
+} from '../dto/restaurant-update.dto';
+import { RestaurantsDeleteArgs } from '../dto/restaurant-delete.dto';
+import { RestaurantsGetAllOutput } from '../dto/restaurant-get.dto';
 
 @Resolver(() => Number)
 export class RestaurantResolver {

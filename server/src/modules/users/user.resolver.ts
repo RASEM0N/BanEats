@@ -1,16 +1,16 @@
 import { Args, Mutation, Query, Resolver } from '@nestjs/graphql';
 import { UserService } from './user.service';
-import { CreateUserArgs, CreateUserOutput } from './dtos/user-create.dto';
+import { CreateUserArgs, CreateUserOutput } from './dto/user-create.dto';
 import { User, USER_ROLE } from './entities/user.entity';
 import { AuthUser } from '@/modules/authorization/decorators/auth-user.decorator';
-import { GetUserArgs, GetUserOutput } from './dtos/user-get.dto';
-import { UpdateUserArgs, UpdateUserOutput } from './dtos/user-update.dto';
-import { VerifyEmailArgs } from './dtos/user-verify-email.dto';
+import { GetUserArgs, GetUserOutput } from './dto/user-get.dto';
+import { UpdateUserArgs, UpdateUserOutput } from './dto/user-update.dto';
+import { VerifyEmailArgs } from './dto/user-verify-email.dto';
 import { UserVerifyService } from './user-verify.service';
 import { Roles } from '@/modules/authorization/decorators/role.decorator';
 import { AuthPublic } from '@/modules/authorization/decorators/auth-public.decorator';
 import { CoreOutputWithoutData } from '@ubereats/common/dtos';
-import { UsersMeOutput } from '@/modules/users/dtos/user-me.dto';
+import { UsersMeOutput } from '@/modules/users/dto/user-me.dto';
 
 @Resolver()
 export class UserResolver {

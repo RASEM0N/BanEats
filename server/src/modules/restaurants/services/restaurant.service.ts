@@ -1,15 +1,15 @@
 import { Inject, Injectable } from '@nestjs/common';
 import { FindManyOptions, FindOptionsWhere, Raw, Repository } from 'typeorm';
 import { Restaurant } from '../entities/restaurant.entity';
-import { CreateRestaurantArgs } from '../dtos/restaurant-create.dto';
-import { UpdateRestaurantArgs } from '../dtos/restaurant-update.dto';
+import { CreateRestaurantArgs } from '../dto/restaurant-create.dto';
+import { UpdateRestaurantArgs } from '../dto/restaurant-update.dto';
 import { DefaultCRUD } from '@ubereats/common/services';
 import { CustomError, getErrorWithDefault } from '@ubereats/common/error';
 import { InjectRepository } from '@nestjs/typeorm';
 import { User } from '@/modules/users/entities/user.entity';
 import { CategoryService } from './category.service';
-import { RestaurantsDeleteArgs } from '../dtos/restaurant-delete.dto';
-import { RestaurantGetAllArgs, RestaurantsGetAllData } from '../dtos/restaurant-get.dto';
+import { RestaurantsDeleteArgs } from '../dto/restaurant-delete.dto';
+import { RestaurantGetAllArgs, RestaurantsGetAllData } from '../dto/restaurant-get.dto';
 
 @Injectable()
 export class RestaurantService implements DefaultCRUD<Restaurant> {
