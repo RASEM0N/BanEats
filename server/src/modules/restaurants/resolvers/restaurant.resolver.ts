@@ -28,7 +28,6 @@ export class RestaurantResolver {
 			const result = await this.restaurantService.getAll(args);
 
 			return {
-				isOk: true,
 				data: {
 					...result,
 				},
@@ -38,7 +37,6 @@ export class RestaurantResolver {
 			// а то копипаст получается все время
 		} catch (e) {
 			return {
-				isOk: false,
 				message: e.message,
 				errorCode: e.errorCode,
 			};
@@ -55,14 +53,12 @@ export class RestaurantResolver {
 			const restaurant = await this.restaurantService.create(user, dto);
 
 			return {
-				isOk: true,
 				data: {
 					restaurant,
 				},
 			};
 		} catch (e) {
 			return {
-				isOk: false,
 				message: e.message,
 				errorCode: e.errorCode,
 			};
@@ -79,14 +75,12 @@ export class RestaurantResolver {
 			const restaurant = await this.restaurantService.update(user, updateArgs);
 
 			return {
-				isOk: true,
 				data: {
 					restaurant,
 				},
 			};
 		} catch (e) {
 			return {
-				isOk: false,
 				message: e.message,
 				errorCode: e.errorCode,
 			};
@@ -102,12 +96,9 @@ export class RestaurantResolver {
 		try {
 			await this.restaurantService.delete(user, args);
 
-			return {
-				isOk: true,
-			};
+			return {};
 		} catch (e) {
 			return {
-				isOk: false,
 				message: e.message,
 				errorCode: e.errorCode,
 			};

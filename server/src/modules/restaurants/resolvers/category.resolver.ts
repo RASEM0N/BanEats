@@ -37,7 +37,6 @@ export class CategoryResolver {
 	/**
 	 * Вместе с методов выше полный ответ будет
 	 *	{
-	 *	   isOk: true,
 	 *	   data: {
 	 *	       categories: [
 	 *	           {
@@ -61,14 +60,12 @@ export class CategoryResolver {
 			const categories = await this.categoryService.getAll();
 
 			return {
-				isOk: true,
 				data: {
 					categories,
 				},
 			};
 		} catch (e) {
 			return {
-				isOk: true,
 				errorCode: e.errorCode,
 				message: e.message,
 			};
@@ -82,14 +79,12 @@ export class CategoryResolver {
 			const result = await this.categoryService.getWithAllRestaurants(args);
 
 			return {
-				isOk: true,
 				data: {
 					...result,
 				},
 			};
 		} catch (e) {
 			return {
-				isOk: false,
 				message: e.message,
 				errorCode: e.errorCode,
 			};

@@ -22,14 +22,12 @@ export class DishResolver {
 		try {
 			const dish = await this.dishService.create(user, args);
 			return {
-				isOk: true,
 				data: {
 					dish,
 				},
 			};
 		} catch (e) {
 			return {
-				isOk: false,
 				message: e.message,
 				errorCode: e.errorCode,
 			};
@@ -45,14 +43,12 @@ export class DishResolver {
 		try {
 			const dish = await this.dishService.update(user, args);
 			return {
-				isOk: true,
 				data: {
 					dish,
 				},
 			};
 		} catch (e) {
 			return {
-				isOk: false,
 				message: e.message,
 				errorCode: e.errorCode,
 			};
@@ -67,12 +63,9 @@ export class DishResolver {
 	): Promise<CoreOutputWithoutData> {
 		try {
 			await this.dishService.delete(user, args);
-			return {
-				isOk: true,
-			};
+			return {};
 		} catch (e) {
 			return {
-				isOk: false,
 				message: e.message,
 				errorCode: e.errorCode,
 			};

@@ -17,7 +17,6 @@ export class AuthResolver {
 			});
 
 			return {
-				isOk: true,
 				data: {
 					user,
 					token,
@@ -25,7 +24,6 @@ export class AuthResolver {
 			};
 		} catch (e) {
 			return {
-				isOk: false,
 				message: e.message,
 				errorCode: e.errorCode,
 			};

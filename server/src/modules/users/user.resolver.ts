@@ -22,7 +22,6 @@ export class UserResolver {
 	@Query(() => UsersMeOutput, { name: 'UserMe' })
 	me(@AuthUser() user: User): UsersMeOutput {
 		return {
-			isOk: true,
 			data: {
 				user,
 			},
@@ -36,14 +35,12 @@ export class UserResolver {
 			const user = await this.userService.get(id);
 
 			return {
-				isOk: true,
 				data: {
 					user,
 				},
 			};
 		} catch (e) {
 			return {
-				isOk: false,
 				errorCode: e.errorCode,
 				message: e.message,
 			};
@@ -57,14 +54,12 @@ export class UserResolver {
 			const user = await this.userService.create(args);
 
 			return {
-				isOk: true,
 				data: {
 					user,
 				},
 			};
 		} catch (e) {
 			return {
-				isOk: false,
 				message: e.message,
 				errorCode: e.errorCode,
 			};
@@ -80,14 +75,12 @@ export class UserResolver {
 			const updatedUser = await this.userService.update(user.id, args);
 
 			return {
-				isOk: true,
 				data: {
 					user: updatedUser,
 				},
 			};
 		} catch (e) {
 			return {
-				isOk: false,
 				message: e.message,
 				errorCode: e.errorCode,
 			};
@@ -98,12 +91,9 @@ export class UserResolver {
 	async verifyEmail(@Args() args: VerifyEmailArgs): Promise<CoreOutputWithoutData> {
 		try {
 			await this.userVerifyService.verifyEmail(args.code);
-			return {
-				isOk: true,
-			};
+			return {};
 		} catch (e) {
 			return {
-				isOk: false,
 				errorCode: e.errorCode,
 				message: e.message,
 			};

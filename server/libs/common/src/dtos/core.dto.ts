@@ -7,9 +7,6 @@ export class CoreOutputWithoutData {
 
 	@Field(() => String, { nullable: true })
 	message?: string;
-
-	@Field(() => Boolean)
-	isOk: boolean;
 }
 
 export abstract class CoreOutput<T> {
@@ -18,9 +15,6 @@ export abstract class CoreOutput<T> {
 
 	@Field(() => String, { nullable: true })
 	message?: string;
-
-	@Field(() => Boolean)
-	isOk: boolean;
 
 	abstract data?: T;
 }

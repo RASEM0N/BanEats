@@ -37,12 +37,10 @@ export class OrderResolver {
 			const data = await this.ordersService.create(user, args);
 
 			return {
-				isOk: true,
 				data,
 			};
 		} catch (e) {
 			return {
-				isOk: false,
 				message: e.message,
 				errorCode: e.errorCode,
 			};
@@ -57,7 +55,6 @@ export class OrderResolver {
 		const updatedOrder = await this.ordersService.update(user, args);
 
 		return {
-			isOk: true,
 			data: {
 				order: updatedOrder,
 			},
@@ -73,12 +70,10 @@ export class OrderResolver {
 			const data = await this.ordersService.getAll(user, args);
 
 			return {
-				isOk: true,
 				data,
 			};
 		} catch (e) {
 			return {
-				isOk: false,
 				message: e.message,
 				errorCode: e.errorCode,
 			};
@@ -91,14 +86,12 @@ export class OrderResolver {
 			const order = await this.ordersService.get(user, args);
 
 			return {
-				isOk: true,
 				data: {
 					order,
 				},
 			};
 		} catch (e) {
 			return {
-				isOk: false,
 				message: e.message,
 				errorCode: e.errorCode,
 			};
