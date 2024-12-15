@@ -6,14 +6,18 @@ import { MailerService } from '@ubereats/mailer';
 import { SendVerifyEmailArgs } from '../dto/user-verify-send-email.dto';
 import { Repository } from 'typeorm';
 import { QueryRunner } from 'typeorm/query-runner/QueryRunner';
+import { ConfigService } from '@nestjs/config';
+import { USER_OPTIONS } from '@/core/config/config.const';
+import path from 'node:path';
 
 @Injectable()
 export class UserVerifyService {
 	constructor(
-		private readonly mailerService: MailerService,
 		@InjectRepository(User) private readonly user: Repository<User>,
 		@InjectRepository(Verification)
 		private readonly verification: Repository<Verification>,
+		private readonly mailerService: MailerService,
+		private readonly configService: ConfigService,
 	) {}
 
 	async createVerifyWithTransaction(
@@ -63,8 +67,10 @@ export class UserVerifyService {
 	}
 
 	private getVerifyHTML(code: string): string {
-		// @TODO ссылка от балды
-		const verifyLink = `https://uber-eats-clone.ru/verify/${code}`;
+		const verifyLink = path.join(
+			this.configService.get(USER_OPTIONS.verify_url),
+			code,
+		);
 		return `
 			<!doctype html>
 			<html lang='en'>

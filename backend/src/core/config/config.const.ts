@@ -2,6 +2,10 @@ export enum APP_OPTIONS {
 	port = 'APP_PORT',
 }
 
+export enum USER_OPTIONS {
+	verify_url = 'USER_VERIFY_URL'
+}
+
 export enum DB_OPTIONS {
 	name = 'DB_NAME',
 	database = 'DB_NAME',

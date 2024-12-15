@@ -4,11 +4,13 @@ import {
 	DB_OPTIONS,
 	JWT_OPTIONS,
 	MAILER_OPTIONS,
+	USER_OPTIONS,
 } from '@/core/config/config.const';
 import { IS_DEV, IS_PROD, IS_TEST } from '@/core/constants/env';
 
 const configShared = {
 	[APP_OPTIONS.port]: joi.number().required(),
+	[USER_OPTIONS.verify_url]: joi.string().required(),
 
 	[DB_OPTIONS.name]: joi.string().required(),
 	[DB_OPTIONS.host]: joi.string().required(),

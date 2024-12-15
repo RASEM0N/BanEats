@@ -171,7 +171,6 @@ export class OrderService {
 		if (!this.canGetOrder(user, order)) {
 			throw new UberEastsException({
 				errorCode: UBER_EATS_ERROR.no_rights,
-				message: 'No rights',
 			});
 		}
 
@@ -185,7 +184,6 @@ export class OrderService {
 		if (!canEdit) {
 			throw new UberEastsException({
 				errorCode: UBER_EATS_ERROR.no_rights,
-				message: 'No rights',
 			});
 		}
 

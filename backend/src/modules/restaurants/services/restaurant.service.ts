@@ -88,7 +88,6 @@ export class RestaurantService implements DefaultCRUD<Restaurant> {
 		if (user.id !== restaurant.id) {
 			throw new UberEastsException({
 				errorCode: UBER_EATS_ERROR.no_rights,
-				message: 'No rights',
 			});
 		}
 
@@ -116,7 +115,6 @@ export class RestaurantService implements DefaultCRUD<Restaurant> {
 		if (restaurant.ownerId !== user.id) {
 			throw new UberEastsException({
 				errorCode: UBER_EATS_ERROR.no_rights,
-				message: 'No rights',
 			});
 		}
 

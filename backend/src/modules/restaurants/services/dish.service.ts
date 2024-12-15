@@ -33,7 +33,6 @@ export class DishService implements DefaultCRUD<RestaurantDish> {
 		if (restaurant.ownerId !== user.id) {
 			throw new UberEastsException({
 				errorCode: UBER_EATS_ERROR.no_rights,
-				message: 'No rights',
 			});
 		}
 
@@ -63,7 +62,6 @@ export class DishService implements DefaultCRUD<RestaurantDish> {
 		if (dish.restaurant.ownerId !== user.id) {
 			throw new UberEastsException({
 				errorCode: UBER_EATS_ERROR.no_entity,
-				message: 'No rights',
 			});
 		}
 
@@ -92,7 +90,6 @@ export class DishService implements DefaultCRUD<RestaurantDish> {
 		if (dish.restaurant.ownerId !== user.id) {
 			throw new UberEastsException({
 				errorCode: UBER_EATS_ERROR.no_rights,
-				message: 'No rights',
 			});
 		}
 
