@@ -28,96 +28,75 @@ export class DishService implements DefaultCRUD<RestaurantDish> {
 	}
 
 	async create(user: User, args: CreateDishArgs): Promise<RestaurantDish> {
-		try {
-			const restaurant = await this.restaurantService.get(args.restaurantId);
+		const restaurant = await this.restaurantService.get(args.restaurantId);
 
-			if (restaurant.ownerId !== user.id) {
-				// @TODO 400 не надо обрабатывать
-				throw new CustomError({
-					message: 'К данному ресторану нет доступа',
-					errorCode: 400,
-				});
-			}
-
-			return this.dish.save(
-				this.dish.create({
-					...args,
-					restaurant,
-				}),
-			);
-		} catch (e) {
-			throw getErrorWithDefault(e, {
-				message: 'Ошибка создания блюда',
+		if (restaurant.ownerId !== user.id) {
+			// @TODO 400 не надо обрабатывать
+			throw new CustomError({
+				message: 'К данному ресторану нет доступа',
 				errorCode: 400,
 			});
 		}
+
+		return this.dish.save(
+			this.dish.create({
+				...args,
+				restaurant,
+			}),
+		);
 	}
 
 	async update(user: User, args: UpdateDishArgs): Promise<RestaurantDish> {
-		try {
-			const dish = await this.dish.findOne({
-				relations: ['restaurant'],
-				where: {
-					id: args.dishId,
-				},
-			});
-
-			if (!dish) {
-				throw new CustomError({
-					message: 'Такого блюда нет',
-					errorCode: 400,
-				});
-			}
-
-			if (dish.restaurant.ownerId !== user.id) {
-				throw new CustomError({
-					message: 'К данному блюду нет доступа',
-					errorCode: 400,
-				});
-			}
-
-			return this.dish.save({
+		const dish = await this.dish.findOne({
+			relations: ['restaurant'],
+			where: {
 				id: args.dishId,
-				...dish,
-				...args,
-			});
-		} catch (e) {
-			throw getErrorWithDefault(e, {
-				message: 'Ошибка обновления блюда',
+			},
+		});
+
+		if (!dish) {
+			throw new CustomError({
+				message: 'Такого блюда нет',
 				errorCode: 400,
 			});
 		}
+
+		if (dish.restaurant.ownerId !== user.id) {
+			throw new CustomError({
+				message: 'К данному блюду нет доступа',
+				errorCode: 400,
+			});
+		}
+
+		return this.dish.save({
+			id: args.dishId,
+			...dish,
+			...args,
+		});
 	}
 
 	async delete(user: User, args: DeleteDishArgs): Promise<void> {
-		try {
-			const dish = await this.dish.findOne({
-				relations: ['restaurant'],
-				where: {
-					id: args.dishId,
-				},
-			});
+		const dish = await this.dish.findOne({
+			relations: ['restaurant'],
+			where: {
+				id: args.dishId,
+			},
+		});
 
-			if (!dish) {
-				throw new CustomError({
-					message: 'Такого блюда нет',
-					errorCode: 400,
-				});
-			}
-
-			if (dish.restaurant.ownerId !== user.id) {
-				throw new CustomError({
-					message: 'К данному блюду нет доступа',
-					errorCode: 400,
-				});
-			}
-
-			await this.dish.delete(dish.id);
-		} catch (e) {
-			throw getErrorWithDefault(e, {
-				message: 'Ошибка удаления блюда',
+		if (!dish) {
+			throw new CustomError({
+				message: 'Такого блюда нет',
 				errorCode: 400,
 			});
 		}
+
+		if (dish.restaurant.ownerId !== user.id) {
+			throw new CustomError({
+				message: 'К данному блюду нет доступа',
+				errorCode: 400,
+			});
+		}
+
+		await this.dish.delete(dish.id);
 	}
 }

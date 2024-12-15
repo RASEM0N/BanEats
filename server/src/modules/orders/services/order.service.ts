@@ -30,88 +30,79 @@ export class OrderService {
 	) {}
 
 	async create(customer: User, args: CreateOrdersArgs): Promise<CreateOrdersData> {
-		try {
-			const restaurant = await this.restaurant.findOneOrFail({
+		const restaurant = await this.restaurant.findOneOrFail({
+			where: {
+				id: args.restaurantId,
+			},
+		});
+
+		let orderFinalPrice = 0;
+		const orderItems: OrderItem[] = [];
+
+		// @TODO вынести в метод, а то помойка пиздец
+		for (const item of args.items) {
+			const dish = await this.dish.findOneOrFail({
 				where: {
-					id: args.restaurantId,
+					id: item.dishId,
 				},
 			});
 
-			let orderFinalPrice = 0;
-			const orderItems: OrderItem[] = [];
+			let dishFinalPrice = dish.price;
+			for (const option of item.options) {
+				const currentOption = dish.options.find((v) => v.name === option.name);
 
-			// @TODO вынести в метод, а то помойка пиздец
-			for (const item of args.items) {
-				const dish = await this.dish.findOneOrFail({
-					where: {
-						id: item.dishId,
-					},
-				});
-
-				let dishFinalPrice = dish.price;
-				for (const option of item.options) {
-					const currentOption = dish.options.find(
-						(v) => v.name === option.name,
-					);
-
-					if (!currentOption) {
-						continue;
-					}
-
-					if (!currentOption.extra) {
-						dishFinalPrice = dishFinalPrice + currentOption.extra;
-						continue;
-					}
-
-					const dishChoice = currentOption.choices.find(
-						(v) => v.name === option.choice,
-					);
-
-					if (!dishChoice.extra) {
-						continue;
-					}
-
-					dishFinalPrice += dishChoice.extra;
-					const orderItem = this.orderItem.create({
-						dish,
-						options: item.options,
-					});
-					await this.orderItem.save(orderItem);
-					orderItems.push(orderItem);
+				if (!currentOption) {
+					continue;
 				}
 
-				const order = await this.order.create({
-					customer,
-					restaurant,
-					total: dishFinalPrice,
-					items: orderItems,
-				});
+				if (!currentOption.extra) {
+					dishFinalPrice = dishFinalPrice + currentOption.extra;
+					continue;
+				}
 
-				orderFinalPrice += dishFinalPrice;
-				await this.order.save(order);
+				const dishChoice = currentOption.choices.find(
+					(v) => v.name === option.choice,
+				);
+
+				if (!dishChoice.extra) {
+					continue;
+				}
+
+				dishFinalPrice += dishChoice.extra;
+				const orderItem = this.orderItem.create({
+					dish,
+					options: item.options,
+				});
+				await this.orderItem.save(orderItem);
+				orderItems.push(orderItem);
 			}
 
-			const order = this.order.create({
+			const order = await this.order.create({
 				customer,
 				restaurant,
-				total: orderFinalPrice,
+				total: dishFinalPrice,
 				items: orderItems,
 			});
 
+			orderFinalPrice += dishFinalPrice;
 			await this.order.save(order);
-			await this.pubSub.publish('pubsub:orders.createOrder', {
-				order,
-			});
-
-			return {
-				order,
-			};
-		} catch (e) {
-			throw getErrorWithDefault(e, {
-				errorCode: 400,
-				message: 'Не удалось создать заказ',
-			});
 		}
+
+		const order = this.order.create({
+			customer,
+			restaurant,
+			total: orderFinalPrice,
+			items: orderItems,
+		});
+
+		await this.order.save(order);
+		await this.pubSub.publish('pubsub:orders.createOrder', {
+			order,
+		});
+
+		return {
+			order,
+		};
 	}
 
 	// https://orkhan.gitbook.io/typeorm/docs/find-options

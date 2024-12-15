@@ -25,7 +25,7 @@ export class RestaurantResolver {
 	@Query(() => RestaurantsGetAllOutput, { name: 'RestaurantGetAll' })
 	async getAll(@Args() args: PaginationArgs): Promise<RestaurantsGetAllOutput> {
 		const result = await this.restaurantService.getAll(args);
-		return { data: { ...result }, };
+		return { data: { ...result } };
 	}
 
 	@Roles([USER_ROLE.owner])

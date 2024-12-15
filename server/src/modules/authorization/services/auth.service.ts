@@ -14,38 +14,31 @@ export class AuthService {
 	) {}
 
 	async login({ email, password }: LoginArgs): Promise<LoginData> {
-		try {
-			const user = await this.user.findOne({
-				where: {
-					email,
-				},
-				select: [
-					// @TODO возможно можно по другому бахнуть я пока хз как
-					'id',
-					'email',
-					'password',
-					'role',
-					'createdAt',
-					'updatedAt',
-					'isVerified',
-				],
-			});
+		const user = await this.user.findOne({
+			where: {
+				email,
+			},
+			select: [
+				// @TODO возможно можно по другому бахнуть я пока хз как
+				'id',
+				'email',
+				'password',
+				'role',
+				'createdAt',
+				'updatedAt',
+				'isVerified',
+			],
+		});
 
-			if (!user || !(await user.isValidPassword(password))) {
-				throw new Error();
-			}
-
-			const token = this.jwtService.sign(user.id);
-
-			return {
-				user,
-				token,
-			};
-		} catch (e) {
-			throw getErrorWithDefault(e, {
-				errorCode: 400,
-				message: 'Не удалось авторизоватся',
-			});
+		if (!user || !(await user.isValidPassword(password))) {
+			throw new Error();
 		}
+
+		const token = this.jwtService.sign(user.id);
+
+		return {
+			user,
+			token,
+		};
 	}
 }

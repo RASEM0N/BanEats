@@ -54,10 +54,7 @@ export class UserService implements DefaultCRUD<User> {
 		} catch (e) {
 			// откатываем обратно наши операции с БД
 			await queryRunner?.rollbackTransaction();
-			throw getErrorWithDefault(e, {
-				errorCode: 400,
-				message: `Не удалось создать пользователя с email: ${email}`,
-			});
+			throw e;
 		} finally {
 			// закрываем соединение наше с queryRunner
 			await queryRunner?.release();
@@ -65,25 +62,18 @@ export class UserService implements DefaultCRUD<User> {
 	}
 
 	async get(userId: number): Promise<User> {
-		try {
-			const user = await this.user.findOne({
-				where: { id: userId },
-			});
+		const user = await this.user.findOne({
+			where: { id: userId },
+		});
 
-			if (!user) {
-				throw new CustomError({
-					errorCode: 400,
-					message: `Пользователя с userId: ${userId} не существует`,
-				});
-			}
-
-			return user;
-		} catch (e) {
-			throw getErrorWithDefault(e, {
+		if (!user) {
+			throw new CustomError({
 				errorCode: 400,
-				message: `Ошибка нахождения пользователя с userId: ${userId}`,
+				message: `Пользователя с userId: ${userId} не существует`,
 			});
 		}
+
+		return user;
 	}
 
 	async getAll(): Promise<User[]> {
@@ -122,23 +112,13 @@ export class UserService implements DefaultCRUD<User> {
 			return updatedUser;
 		} catch (e) {
 			await queryRunner?.rollbackTransaction();
-			throw getErrorWithDefault(e, {
-				errorCode: 400,
-				message: `Ошибка обновления пользователя с userId: ${userId}`,
-			});
+			throw e;
 		} finally {
 			await queryRunner?.release();
 		}
 	}
 
 	async delete(userId: number): Promise<void> {
-		try {
-			await this.user.delete(userId);
-		} catch (e) {
-			throw new CustomError({
-				errorCode: 400,
-				message: 'Не удалось удалить пользователя',
-			});
-		}
+		await this.user.delete(userId);
 	}
 }
