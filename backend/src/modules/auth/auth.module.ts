@@ -13,6 +13,7 @@ import { AuthResolver } from './resolvers/auth.resolver';
 		AuthService,
 		AuthResolver,
 
+		// @TODO думаю лучше вынести в main
 		// Глобальный декоратор
 		// https://docs.nestjs.com/security/authentication#enable-authentication-globally
 		{
