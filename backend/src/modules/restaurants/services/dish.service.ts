@@ -1,4 +1,4 @@
-import { Inject, Injectable } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import { Repository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
 import { DefaultCRUD } from '@ubereats/common/services';
@@ -9,7 +9,7 @@ import { RestaurantDish } from '../entities/dish.entity';
 import { CreateDishArgs } from '../dto/dish-create.dto';
 import { UpdateDishArgs } from '../dto/dish-update.dto';
 import { DeleteDishArgs } from '../dto/dish-delete.dto';
-import { CustomError } from '@ubereats/common/error';
+import { UBER_EATS_ERROR, UberEastsError } from '@ubereats/common/error';
 
 @Injectable()
 export class DishService implements DefaultCRUD<RestaurantDish> {
@@ -31,10 +31,9 @@ export class DishService implements DefaultCRUD<RestaurantDish> {
 		const restaurant = await this.restaurantService.get(args.restaurantId);
 
 		if (restaurant.ownerId !== user.id) {
-			// @TODO 400 не надо обрабатывать
-			throw new CustomError({
-				message: 'К данному ресторану нет доступа',
-				errorCode: 400,
+			throw new UberEastsError({
+				errorCode: UBER_EATS_ERROR.no_rights,
+				message: 'No rights',
 			});
 		}
 
@@ -55,16 +54,16 @@ export class DishService implements DefaultCRUD<RestaurantDish> {
 		});
 
 		if (!dish) {
-			throw new CustomError({
-				message: 'Такого блюда нет',
-				errorCode: 400,
+			throw new UberEastsError({
+				errorCode: UBER_EATS_ERROR.no_entity,
+				message: 'There is no dish',
 			});
 		}
 
 		if (dish.restaurant.ownerId !== user.id) {
-			throw new CustomError({
-				message: 'К данному блюду нет доступа',
-				errorCode: 400,
+			throw new UberEastsError({
+				errorCode: UBER_EATS_ERROR.no_entity,
+				message: 'No rights',
 			});
 		}
 
@@ -84,16 +83,16 @@ export class DishService implements DefaultCRUD<RestaurantDish> {
 		});
 
 		if (!dish) {
-			throw new CustomError({
-				message: 'Такого блюда нет',
-				errorCode: 400,
+			throw new UberEastsError({
+				errorCode: UBER_EATS_ERROR.no_entity,
+				message: 'There is no dish',
 			});
 		}
 
 		if (dish.restaurant.ownerId !== user.id) {
-			throw new CustomError({
-				message: 'К данному блюду нет доступа',
-				errorCode: 400,
+			throw new UberEastsError({
+				errorCode: UBER_EATS_ERROR.no_rights,
+				message: 'No rights',
 			});
 		}
 

@@ -4,7 +4,7 @@ import { Restaurant } from '../entities/restaurant.entity';
 import { CreateRestaurantArgs } from '../dto/restaurant-create.dto';
 import { UpdateRestaurantArgs } from '../dto/restaurant-update.dto';
 import { DefaultCRUD } from '@ubereats/common/services';
-import { CustomError } from '@ubereats/common/error';
+import { UBER_EATS_ERROR, UberEastsError } from '@ubereats/common/error';
 import { InjectRepository } from '@nestjs/typeorm';
 import { User } from '@/modules/users/entities/user.entity';
 import { CategoryService } from './category.service';
@@ -32,9 +32,9 @@ export class RestaurantService implements DefaultCRUD<Restaurant> {
 		});
 
 		if (!restaurant) {
-			throw new CustomError({
-				errorCode: 400,
-				message: `Не нашли сущность Restaurant с id: ${id}`,
+			throw new UberEastsError({
+				errorCode: UBER_EATS_ERROR.no_entity,
+				message: `There is no restaurant`,
 			});
 		}
 
@@ -79,16 +79,16 @@ export class RestaurantService implements DefaultCRUD<Restaurant> {
 		});
 
 		if (!restaurant) {
-			throw new CustomError({
-				errorCode: 400,
-				message: 'Не нашли ресторан',
+			throw new UberEastsError({
+				errorCode: UBER_EATS_ERROR.no_entity,
+				message: 'There is no restaurant',
 			});
 		}
 
 		if (user.id !== restaurant.id) {
-			throw new CustomError({
-				errorCode: 400,
-				message: 'Нет прав для обновления данного ресторана',
+			throw new UberEastsError({
+				errorCode: UBER_EATS_ERROR.no_rights,
+				message: 'No rights',
 			});
 		}
 
@@ -114,9 +114,9 @@ export class RestaurantService implements DefaultCRUD<Restaurant> {
 		}
 
 		if (restaurant.ownerId !== user.id) {
-			throw new CustomError({
-				errorCode: 400,
-				message: 'Нет прав на удаление ресторана',
+			throw new UberEastsError({
+				errorCode: UBER_EATS_ERROR.no_rights,
+				message: 'No rights',
 			});
 		}
 

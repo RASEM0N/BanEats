@@ -14,6 +14,7 @@ export enum USER_ROLE {
 	delivery = 'delivery',
 }
 
+// @TODO добавить описание
 registerEnumType(USER_ROLE, { name: 'USER_ROLE' });
 
 @InputType({ isAbstract: true })

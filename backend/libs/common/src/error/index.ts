@@ -1,1 +1,1 @@
-export * from './custom-error';
+export * from './uber-easts-error';

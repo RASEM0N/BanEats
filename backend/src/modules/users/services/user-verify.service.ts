@@ -36,18 +36,17 @@ export class UserVerifyService {
 	}
 
 	async verifyEmail(code: string): Promise<void> {
-			const verification = await this.verification.findOne({
-				where: { code },
-				relations: ['user'],
-			});
+		const verification = await this.verification.findOne({
+			where: { code },
+			relations: ['user'],
+		});
 
-			if (!verification) {
-				throw new Error();
-			}
+		if (!verification) {
+			throw new Error();
+		}
 
-			verification.user.isVerified = true;
-			await this.user.save(verification.user);
-
+		verification.user.isVerified = true;
+		await this.user.save(verification.user);
 	}
 
 	async sendVerifyEmail({ email, code }: SendVerifyEmailArgs): Promise<void> {

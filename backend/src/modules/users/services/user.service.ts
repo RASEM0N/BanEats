@@ -3,7 +3,7 @@ import { DataSource, Repository } from 'typeorm';
 import { User } from '../entities/user.entity';
 import { CreateUserArgs } from '../dto/user-create.dto';
 import { DefaultCRUD } from '@ubereats/common/services';
-import { CustomError } from '@ubereats/common/error';
+import { UBER_EATS_ERROR, UberEastsError } from '@ubereats/common/error';
 import { InjectRepository } from '@nestjs/typeorm';
 import { UpdateUserArgs } from '../dto/user-update.dto';
 import { UserVerifyService } from './user-verify.service';
@@ -29,9 +29,9 @@ export class UserService implements DefaultCRUD<User> {
 			});
 
 			if (existUser) {
-				throw new CustomError({
-					errorCode: 400,
-					message: `Пользователь с email: ${email} уже есть`,
+				throw new UberEastsError({
+					errorCode: UBER_EATS_ERROR.already_there,
+					message: `There is already a user with this email address`,
 				});
 			}
 
@@ -67,9 +67,9 @@ export class UserService implements DefaultCRUD<User> {
 		});
 
 		if (!user) {
-			throw new CustomError({
-				errorCode: 400,
-				message: `Пользователя с userId: ${userId} не существует`,
+			throw new UberEastsError({
+				errorCode: UBER_EATS_ERROR.no_entity,
+				message: `There is no user`,
 			});
 		}
 

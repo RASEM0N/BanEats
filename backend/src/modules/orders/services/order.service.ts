@@ -7,7 +7,7 @@ import { User, USER_ROLE } from '@/modules/users/entities/user.entity';
 import { CreateOrdersArgs, CreateOrdersData } from '../dto/order-create.dto';
 import { Restaurant } from '@/modules/restaurants/entities/restaurant.entity';
 import { RestaurantDish } from '@/modules/restaurants/entities/dish.entity';
-import { CustomError } from '@ubereats/common/error';
+import { UBER_EATS_ERROR, UberEastsError } from '@ubereats/common/error';
 import { GetAllOrdersArgs, GetAllOrdersData, GetOrdersArgs } from '../dto/order-get.dto';
 import { UpdateOrdersArgs } from '../dto/order-update.dto';
 import { SHARED_COMPONENTS } from '@/core/shared.module';
@@ -169,9 +169,9 @@ export class OrderService {
 		});
 
 		if (!this.canGetOrder(user, order)) {
-			throw new CustomError({
-				errorCode: 400,
-				message: 'Нет прав',
+			throw new UberEastsError({
+				errorCode: UBER_EATS_ERROR.no_rights,
+				message: 'No rights',
 			});
 		}
 
@@ -183,9 +183,9 @@ export class OrderService {
 		const canEdit = this.canEdit(user, updateArgs.status);
 
 		if (!canEdit) {
-			throw new CustomError({
-				errorCode: 400,
-				message: 'Нет прав на редактирование',
+			throw new UberEastsError({
+				errorCode: UBER_EATS_ERROR.no_rights,
+				message: 'No rights',
 			});
 		}
 
