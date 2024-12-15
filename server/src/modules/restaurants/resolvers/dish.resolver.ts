@@ -2,7 +2,7 @@ import { Args, Mutation, Resolver } from '@nestjs/graphql';
 import { Roles } from '@/modules/authorization/decorators/role.decorator';
 import { AuthUser } from '@/modules/authorization/decorators/auth-user.decorator';
 import { User, USER_ROLE } from '@/modules/users/entities/user.entity';
-import { CoreOutputWithoutData } from '@ubereats/common/dtos';
+import { CoreOutputWithoutData } from '@ubereats/common/dto';
 
 import { DeleteDishArgs } from '../dto/dish-delete.dto';
 import { DishService } from '../services/dish.service';

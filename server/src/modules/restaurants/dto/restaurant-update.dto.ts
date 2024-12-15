@@ -1,7 +1,7 @@
 import { ArgsType, Field, ObjectType, PartialType } from '@nestjs/graphql';
 import { Restaurant } from '../entities/restaurant.entity';
 import { CreateRestaurantArgs } from './restaurant-create.dto';
-import { CoreOutput } from '@ubereats/common/dtos';
+import { CoreOutput } from '@ubereats/common/dto';
 
 @ArgsType()
 export class UpdateRestaurantArgs extends PartialType(CreateRestaurantArgs) {

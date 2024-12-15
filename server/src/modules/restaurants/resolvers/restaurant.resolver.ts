@@ -1,5 +1,5 @@
 import { Args, Mutation, Query, Resolver } from '@nestjs/graphql';
-import { CoreOutputWithoutData, PaginationArgs } from '@ubereats/common/dtos';
+import { CoreOutputWithoutData, PaginationArgs } from '@ubereats/common/dto';
 import { Roles } from '@/modules/authorization/decorators/role.decorator';
 import { AuthUser } from '@/modules/authorization/decorators/auth-user.decorator';
 import { AuthPublic } from '@/modules/authorization/decorators/auth-public.decorator';

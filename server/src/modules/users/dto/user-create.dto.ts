@@ -1,6 +1,6 @@
 import { ArgsType, Field, ObjectType, PickType } from '@nestjs/graphql';
 import { User } from '../entities/user.entity';
-import { CoreOutput } from '@ubereats/common/dtos';
+import { CoreOutput } from '@ubereats/common/dto';
 
 @ObjectType()
 export class CreateUserData {

@@ -1,8 +1,8 @@
 import { ArgsType, Field, ObjectType } from '@nestjs/graphql';
-import { CoreOutput } from '@ubereats/common/dtos';
+import { CoreOutput } from '@ubereats/common/dto';
 import { RestaurantsCategory } from '../entities/category.entity';
 import { Restaurant } from '@/modules/restaurants/entities/restaurant.entity';
-import { PaginationArgs, PaginationData } from '@ubereats/common/dtos';
+import { PaginationArgs, PaginationData } from '@ubereats/common/dto';
 
 // -------------
 

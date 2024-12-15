@@ -9,7 +9,7 @@ import { VerifyEmailArgs } from '../dto/user-verify-email.dto';
 import { UserVerifyService } from '../services/user-verify.service';
 import { Roles } from '@/modules/authorization/decorators/role.decorator';
 import { AuthPublic } from '@/modules/authorization/decorators/auth-public.decorator';
-import { CoreOutputWithoutData } from '@ubereats/common/dtos';
+import { CoreOutputWithoutData } from '@ubereats/common/dto';
 import { UsersMeOutput } from '@/modules/users/dto/user-me.dto';
 
 @Resolver()
