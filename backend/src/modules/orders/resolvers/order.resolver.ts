@@ -1,8 +1,8 @@
 import { Args, Mutation, Query, Resolver, Subscription } from '@nestjs/graphql';
 import { CreateOrdersArgs, CreateOrdersOutput } from '../dto/order-create.dto';
-import { AuthUser } from '@/modules/authorization/decorators/auth-user.decorator';
+import { AuthUser } from '@/modules/auth/decorators/auth-user.decorator';
 import { User, USER_ROLE } from '@/modules/users/entities/user.entity';
-import { Roles } from '@/modules/authorization/decorators/role.decorator';
+import { Roles } from '@/modules/auth/decorators/role.decorator';
 import { OrderService } from '../services/order.service';
 import { Inject } from '@nestjs/common';
 import {

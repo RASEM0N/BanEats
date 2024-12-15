@@ -1,5 +1,5 @@
 import { Args, Int, Parent, Query, ResolveField, Resolver } from '@nestjs/graphql';
-import { AuthPublic } from '@/modules/authorization/decorators/auth-public.decorator';
+import { AuthPublic } from '@/modules/auth/decorators/auth-public.decorator';
 
 import { RestaurantService } from '../services/restaurant.service';
 import { CategoryService } from '../services/category.service';

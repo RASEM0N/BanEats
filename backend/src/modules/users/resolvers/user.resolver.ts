@@ -2,13 +2,13 @@ import { Args, Mutation, Query, Resolver } from '@nestjs/graphql';
 import { UserService } from '../services/user.service';
 import { CreateUserArgs, CreateUserOutput } from '../dto/user-create.dto';
 import { User, USER_ROLE } from '../entities/user.entity';
-import { AuthUser } from '@/modules/authorization/decorators/auth-user.decorator';
+import { AuthUser } from '@/modules/auth/decorators/auth-user.decorator';
 import { GetUserArgs, GetUserOutput } from '../dto/user-get.dto';
 import { UpdateUserArgs, UpdateUserOutput } from '../dto/user-update.dto';
 import { VerifyEmailArgs } from '../dto/user-verify-email.dto';
 import { UserVerifyService } from '../services/user-verify.service';
-import { Roles } from '@/modules/authorization/decorators/role.decorator';
-import { AuthPublic } from '@/modules/authorization/decorators/auth-public.decorator';
+import { Roles } from '@/modules/auth/decorators/role.decorator';
+import { AuthPublic } from '@/modules/auth/decorators/auth-public.decorator';
 import { CoreOutputWithoutData } from '@ubereats/common/dto';
 import { UsersMeOutput } from '@/modules/users/dto/user-me.dto';
 

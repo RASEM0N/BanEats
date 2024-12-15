@@ -1,8 +1,8 @@
 import { Args, Mutation, Query, Resolver } from '@nestjs/graphql';
 import { CoreOutputWithoutData, PaginationArgs } from '@ubereats/common/dto';
-import { Roles } from '@/modules/authorization/decorators/role.decorator';
-import { AuthUser } from '@/modules/authorization/decorators/auth-user.decorator';
-import { AuthPublic } from '@/modules/authorization/decorators/auth-public.decorator';
+import { Roles } from '@/modules/auth/decorators/role.decorator';
+import { AuthUser } from '@/modules/auth/decorators/auth-user.decorator';
+import { AuthPublic } from '@/modules/auth/decorators/auth-public.decorator';
 import { User, USER_ROLE } from '@/modules/users/entities/user.entity';
 
 import {

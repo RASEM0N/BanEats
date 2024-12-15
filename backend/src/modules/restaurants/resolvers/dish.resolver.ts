@@ -1,6 +1,6 @@
 import { Args, Mutation, Resolver } from '@nestjs/graphql';
-import { Roles } from '@/modules/authorization/decorators/role.decorator';
-import { AuthUser } from '@/modules/authorization/decorators/auth-user.decorator';
+import { Roles } from '@/modules/auth/decorators/role.decorator';
+import { AuthUser } from '@/modules/auth/decorators/auth-user.decorator';
 import { User, USER_ROLE } from '@/modules/users/entities/user.entity';
 import { CoreOutputWithoutData } from '@ubereats/common/dto';
 
