@@ -27,7 +27,7 @@ export class OrderResolver {
 		@Inject(SHARED_COMPONENTS.pubSub) private readonly pubSub: PubSub,
 	) {}
 
-	@Roles([USER_ROLE.client])
+	@Roles(USER_ROLE.client)
 	@Mutation(() => CreateOrdersOutput, { name: 'OrderCreate' })
 	async create(
 		@AuthUser() user: User,
@@ -77,9 +77,7 @@ export class OrderResolver {
 		this.pubSub.asyncIterator('pubsub:orders.updateOrder');
 	}
 
-	@Subscription(() => Order, {
-		name: 'OnOrderCreate',
-	})
+	@Subscription(() => Order, { name: 'OnOrderCreate' })
 	async onCreateOrder() {
 		this.pubSub.asyncIterator('pubsub:orders.createOrder');
 	}

@@ -1,11 +1,12 @@
 import { CanActivate, ExecutionContext, Injectable } from '@nestjs/common';
 import { GqlExecutionContext } from '@nestjs/graphql';
 import { Reflector } from '@nestjs/core';
-import { META_KEY as USER_ROLE_KEY } from '../decorators/role.decorator';
-import { META_KEY as PUBLIC_KEY } from '../decorators/auth-public.decorator';
+import { AllowedRoles, META_KEY as USER_ROLE_KEY } from '../decorators/role.decorator';
+import { META_KEY as NO_AUTH_KEY } from '../decorators/no-auth.decorator';
 import { User, USER_ROLE } from '@/modules/users/entities/user.entity';
 import { UserService } from '@/modules/users/services/user.service';
 import { JwtService } from '@ubereats/jwt';
+import { UBER_EATS_ERROR, UberEastsException } from '@ubereats/common/error';
 
 @Injectable()
 export class AuthGuard implements CanActivate {
@@ -15,43 +16,54 @@ export class AuthGuard implements CanActivate {
 		private readonly userService: UserService,
 	) {}
 
-	async canActivate(context: ExecutionContext): Promise<boolean> {
-		const isPublic = this.reflector.get<boolean>(PUBLIC_KEY, context.getHandler());
-		const roles = this.reflector.get<USER_ROLE[]>(
-			USER_ROLE_KEY,
-			context.getHandler(),
-		);
+	async canActivate(ctx: ExecutionContext): Promise<boolean> {
+		const isNoAuth = this.isNoAuth(ctx);
+		const roles = this.getRoles(ctx);
 
-		if (isPublic) {
-			return true;
+		if (roles && isNoAuth) {
+			throw new UberEastsException({ errorCode: UBER_EATS_ERROR.server_error });
 		}
 
-		const gqlContext = GqlExecutionContext.create(context).getContext();
-		const authToken = gqlContext.authToken;
-
-		if (!authToken) {
-			return false;
+		if (isNoAuth) {
+			return !this.getAuthToken(ctx);
 		}
 
-		const userId = +this.jwtService.verify(authToken);
-		const user = await this.userService.get(userId);
+		if (roles) {
+			try {
+				const userId = +this.jwtService.verify(this.getAuthToken(ctx));
+				const user = await this.userService.get(userId);
 
-		return this.isValidRole(user, roles);
+				return this.isValidRole(user, roles);
+			} catch (e) {
+				throw new UberEastsException({
+					errorCode: UBER_EATS_ERROR.fail_login,
+					message: e.message,
+				});
+			}
+		}
+
+		return true;
 	}
 
-	private isValidRole(user: User, roles: USER_ROLE[]): boolean {
-		// Если не передали роли, то все подходят
-		if (!roles) {
-			return true;
-		}
+	private isValidRole(user: User, roles: AllowedRoles[]): boolean {
+		// @TODO слишком простая логика
+		// по права на ROLE.client должно
+		// подходить и для ROLE.Admin т.к. админ все впитывает в себя
 
-		// чтоб пустышки не передавали
-		if (!roles.length) {
-			throw new Error('Список Ролей не должны быть пустым');
-		}
+		// @TODO где в других местах еще такая проверка есть
 
-		// а тут уже проверяем на то, что роль текущего пользователя
-		// входит в список доступных ролей
-		return roles.includes(user.role);
+		return roles.includes('any') || roles.includes(user.role);
+	}
+
+	private isNoAuth(ctx: ExecutionContext): boolean {
+		return Boolean(this.reflector.get<boolean>(NO_AUTH_KEY, ctx.getHandler()));
+	}
+
+	private getRoles(ctx: ExecutionContext): USER_ROLE[] | undefined {
+		return this.reflector.get<USER_ROLE[]>(USER_ROLE_KEY, ctx.getHandler());
+	}
+
+	private getAuthToken(ctx: ExecutionContext): string | undefined {
+		return GqlExecutionContext.create(ctx).getContext().authToken;
 	}
 }

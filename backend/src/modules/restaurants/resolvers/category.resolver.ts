@@ -1,5 +1,4 @@
 import { Args, Int, Parent, Query, ResolveField, Resolver } from '@nestjs/graphql';
-import { AuthPublic } from '@/modules/auth/decorators/auth-public.decorator';
 
 import { RestaurantService } from '../services/restaurant.service';
 import { CategoryService } from '../services/category.service';
@@ -53,14 +52,12 @@ export class CategoryResolver {
 	 *	   }
 	 *	}
 	 */
-	@AuthPublic()
 	@Query(() => CategoryGetAllOutput, { name: 'RestaurantCategoryGetAll' })
 	async getAll(): Promise<CategoryGetAllOutput> {
 		const categories = await this.categoryService.getAll();
 		return { data: { categories } };
 	}
 
-	@AuthPublic()
 	@Query(() => CategoryGetOutput, { name: 'RestaurantCategoryGetBySlug' })
 	async getBySlug(@Args() args: CategoryGetArgs): Promise<CategoryGetOutput> {
 		const result = await this.restaurantService.getCategoryWithAllRestaurants(args);

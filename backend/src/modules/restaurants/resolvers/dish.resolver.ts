@@ -13,7 +13,7 @@ import { UpdateDishArgs, UpdateDishOutput } from '../dto/dish-update.dto';
 export class DishResolver {
 	constructor(private readonly dishService: DishService) {}
 
-	@Roles([USER_ROLE.admin])
+	@Roles(USER_ROLE.admin)
 	@Mutation(() => CreateDishOutput, { name: 'RestaurantDishCreate' })
 	async create(
 		@AuthUser() user: User,
@@ -23,7 +23,7 @@ export class DishResolver {
 		return { data: { dish } };
 	}
 
-	@Roles([USER_ROLE.admin])
+	@Roles(USER_ROLE.admin)
 	@Mutation(() => UpdateDishOutput, { name: 'RestaurantDishUpdate' })
 	async update(
 		@AuthUser() user: User,
@@ -33,7 +33,7 @@ export class DishResolver {
 		return { data: { dish } };
 	}
 
-	@Roles([USER_ROLE.admin])
+	@Roles(USER_ROLE.admin)
 	@Mutation(() => CoreOutputWithoutData, { name: 'RestaurantDishDelete' })
 	async delete(
 		@AuthUser() user: User,

@@ -2,7 +2,6 @@ import { Args, Mutation, Query, Resolver } from '@nestjs/graphql';
 import { CoreOutputWithoutData, PaginationArgs } from '@ubereats/common/dto';
 import { Roles } from '@/modules/auth/decorators/role.decorator';
 import { AuthUser } from '@/modules/auth/decorators/auth-user.decorator';
-import { AuthPublic } from '@/modules/auth/decorators/auth-public.decorator';
 import { User, USER_ROLE } from '@/modules/users/entities/user.entity';
 
 import {
@@ -21,25 +20,23 @@ import { RestaurantsGetAllOutput } from '../dto/restaurant-get.dto';
 export class RestaurantResolver {
 	constructor(private readonly restaurantService: RestaurantService) {}
 
-	@AuthPublic()
 	@Query(() => RestaurantsGetAllOutput, { name: 'RestaurantGetAll' })
 	async getAll(@Args() args: PaginationArgs): Promise<RestaurantsGetAllOutput> {
 		const result = await this.restaurantService.getAll(args);
 		return { data: { ...result } };
 	}
 
-	@Roles([USER_ROLE.owner])
+	@Roles(USER_ROLE.owner)
 	@Mutation(() => CreateRestaurantOutput, { name: 'RestaurantCreate' })
 	async create(
 		@AuthUser() user: User,
 		@Args() dto: CreateRestaurantArgs,
 	): Promise<CreateRestaurantOutput> {
 		const restaurant = await this.restaurantService.create(user, dto);
-
 		return { data: { restaurant } };
 	}
 
-	@Roles([USER_ROLE.owner])
+	@Roles(USER_ROLE.owner)
 	@Mutation(() => UpdateRestaurantOutput, { name: 'RestaurantUpdate' })
 	async update(
 		@AuthUser() user: User,
@@ -50,7 +47,7 @@ export class RestaurantResolver {
 		return { data: { restaurant } };
 	}
 
-	@Roles([USER_ROLE.admin])
+	@Roles(USER_ROLE.admin)
 	@Mutation(() => CoreOutputWithoutData, { name: 'RestaurantDelete' })
 	async delete(
 		@AuthUser() user: User,

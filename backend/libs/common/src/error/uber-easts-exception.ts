@@ -7,9 +7,11 @@ interface UberEatsConstructor {
 
 export enum UBER_EATS_ERROR {
 	error = 400,
+	server_error = 500,
 	no_rights = 10001,
 	no_entity = 10002,
 	already_there = 20001,
+	fail_login = 20002,
 }
 
 export class UberEastsException extends Error {
@@ -26,6 +28,10 @@ export class UberEastsException extends Error {
 
 		if (errorCode === UBER_EATS_ERROR.already_there) {
 			return 'There is entity';
+		}
+
+		if (errorCode === UBER_EATS_ERROR.server_error) {
+			return 'Server error';
 		}
 
 		return 'Unhandled error';
