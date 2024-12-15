@@ -9,7 +9,7 @@ import {
 } from '@/modules/users/tests/lib/mock-user-entity';
 import { CustomError } from '@ubereats/common/error';
 
-describe('UsersService', () => {
+describe('UserService', () => {
 	let usersService: UserService;
 	let usersVerifyService: MockComponent<UserVerifyService>;
 	let usersRepository: MockRepository<User>;

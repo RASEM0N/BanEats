@@ -15,7 +15,7 @@ export class DishResolver {
 	constructor(private readonly dishService: DishService) {}
 
 	@AuthRoles([USER_ROLE.admin])
-	@Mutation(() => CreateDishOutput, { name: 'restaurantDishCreate' })
+	@Mutation(() => CreateDishOutput, { name: 'RestaurantDishCreate' })
 	async create(
 		@AuthUser() user: User,
 		@Args() args: CreateDishArgs,
@@ -38,7 +38,7 @@ export class DishResolver {
 	}
 
 	@AuthRoles([USER_ROLE.admin])
-	@Mutation(() => UpdateDishOutput, { name: 'restaurantDishUpdate' })
+	@Mutation(() => UpdateDishOutput, { name: 'RestaurantDishUpdate' })
 	async update(
 		@AuthUser() user: User,
 		@Args() args: UpdateDishArgs,
@@ -61,7 +61,7 @@ export class DishResolver {
 	}
 
 	@AuthRoles([USER_ROLE.admin])
-	@Mutation(() => CoreOutputWithoutData, { name: 'restaurantDishDelete' })
+	@Mutation(() => CoreOutputWithoutData, { name: 'RestaurantDishDelete' })
 	async delete(
 		@AuthUser() user: User,
 		@Args() args: DeleteDishArgs,

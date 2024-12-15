@@ -27,7 +27,7 @@ export class OrderResolver {
 		@Inject(SHARED_COMPONENTS.pubSub) private readonly pubSub: PubSub,
 	) {}
 
-	@Mutation(() => CreateOrdersOutput, { name: 'ordersCreate' })
+	@Mutation(() => CreateOrdersOutput, { name: 'OrderCreate' })
 	@AuthRoles([USER_ROLE.client])
 	async create(
 		@AuthUser() user: User,
@@ -49,7 +49,7 @@ export class OrderResolver {
 		}
 	}
 
-	@Mutation(() => UpdateOrdersOutput, { name: 'ordersUpdate' })
+	@Mutation(() => UpdateOrdersOutput, { name: 'OrderUpdate' })
 	async update(
 		@AuthUser() user: User,
 		@Args() args: UpdateOrdersArgs,
@@ -64,7 +64,7 @@ export class OrderResolver {
 		};
 	}
 
-	@Query(() => GetAllOrdersOutput, { name: 'ordersGetAll' })
+	@Query(() => GetAllOrdersOutput, { name: 'OrderGetAll' })
 	async getAll(
 		@AuthUser() user: User,
 		@Args() args: GetAllOrdersArgs,
@@ -85,7 +85,7 @@ export class OrderResolver {
 		}
 	}
 
-	@Query(() => GetOrderOutput, { name: 'ordersGet' })
+	@Query(() => GetOrderOutput, { name: 'OrderGet' })
 	async get(@AuthUser() user: User, args: GetOrdersArgs): Promise<GetOrderOutput> {
 		try {
 			const order = await this.ordersService.get(user, args);
@@ -106,7 +106,7 @@ export class OrderResolver {
 	}
 
 	@Subscription(() => Order, {
-		name: 'subscriptionOrdersUpdate',
+		name: 'OnOrderUpdate',
 		filter: (
 			{ order }: UpdateOrdersData,
 			_: UpdateOrdersArgs,
@@ -122,7 +122,7 @@ export class OrderResolver {
 	}
 
 	@Subscription(() => Order, {
-		name: 'subscriptionOrdersCreate',
+		name: 'OnOrderCreate',
 	})
 	async onCreateOrder() {
 		this.pubSub.asyncIterator('pubsub:orders.createOrder');

@@ -8,7 +8,7 @@ export class AuthResolver {
 	constructor(private readonly authorizationService: AuthService) {}
 
 	@AuthPublic()
-	@Mutation(() => LoginOutput, { name: 'authorizationLogin' })
+	@Mutation(() => LoginOutput, { name: 'AuthLogin' })
 	async login(@Args() { email, password }: LoginArgs): Promise<LoginOutput> {
 		try {
 			const { user, token } = await this.authorizationService.login({

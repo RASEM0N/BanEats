@@ -1,4 +1,4 @@
-import { Args, Parent, Query, ResolveField, Resolver } from '@nestjs/graphql';
+import { Args, Int, Parent, Query, ResolveField, Resolver } from '@nestjs/graphql';
 import { AuthPublic } from '@/modules/authorization/decorators/auth-public.decorator';
 
 import { RestaurantService } from '../services/restaurant.service';
@@ -26,7 +26,7 @@ export class CategoryResolver {
 	 */
 	// @TODO
 	// @Resolver(() => RestaurantsCategory)
-	@ResolveField(() => Number)
+	@ResolveField(() => Int)
 
 	// Parent получаем из @Resolver, который может как на методе
 	// так и на классе самом
@@ -55,7 +55,7 @@ export class CategoryResolver {
 	 *	}
 	 */
 	@AuthPublic()
-	@Query(() => CategoryGetAllOutput, { name: 'restaurantsCategoryGetAll' })
+	@Query(() => CategoryGetAllOutput, { name: 'RestaurantCategoryGetAll' })
 	async getAll(): Promise<CategoryGetAllOutput> {
 		try {
 			const categories = await this.categoryService.getAll();
@@ -76,7 +76,7 @@ export class CategoryResolver {
 	}
 
 	@AuthPublic()
-	@Query(() => CategoryGetOutput, { name: 'restaurantsCategoryGetBySlug' })
+	@Query(() => CategoryGetOutput, { name: 'RestaurantCategoryGetBySlug' })
 	async getBySlug(@Args() args: CategoryGetArgs): Promise<CategoryGetOutput> {
 		try {
 			const result = await this.categoryService.getWithAllRestaurants(args);

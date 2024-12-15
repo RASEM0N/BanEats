@@ -19,7 +19,7 @@ export class UserResolver {
 		private readonly userVerifyService: UserVerifyService,
 	) {}
 
-	@Query(() => UsersMeOutput, { name: 'usersMe' })
+	@Query(() => UsersMeOutput, { name: 'UserMe' })
 	me(@AuthUser() user: User): UsersMeOutput {
 		return {
 			isOk: true,
@@ -30,7 +30,7 @@ export class UserResolver {
 	}
 
 	@AuthRoles([USER_ROLE.admin])
-	@Query(() => GetUserOutput, { name: 'usersGetOne' })
+	@Query(() => GetUserOutput, { name: 'UserGetOne' })
 	async get(@Args() { id }: GetUserArgs): Promise<GetUserOutput> {
 		try {
 			const user = await this.userService.get(id);
@@ -51,7 +51,7 @@ export class UserResolver {
 	}
 
 	@AuthPublic()
-	@Mutation(() => CreateUserOutput, { name: 'usersCreate' })
+	@Mutation(() => CreateUserOutput, { name: 'UserCreate' })
 	async create(@Args() args: CreateUserArgs): Promise<CreateUserOutput> {
 		try {
 			const user = await this.userService.create(args);
@@ -71,7 +71,7 @@ export class UserResolver {
 		}
 	}
 
-	@Mutation(() => UpdateUserOutput, { name: 'usersUpdate' })
+	@Mutation(() => UpdateUserOutput, { name: 'UserUpdate' })
 	async update(
 		@AuthUser() user: User,
 		@Args() args: UpdateUserArgs,
@@ -94,7 +94,7 @@ export class UserResolver {
 		}
 	}
 
-	@Mutation(() => CoreOutputWithoutData, { name: 'usersVerifyEmail' })
+	@Mutation(() => CoreOutputWithoutData, { name: 'UserVerifyEmail' })
 	async verifyEmail(@Args() args: VerifyEmailArgs): Promise<CoreOutputWithoutData> {
 		try {
 			await this.userVerifyService.verifyEmail(args.code);

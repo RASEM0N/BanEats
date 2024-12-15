@@ -22,7 +22,7 @@ export class RestaurantResolver {
 	constructor(private readonly restaurantService: RestaurantService) {}
 
 	@AuthPublic()
-	@Query(() => RestaurantsGetAllOutput, { name: 'restaurantsGetAll' })
+	@Query(() => RestaurantsGetAllOutput, { name: 'RestaurantGetAll' })
 	async getAll(@Args() args: PaginationArgs): Promise<RestaurantsGetAllOutput> {
 		try {
 			const result = await this.restaurantService.getAll(args);
@@ -46,7 +46,7 @@ export class RestaurantResolver {
 	}
 
 	@AuthRoles([USER_ROLE.owner])
-	@Mutation(() => CreateRestaurantOutput, { name: 'restaurantsCreate' })
+	@Mutation(() => CreateRestaurantOutput, { name: 'RestaurantCreate' })
 	async create(
 		@AuthUser() user: User,
 		@Args() dto: CreateRestaurantArgs,
@@ -70,7 +70,7 @@ export class RestaurantResolver {
 	}
 
 	@AuthRoles([USER_ROLE.owner])
-	@Mutation(() => UpdateRestaurantOutput, { name: 'restaurantsUpdate' })
+	@Mutation(() => UpdateRestaurantOutput, { name: 'RestaurantUpdate' })
 	async update(
 		@AuthUser() user: User,
 		@Args() updateArgs: UpdateRestaurantArgs,
@@ -94,7 +94,7 @@ export class RestaurantResolver {
 	}
 
 	@AuthRoles([USER_ROLE.admin])
-	@Mutation(() => CoreOutputWithoutData, { name: 'restaurantsDelete' })
+	@Mutation(() => CoreOutputWithoutData, { name: 'RestaurantDelete' })
 	async delete(
 		@AuthUser() user: User,
 		@Args() args: RestaurantsDeleteArgs,

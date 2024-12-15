@@ -1,7 +1,7 @@
 import { CanActivate, ExecutionContext, Injectable } from '@nestjs/common';
 import { GqlExecutionContext } from '@nestjs/graphql';
 import { Reflector } from '@nestjs/core';
-import { META_KEY as USER_ROLE_KEY } from '../decorators/auth-role.decorator';
+import { META_KEY as USER_ROLE_KEY } from '../decorators/role.decorator';
 import { META_KEY as PUBLIC_KEY } from '../decorators/auth-public.decorator';
 import { User, USER_ROLE } from '@/modules/users/entities/user.entity';
 import { UserService } from '@/modules/users/user.service';
