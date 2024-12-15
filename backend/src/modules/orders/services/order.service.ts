@@ -7,7 +7,7 @@ import { User, USER_ROLE } from '@/modules/users/entities/user.entity';
 import { CreateOrdersArgs, CreateOrdersData } from '../dto/order-create.dto';
 import { Restaurant } from '@/modules/restaurants/entities/restaurant.entity';
 import { RestaurantDish } from '@/modules/restaurants/entities/dish.entity';
-import { UBER_EATS_ERROR, UberEastsError } from '@ubereats/common/error';
+import { UBER_EATS_ERROR, UberEastsException } from '@ubereats/common/error';
 import { GetAllOrdersArgs, GetAllOrdersData, GetOrdersArgs } from '../dto/order-get.dto';
 import { UpdateOrdersArgs } from '../dto/order-update.dto';
 import { SHARED_COMPONENTS } from '@/core/shared.module';
@@ -169,7 +169,7 @@ export class OrderService {
 		});
 
 		if (!this.canGetOrder(user, order)) {
-			throw new UberEastsError({
+			throw new UberEastsException({
 				errorCode: UBER_EATS_ERROR.no_rights,
 				message: 'No rights',
 			});
@@ -183,7 +183,7 @@ export class OrderService {
 		const canEdit = this.canEdit(user, updateArgs.status);
 
 		if (!canEdit) {
-			throw new UberEastsError({
+			throw new UberEastsException({
 				errorCode: UBER_EATS_ERROR.no_rights,
 				message: 'No rights',
 			});

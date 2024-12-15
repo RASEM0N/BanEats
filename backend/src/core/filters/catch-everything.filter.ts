@@ -1,6 +1,6 @@
 import { ArgumentsHost, HttpException } from '@nestjs/common';
 import { BaseExceptionFilter } from '@nestjs/core';
-import { UberEastsError } from '@ubereats/common/error';
+import { UberEastsException } from '@ubereats/common/error';
 
 export class CatchEverythingFilter extends BaseExceptionFilter {
 	catch(exception: any, host: ArgumentsHost) {
@@ -15,7 +15,7 @@ export class CatchEverythingFilter extends BaseExceptionFilter {
 	}
 
 	private _getErrorResult(exception: Error): { errorCode: number; message: string } {
-		if (exception instanceof UberEastsError) {
+		if (exception instanceof UberEastsException) {
 			return {
 				errorCode: exception.errorCode,
 				message: exception.message,

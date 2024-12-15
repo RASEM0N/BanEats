@@ -7,7 +7,7 @@ import {
 	createMockUserData,
 	MockUserData,
 } from '@/modules/users/tests/lib/mock-user-entity';
-import { UberEastsError } from '@ubereats/common/error';
+import { UberEastsException } from '@ubereats/common/error';
 
 describe('UserService', () => {
 	let usersService: UserService;
@@ -93,7 +93,7 @@ describe('UserService', () => {
 			try {
 				await usersService.get(1);
 			} catch (e) {
-				expect(e).toBeInstanceOf(UberEastsError);
+				expect(e).toBeInstanceOf(UberEastsException);
 				expect(e.errorCode).toBe(400);
 			}
 		});
@@ -161,7 +161,7 @@ describe('UserService', () => {
 					password: mockUser.password,
 				});
 			} catch (e) {
-				expect(e).toBeInstanceOf(UberEastsError);
+				expect(e).toBeInstanceOf(UberEastsException);
 				expect(e.errorCode).toBe(400);
 			}
 
@@ -192,7 +192,7 @@ describe('UserService', () => {
 					usersVerifyService.createVerifyWithTransaction,
 				).not.toHaveBeenCalled();
 
-				expect(e).toThrow(UberEastsError);
+				expect(e).toThrow(UberEastsException);
 				expect(e.errorCode).toBe(400);
 			}
 		});
@@ -260,7 +260,7 @@ describe('UserService', () => {
 			try {
 				await usersService.update(mockUser.id, updateData);
 			} catch (e) {
-				expect(e).toBeInstanceOf(UberEastsError);
+				expect(e).toBeInstanceOf(UberEastsException);
 				expect(e.errorCode).toBe(400);
 			}
 
@@ -283,7 +283,7 @@ describe('UserService', () => {
 					password: '1234568910',
 				});
 			} catch (e) {
-				expect(e).toThrow(UberEastsError);
+				expect(e).toThrow(UberEastsException);
 				expect(e.errorCode).toBe(400);
 			}
 

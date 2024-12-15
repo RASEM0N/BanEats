@@ -9,7 +9,7 @@ import { RestaurantDish } from '../entities/dish.entity';
 import { CreateDishArgs } from '../dto/dish-create.dto';
 import { UpdateDishArgs } from '../dto/dish-update.dto';
 import { DeleteDishArgs } from '../dto/dish-delete.dto';
-import { UBER_EATS_ERROR, UberEastsError } from '@ubereats/common/error';
+import { UBER_EATS_ERROR, UberEastsException } from '@ubereats/common/error';
 
 @Injectable()
 export class DishService implements DefaultCRUD<RestaurantDish> {
@@ -31,7 +31,7 @@ export class DishService implements DefaultCRUD<RestaurantDish> {
 		const restaurant = await this.restaurantService.get(args.restaurantId);
 
 		if (restaurant.ownerId !== user.id) {
-			throw new UberEastsError({
+			throw new UberEastsException({
 				errorCode: UBER_EATS_ERROR.no_rights,
 				message: 'No rights',
 			});
@@ -54,14 +54,14 @@ export class DishService implements DefaultCRUD<RestaurantDish> {
 		});
 
 		if (!dish) {
-			throw new UberEastsError({
+			throw new UberEastsException({
 				errorCode: UBER_EATS_ERROR.no_entity,
 				message: 'There is no dish',
 			});
 		}
 
 		if (dish.restaurant.ownerId !== user.id) {
-			throw new UberEastsError({
+			throw new UberEastsException({
 				errorCode: UBER_EATS_ERROR.no_entity,
 				message: 'No rights',
 			});
@@ -83,14 +83,14 @@ export class DishService implements DefaultCRUD<RestaurantDish> {
 		});
 
 		if (!dish) {
-			throw new UberEastsError({
+			throw new UberEastsException({
 				errorCode: UBER_EATS_ERROR.no_entity,
 				message: 'There is no dish',
 			});
 		}
 
 		if (dish.restaurant.ownerId !== user.id) {
-			throw new UberEastsError({
+			throw new UberEastsException({
 				errorCode: UBER_EATS_ERROR.no_rights,
 				message: 'No rights',
 			});

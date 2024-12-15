@@ -3,7 +3,7 @@ import { DataSource, Repository } from 'typeorm';
 import { User } from '../entities/user.entity';
 import { CreateUserArgs } from '../dto/user-create.dto';
 import { DefaultCRUD } from '@ubereats/common/services';
-import { UBER_EATS_ERROR, UberEastsError } from '@ubereats/common/error';
+import { UBER_EATS_ERROR, UberEastsException } from '@ubereats/common/error';
 import { InjectRepository } from '@nestjs/typeorm';
 import { UpdateUserArgs } from '../dto/user-update.dto';
 import { UserVerifyService } from './user-verify.service';
@@ -29,7 +29,7 @@ export class UserService implements DefaultCRUD<User> {
 			});
 
 			if (existUser) {
-				throw new UberEastsError({
+				throw new UberEastsException({
 					errorCode: UBER_EATS_ERROR.already_there,
 					message: `There is already a user with this email address`,
 				});
@@ -67,7 +67,7 @@ export class UserService implements DefaultCRUD<User> {
 		});
 
 		if (!user) {
-			throw new UberEastsError({
+			throw new UberEastsException({
 				errorCode: UBER_EATS_ERROR.no_entity,
 				message: `There is no user`,
 			});

@@ -4,7 +4,7 @@ import { RestaurantsCategory } from '../entities/category.entity';
 import { InjectRepository } from '@nestjs/typeorm';
 import { DefaultCRUD } from '@ubereats/common/services';
 import slugify from 'slugify';
-import { UBER_EATS_ERROR, UberEastsError } from '@ubereats/common/error';
+import { UBER_EATS_ERROR, UberEastsException } from '@ubereats/common/error';
 
 @Injectable()
 export class CategoryService implements DefaultCRUD<RestaurantsCategory> {
@@ -41,7 +41,7 @@ export class CategoryService implements DefaultCRUD<RestaurantsCategory> {
 		});
 
 		if (!restaurant) {
-			throw new UberEastsError({
+			throw new UberEastsException({
 				errorCode: UBER_EATS_ERROR.no_entity,
 				message: 'There is no category',
 			});

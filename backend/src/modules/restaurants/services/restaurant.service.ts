@@ -4,7 +4,7 @@ import { Restaurant } from '../entities/restaurant.entity';
 import { CreateRestaurantArgs } from '../dto/restaurant-create.dto';
 import { UpdateRestaurantArgs } from '../dto/restaurant-update.dto';
 import { DefaultCRUD } from '@ubereats/common/services';
-import { UBER_EATS_ERROR, UberEastsError } from '@ubereats/common/error';
+import { UBER_EATS_ERROR, UberEastsException } from '@ubereats/common/error';
 import { InjectRepository } from '@nestjs/typeorm';
 import { User } from '@/modules/users/entities/user.entity';
 import { CategoryService } from './category.service';
@@ -32,7 +32,7 @@ export class RestaurantService implements DefaultCRUD<Restaurant> {
 		});
 
 		if (!restaurant) {
-			throw new UberEastsError({
+			throw new UberEastsException({
 				errorCode: UBER_EATS_ERROR.no_entity,
 				message: `There is no restaurant`,
 			});
@@ -79,14 +79,14 @@ export class RestaurantService implements DefaultCRUD<Restaurant> {
 		});
 
 		if (!restaurant) {
-			throw new UberEastsError({
+			throw new UberEastsException({
 				errorCode: UBER_EATS_ERROR.no_entity,
 				message: 'There is no restaurant',
 			});
 		}
 
 		if (user.id !== restaurant.id) {
-			throw new UberEastsError({
+			throw new UberEastsException({
 				errorCode: UBER_EATS_ERROR.no_rights,
 				message: 'No rights',
 			});
@@ -114,7 +114,7 @@ export class RestaurantService implements DefaultCRUD<Restaurant> {
 		}
 
 		if (restaurant.ownerId !== user.id) {
-			throw new UberEastsError({
+			throw new UberEastsException({
 				errorCode: UBER_EATS_ERROR.no_rights,
 				message: 'No rights',
 			});
