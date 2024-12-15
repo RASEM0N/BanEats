@@ -20,6 +20,7 @@ const defaultMessage = (errorCode: UBER_EATS_ERROR): string => {
 };
 
 export enum UBER_EATS_ERROR {
+	error = 400,
 	no_rights = 10001,
 	no_entity = 10002,
 	already_there = 20001,
