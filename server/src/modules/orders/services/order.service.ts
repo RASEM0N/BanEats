@@ -7,7 +7,7 @@ import { User, USER_ROLE } from '@/modules/users/entities/user.entity';
 import { CreateOrdersArgs, CreateOrdersData } from '../dto/order-create.dto';
 import { Restaurant } from '@/modules/restaurants/entities/restaurant.entity';
 import { RestaurantDish } from '@/modules/restaurants/entities/dish.entity';
-import { CustomError, getErrorWithDefault } from '@ubereats/common/error';
+import { CustomError } from '@ubereats/common/error';
 import { GetAllOrdersArgs, GetAllOrdersData, GetOrdersArgs } from '../dto/order-get.dto';
 import { UpdateOrdersArgs } from '../dto/order-update.dto';
 import { SHARED_COMPONENTS } from '@/core/shared.module';

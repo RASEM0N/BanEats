@@ -3,7 +3,6 @@ import { LoginData, LoginArgs } from '../dto/auth-login.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { User } from '@/modules/users/entities/user.entity';
 import { Repository } from 'typeorm';
-import { getErrorWithDefault } from '@ubereats/common/error';
 import { JwtService } from '@ubereats/jwt';
 
 @Injectable()

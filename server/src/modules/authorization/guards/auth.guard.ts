@@ -4,7 +4,7 @@ import { Reflector } from '@nestjs/core';
 import { META_KEY as USER_ROLE_KEY } from '../decorators/role.decorator';
 import { META_KEY as PUBLIC_KEY } from '../decorators/auth-public.decorator';
 import { User, USER_ROLE } from '@/modules/users/entities/user.entity';
-import { UserService } from '@/modules/users/user.service';
+import { UserService } from '@/modules/users/services/user.service';
 import { JwtService } from '@ubereats/jwt';
 
 @Injectable()

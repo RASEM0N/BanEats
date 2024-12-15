@@ -2,9 +2,9 @@ import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { User } from './entities/user.entity';
 import { Verification } from './entities/verification.entity';
-import { UserResolver } from './user.resolver';
-import { UserService } from './user.service';
-import { UserVerifyService } from './user-verify.service';
+import { UserResolver } from './resolvers/user.resolver';
+import { UserService } from './services/user.service';
+import { UserVerifyService } from './services/user-verify.service';
 import { UserMiddleware } from './middlewares/user.middleware';
 
 @Module({

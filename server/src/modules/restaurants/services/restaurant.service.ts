@@ -4,7 +4,7 @@ import { Restaurant } from '../entities/restaurant.entity';
 import { CreateRestaurantArgs } from '../dto/restaurant-create.dto';
 import { UpdateRestaurantArgs } from '../dto/restaurant-update.dto';
 import { DefaultCRUD } from '@ubereats/common/services';
-import { CustomError, getErrorWithDefault } from '@ubereats/common/error';
+import { CustomError } from '@ubereats/common/error';
 import { InjectRepository } from '@nestjs/typeorm';
 import { User } from '@/modules/users/entities/user.entity';
 import { CategoryService } from './category.service';

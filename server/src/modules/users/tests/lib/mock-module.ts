@@ -1,8 +1,8 @@
 import { Test } from '@nestjs/testing';
 import { getRepositoryToken } from '@nestjs/typeorm';
 import { MailerService } from '@ubereats/mailer';
-import { UserService } from '../../user.service';
-import { UserVerifyService } from '../../user-verify.service';
+import { UserService } from '../../services/user.service';
+import { UserVerifyService } from '../../services/user-verify.service';
 import { User } from '../../entities/user.entity';
 import { Verification } from '../../entities/verification.entity';
 import { createMockRepository } from '@ubereats/test/mock-repository';

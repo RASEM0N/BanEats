@@ -1,10 +1,9 @@
-import { Inject, Injectable } from '@nestjs/common';
-import { getErrorWithDefault } from '@ubereats/common/error';
+import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { User } from './entities/user.entity';
-import { Verification } from './entities/verification.entity';
+import { User } from '../entities/user.entity';
+import { Verification } from '../entities/verification.entity';
 import { MailerService } from '@ubereats/mailer';
-import { SendVerifyEmailArgs } from './dto/user-verify-send-email.dto';
+import { SendVerifyEmailArgs } from '../dto/user-verify-send-email.dto';
 import { Repository } from 'typeorm';
 import { QueryRunner } from 'typeorm/query-runner/QueryRunner';
 
@@ -37,7 +36,6 @@ export class UserVerifyService {
 	}
 
 	async verifyEmail(code: string): Promise<void> {
-		try {
 			const verification = await this.verification.findOne({
 				where: { code },
 				relations: ['user'],
@@ -49,12 +47,7 @@ export class UserVerifyService {
 
 			verification.user.isVerified = true;
 			await this.user.save(verification.user);
-		} catch (e) {
-			throw getErrorWithDefault(e, {
-				errorCode: 400,
-				message: 'Ошибка подтверждения email',
-			});
-		}
+
 	}
 
 	async sendVerifyEmail({ email, code }: SendVerifyEmailArgs): Promise<void> {
