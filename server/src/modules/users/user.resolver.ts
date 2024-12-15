@@ -7,7 +7,7 @@ import { GetUserArgs, GetUserOutput } from './dtos/user-get.dto';
 import { UpdateUserArgs, UpdateUserOutput } from './dtos/user-update.dto';
 import { VerifyEmailArgs } from './dtos/user-verify-email.dto';
 import { UserVerifyService } from './user-verify.service';
-import { AuthRoles } from '@/modules/authorization/decorators/auth-role.decorator';
+import { Roles } from '@/modules/authorization/decorators/role.decorator';
 import { AuthPublic } from '@/modules/authorization/decorators/auth-public.decorator';
 import { CoreOutputWithoutData } from '@ubereats/common/dtos';
 import { UsersMeOutput } from '@/modules/users/dtos/user-me.dto';
@@ -29,7 +29,7 @@ export class UserResolver {
 		};
 	}
 
-	@AuthRoles([USER_ROLE.admin])
+	@Roles([USER_ROLE.admin])
 	@Query(() => GetUserOutput, { name: 'UserGetOne' })
 	async get(@Args() { id }: GetUserArgs): Promise<GetUserOutput> {
 		try {

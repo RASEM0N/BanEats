@@ -1,6 +1,5 @@
-import { Inject } from '@nestjs/common';
 import { Args, Mutation, Resolver } from '@nestjs/graphql';
-import { AuthRoles } from '@/modules/authorization/decorators/auth-role.decorator';
+import { Roles } from '@/modules/authorization/decorators/role.decorator';
 import { AuthUser } from '@/modules/authorization/decorators/auth-user.decorator';
 import { User, USER_ROLE } from '@/modules/users/entities/user.entity';
 import { CoreOutputWithoutData } from '@ubereats/common/dtos';
@@ -14,7 +13,7 @@ import { UpdateDishArgs, UpdateDishOutput } from '../dtos/dish-update.dto';
 export class DishResolver {
 	constructor(private readonly dishService: DishService) {}
 
-	@AuthRoles([USER_ROLE.admin])
+	@Roles([USER_ROLE.admin])
 	@Mutation(() => CreateDishOutput, { name: 'RestaurantDishCreate' })
 	async create(
 		@AuthUser() user: User,
@@ -37,7 +36,7 @@ export class DishResolver {
 		}
 	}
 
-	@AuthRoles([USER_ROLE.admin])
+	@Roles([USER_ROLE.admin])
 	@Mutation(() => UpdateDishOutput, { name: 'RestaurantDishUpdate' })
 	async update(
 		@AuthUser() user: User,
@@ -60,7 +59,7 @@ export class DishResolver {
 		}
 	}
 
-	@AuthRoles([USER_ROLE.admin])
+	@Roles([USER_ROLE.admin])
 	@Mutation(() => CoreOutputWithoutData, { name: 'RestaurantDishDelete' })
 	async delete(
 		@AuthUser() user: User,

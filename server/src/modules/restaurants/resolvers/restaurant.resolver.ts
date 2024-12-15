@@ -1,6 +1,6 @@
 import { Args, Mutation, Query, Resolver } from '@nestjs/graphql';
 import { CoreOutputWithoutData, PaginationArgs } from '@ubereats/common/dtos';
-import { AuthRoles } from '@/modules/authorization/decorators/auth-role.decorator';
+import { Roles } from '@/modules/authorization/decorators/role.decorator';
 import { AuthUser } from '@/modules/authorization/decorators/auth-user.decorator';
 import { AuthPublic } from '@/modules/authorization/decorators/auth-public.decorator';
 import { User, USER_ROLE } from '@/modules/users/entities/user.entity';
@@ -45,7 +45,7 @@ export class RestaurantResolver {
 		}
 	}
 
-	@AuthRoles([USER_ROLE.owner])
+	@Roles([USER_ROLE.owner])
 	@Mutation(() => CreateRestaurantOutput, { name: 'RestaurantCreate' })
 	async create(
 		@AuthUser() user: User,
@@ -69,7 +69,7 @@ export class RestaurantResolver {
 		}
 	}
 
-	@AuthRoles([USER_ROLE.owner])
+	@Roles([USER_ROLE.owner])
 	@Mutation(() => UpdateRestaurantOutput, { name: 'RestaurantUpdate' })
 	async update(
 		@AuthUser() user: User,
@@ -93,7 +93,7 @@ export class RestaurantResolver {
 		}
 	}
 
-	@AuthRoles([USER_ROLE.admin])
+	@Roles([USER_ROLE.admin])
 	@Mutation(() => CoreOutputWithoutData, { name: 'RestaurantDelete' })
 	async delete(
 		@AuthUser() user: User,

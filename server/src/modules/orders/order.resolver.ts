@@ -2,7 +2,7 @@ import { Args, Mutation, Query, Resolver, Subscription } from '@nestjs/graphql';
 import { CreateOrdersArgs, CreateOrdersOutput } from './dtos/order-create.dto';
 import { AuthUser } from '@/modules/authorization/decorators/auth-user.decorator';
 import { User, USER_ROLE } from '@/modules/users/entities/user.entity';
-import { AuthRoles } from '@/modules/authorization/decorators/auth-role.decorator';
+import { Roles } from '@/modules/authorization/decorators/role.decorator';
 import { OrderService } from './order.service';
 import { Inject } from '@nestjs/common';
 import {
@@ -27,8 +27,8 @@ export class OrderResolver {
 		@Inject(SHARED_COMPONENTS.pubSub) private readonly pubSub: PubSub,
 	) {}
 
+	@Roles([USER_ROLE.client])
 	@Mutation(() => CreateOrdersOutput, { name: 'OrderCreate' })
-	@AuthRoles([USER_ROLE.client])
 	async create(
 		@AuthUser() user: User,
 		@Args() args: CreateOrdersArgs,

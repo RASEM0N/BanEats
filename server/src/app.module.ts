@@ -10,7 +10,6 @@ import { MailerModule } from '@ubereats/mailer';
 import { configDb } from '@/core/db/db.config';
 import { configSchema } from '@/core/config/config.schema';
 import { JWT_OPTIONS, MAILER_OPTIONS } from '@/core/config/config.const';
-import { AppResolver } from './app.resolver';
 
 import { RestaurantModule } from '@/modules/restaurants/restaurant.module';
 import { UserModule } from '@/modules/users/user.module';
@@ -27,7 +26,6 @@ import { OrderItem } from '@/modules/orders/entities/order-item.entity';
 import { User } from '@/modules/users/entities/user.entity';
 
 @Module({
-	providers: [AppResolver],
 	imports: [
 		ConfigModule.forRoot({
 			isGlobal: true,
