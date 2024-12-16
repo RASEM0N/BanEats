@@ -5,6 +5,16 @@
 - добавить в описание методов gql, какие права нужны, нужны ли быть авторизованным и т.д.
 
 ## Backend
+- Добавить нормальную обработку ошибок валидации
+```
+"originalError": {
+          "message": [
+            "email must be longer than or equal to 4 characters",
+            "email must be an email",
+            "password must be longer than or equal to 10 characters",
+            "role must be one of the following values: admin, client, owner, delivery"
+          ],
+```
 - Исправить Output, чтоб не было свойств дата, а сразу же были данные
 
 Вместо
