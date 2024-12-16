@@ -1,5 +1,3 @@
-import { registerEnumType } from '@nestjs/graphql';
-
 interface UberEatsConstructor {
 	errorCode: UBER_EATS_ERROR;
 	message?: string;
@@ -14,41 +12,24 @@ export enum UBER_EATS_ERROR {
 	fail_login = 20002,
 }
 
-registerEnumType(UBER_EATS_ERROR, {
-	name: 'UBER_EATS_ERROR',
-	valuesMap: {
-		error: { description: 'Дефолтная ошибка' },
-		no_rights: { description: 'Нет прав на действие' },
-		no_entity: { description: 'Нет сущности/предмета' },
-		already_there: { description: 'Данная сущность/предмет уже существует' },
-	},
-});
-
 export class UberEastsException extends Error {
 	readonly errorCode: UBER_EATS_ERROR;
 
-	static defaultMessage(errorCode: UBER_EATS_ERROR): string {
-		if (errorCode === UBER_EATS_ERROR.no_rights) {
-			return 'No rights';
-		}
+	private static readonly descriptions: { [key in UBER_EATS_ERROR]: string } = {
+		[UBER_EATS_ERROR.error]: 'Unhandled error',
+		[UBER_EATS_ERROR.server_error]: 'Server error',
+		[UBER_EATS_ERROR.no_rights]: 'No rights',
+		[UBER_EATS_ERROR.no_entity]: 'There is no entity',
+		[UBER_EATS_ERROR.already_there]: 'There is entity',
+		[UBER_EATS_ERROR.fail_login]: 'Fail authentication',
+	};
 
-		if (errorCode === UBER_EATS_ERROR.no_entity) {
-			return 'There is no entity';
-		}
-
-		if (errorCode === UBER_EATS_ERROR.already_there) {
-			return 'There is entity';
-		}
-
-		if (errorCode === UBER_EATS_ERROR.server_error) {
-			return 'Server error';
-		}
-
-		return 'Unhandled error';
+	static getDescription(errorCode: UBER_EATS_ERROR): string {
+		return this.descriptions[errorCode] ?? this.descriptions[UBER_EATS_ERROR.error];
 	}
 
 	constructor(params: UberEatsConstructor) {
-		super(params.message ?? UberEastsException.defaultMessage(params.errorCode));
+		super(params.message ?? UberEastsException.getDescription(params.errorCode));
 		this.errorCode = params.errorCode;
 	}
 }
