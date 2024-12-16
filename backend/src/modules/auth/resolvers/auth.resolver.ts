@@ -15,6 +15,6 @@ export class AuthResolver {
 			password,
 		});
 
-		return { data: { user, token } };
+		return { user, token };
 	}
 }

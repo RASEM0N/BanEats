@@ -22,13 +22,7 @@ export class CreateOrdersArgs {
 }
 
 @ObjectType()
-export class CreateOrdersData {
+export class CreateOrdersOutput {
 	@Field(() => Order)
 	order: Order;
-}
-
-@ObjectType()
-export class CreateOrdersOutput extends CoreOutput<CreateOrdersData> {
-	@Field(() => CreateOrdersData, { nullable: true })
-	data?: CreateOrdersData;
 }

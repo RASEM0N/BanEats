@@ -4,7 +4,7 @@ import { Order, ORDER_STATUS } from '../entities/order.entity';
 import { OrderItem } from '../entities/order-item.entity';
 import { Repository } from 'typeorm';
 import { User, USER_ROLE } from '@/modules/users/entities/user.entity';
-import { CreateOrdersArgs, CreateOrdersData } from '../dto/order-create.dto';
+import { CreateOrdersArgs, CreateOrdersOutput } from '../dto/order-create.dto';
 import { Restaurant } from '@/modules/restaurants/entities/restaurant.entity';
 import { RestaurantDish } from '@/modules/restaurants/entities/dish.entity';
 import { UBER_EATS_ERROR, UberEastsException } from '@ubereats/common/error';
@@ -29,7 +29,7 @@ export class OrderService {
 		@Inject(SHARED_COMPONENTS.pubSub) private readonly pubSub: PubSub,
 	) {}
 
-	async create(customer: User, args: CreateOrdersArgs): Promise<CreateOrdersData> {
+	async create(customer: User, args: CreateOrdersArgs): Promise<CreateOrdersOutput> {
 		const restaurant = await this.restaurant.findOneOrFail({
 			where: {
 				id: args.restaurantId,

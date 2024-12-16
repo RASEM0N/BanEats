@@ -6,13 +6,7 @@ import { Order } from '../entities/order.entity';
 export class UpdateOrdersArgs extends PickType(Order, ['id', 'status'], ArgsType) {}
 
 @ObjectType()
-export class UpdateOrdersData {
+export class UpdateOrdersOutput {
 	@Field(() => Order)
 	order: Order;
-}
-
-@ObjectType()
-export class UpdateOrdersOutput extends CoreOutput<UpdateOrdersData> {
-	@Field(() => UpdateOrdersData, { nullable: true })
-	data?: UpdateOrdersData;
 }

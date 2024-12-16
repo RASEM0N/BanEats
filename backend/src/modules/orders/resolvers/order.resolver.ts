@@ -11,11 +11,7 @@ import {
 	GetOrderOutput,
 	GetOrdersArgs,
 } from '../dto/order-get.dto';
-import {
-	UpdateOrdersArgs,
-	UpdateOrdersData,
-	UpdateOrdersOutput,
-} from '../dto/order-update.dto';
+import { UpdateOrdersArgs, UpdateOrdersOutput } from '../dto/order-update.dto';
 import { Order } from '@/modules/orders/entities/order.entity';
 import { SHARED_COMPONENTS } from '@/core/shared.module';
 import { PubSub } from 'graphql-subscriptions';
@@ -33,8 +29,7 @@ export class OrderResolver {
 		@AuthUser() user: User,
 		@Args() args: CreateOrdersArgs,
 	): Promise<CreateOrdersOutput> {
-		const data = await this.ordersService.create(user, args);
-		return { data };
+		return await this.ordersService.create(user, args);
 	}
 
 	@Mutation(() => UpdateOrdersOutput, { name: 'OrderUpdate' })
@@ -43,7 +38,7 @@ export class OrderResolver {
 		@Args() args: UpdateOrdersArgs,
 	): Promise<UpdateOrdersOutput> {
 		const updatedOrder = await this.ordersService.update(user, args);
-		return { data: { order: updatedOrder } };
+		return { order: updatedOrder };
 	}
 
 	@Query(() => GetAllOrdersOutput, { name: 'OrderGetAll' })
@@ -64,7 +59,7 @@ export class OrderResolver {
 	@Subscription(() => Order, {
 		name: 'OnOrderUpdate',
 		filter: (
-			{ order }: UpdateOrdersData,
+			{ order }: UpdateOrdersOutput,
 			_: UpdateOrdersArgs,
 			{ user }: { user: User },
 		) => {
