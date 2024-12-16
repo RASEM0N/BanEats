@@ -14,7 +14,7 @@ export class CreateRestaurantArgs extends PickType(Restaurant, [
 	'name',
 	'address',
 	'coverImage',
-]) {
+], ArgsType) {
 	@Field(() => String)
 	@IsString()
 	@Length(5)

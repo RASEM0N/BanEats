@@ -9,7 +9,7 @@ export class GetUserData {
 }
 
 @ArgsType()
-export class GetUserArgs extends PickType(User, ['id']) {}
+export class GetUserArgs extends PickType(User, ['id'], ArgsType) {}
 
 @ObjectType()
 export class GetUserOutput extends CoreOutput<GetUserData> {

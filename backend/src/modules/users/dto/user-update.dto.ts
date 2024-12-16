@@ -9,7 +9,7 @@ export class UpdateUserData {
 }
 
 @ArgsType()
-export class UpdateUserArgs extends PickType(User, ['email', 'password']) {}
+export class UpdateUserArgs extends PickType(User, ['email', 'password'], ArgsType) {}
 
 @ObjectType()
 export class UpdateUserOutput extends CoreOutput<UpdateUserData> {
