@@ -37,8 +37,8 @@ export class OrderResolver {
 		@AuthUser() user: User,
 		@Args() args: UpdateOrdersArgs,
 	): Promise<UpdateOrdersOutput> {
-		const updatedOrder = await this.ordersService.update(user, args);
-		return { order: updatedOrder };
+		const order = await this.ordersService.update(user, args);
+		return { order };
 	}
 
 	@Query(() => GetAllOrdersOutput, { name: 'OrderGetAll' })
@@ -46,14 +46,13 @@ export class OrderResolver {
 		@AuthUser() user: User,
 		@Args() args: GetAllOrdersArgs,
 	): Promise<GetAllOrdersOutput> {
-		const data = await this.ordersService.getAll(user, args);
-		return { data };
+		return await this.ordersService.getAll(user, args);
 	}
 
 	@Query(() => GetOrderOutput, { name: 'OrderGet' })
 	async get(@AuthUser() user: User, args: GetOrdersArgs): Promise<GetOrderOutput> {
 		const order = await this.ordersService.get(user, args);
-		return { data: { order } };
+		return { order };
 	}
 
 	@Subscription(() => Order, {

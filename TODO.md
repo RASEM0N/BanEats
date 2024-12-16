@@ -15,25 +15,7 @@
             "role must be one of the following values: admin, client, owner, delivery"
           ],
 ```
-- Исправить Output, чтоб не было свойств дата, а сразу же были данные
 
-Вместо
-```
-query {
-   UserMe {
-      data { user { email name  }  } 
-   }
-}
-```
-
-Было бы
-```
-query {
-   UserMe {
-      user { email name  }
-   }
-}
-```
 - Добавить Логгер для запросов GraphQL. Моргана хороша для HTTP запросов
 - Убрать TODO-шки
 - AuthPublic в мусорку

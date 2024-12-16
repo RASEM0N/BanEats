@@ -2,7 +2,6 @@ import { Args, Mutation, Resolver } from '@nestjs/graphql';
 import { Roles } from '@/modules/auth/decorators/role.decorator';
 import { AuthUser } from '@/modules/auth/decorators/auth-user.decorator';
 import { User, USER_ROLE } from '@/modules/users/entities/user.entity';
-import { CoreOutputWithoutData } from '@ubereats/common/dto';
 
 import { DeleteDishArgs } from '../dto/dish-delete.dto';
 import { DishService } from '../services/dish.service';
@@ -20,7 +19,7 @@ export class DishResolver {
 		@Args() args: CreateDishArgs,
 	): Promise<CreateDishOutput> {
 		const dish = await this.dishService.create(user, args);
-		return { data: { dish } };
+		return { dish };
 	}
 
 	@Roles(USER_ROLE.admin)
@@ -30,16 +29,13 @@ export class DishResolver {
 		@Args() args: UpdateDishArgs,
 	): Promise<UpdateDishOutput> {
 		const dish = await this.dishService.update(user, args);
-		return { data: { dish } };
+		return { dish };
 	}
 
 	@Roles(USER_ROLE.admin)
-	@Mutation(() => CoreOutputWithoutData, { name: 'RestaurantDishDelete' })
-	async delete(
-		@AuthUser() user: User,
-		@Args() args: DeleteDishArgs,
-	): Promise<CoreOutputWithoutData> {
+	@Mutation(() => Boolean, { name: 'RestaurantDishDelete' })
+	async delete(@AuthUser() user: User, @Args() args: DeleteDishArgs): Promise<boolean> {
 		await this.dishService.delete(user, args);
-		return {};
+		return true;
 	}
 }

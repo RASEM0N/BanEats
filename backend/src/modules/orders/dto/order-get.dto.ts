@@ -1,5 +1,4 @@
 import { ArgsType, Field, ObjectType } from '@nestjs/graphql';
-import { CoreOutput } from '@ubereats/common/dto';
 import { Order, ORDER_STATUS } from '../entities/order.entity';
 
 @ArgsType()
@@ -9,15 +8,9 @@ export class GetAllOrdersArgs {
 }
 
 @ObjectType()
-export class GetAllOrdersData {
+export class GetAllOrdersOutput {
 	@Field(() => [Order])
 	orders?: Order[];
-}
-
-@ObjectType()
-export class GetAllOrdersOutput extends CoreOutput<GetAllOrdersData> {
-	@Field(() => GetAllOrdersData, { nullable: true })
-	data?: GetAllOrdersData;
 }
 
 @ArgsType()
@@ -27,13 +20,7 @@ export class GetOrdersArgs {
 }
 
 @ObjectType()
-export class GetOrdersData {
+export class GetOrderOutput {
 	@Field(() => Order)
 	order: Order;
-}
-
-@ObjectType()
-export class GetOrderOutput extends CoreOutput<GetOrdersData> {
-	@Field(() => GetOrdersData, { nullable: true })
-	data?: GetOrdersData;
 }

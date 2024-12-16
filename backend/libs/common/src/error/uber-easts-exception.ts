@@ -1,4 +1,4 @@
-import { HttpException } from '@nestjs/common';
+import { registerEnumType } from '@nestjs/graphql';
 
 interface UberEatsConstructor {
 	errorCode: UBER_EATS_ERROR;
@@ -13,6 +13,16 @@ export enum UBER_EATS_ERROR {
 	already_there = 20001,
 	fail_login = 20002,
 }
+
+registerEnumType(UBER_EATS_ERROR, {
+	name: 'UBER_EATS_ERROR',
+	valuesMap: {
+		error: { description: 'Дефолтная ошибка' },
+		no_rights: { description: 'Нет прав на действие' },
+		no_entity: { description: 'Нет сущности/предмета' },
+		already_there: { description: 'Данная сущность/предмет уже существует' },
+	},
+});
 
 export class UberEastsException extends Error {
 	readonly errorCode: UBER_EATS_ERROR;

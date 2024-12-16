@@ -8,7 +8,6 @@ import { UpdateUserArgs, UpdateUserOutput } from '../dto/user-update.dto';
 import { VerifyEmailArgs } from '../dto/user-verify-email.dto';
 import { UserVerifyService } from '../services/user-verify.service';
 import { Roles } from '@/modules/auth/decorators/role.decorator';
-import { CoreOutputWithoutData } from '@ubereats/common/dto';
 import { UsersMeOutput } from '@/modules/users/dto/user-me.dto';
 import { UBER_EATS_ERROR, UberEastsException } from '@ubereats/common/error';
 import { NoAuth } from '@/modules/auth/decorators/no-auth.decorator';
@@ -23,7 +22,7 @@ export class UserResolver {
 	@Roles('any')
 	@Query(() => UsersMeOutput, { name: 'UserMe' })
 	me(@AuthUser() user: User): UsersMeOutput {
-		return { data: { user } };
+		return { user };
 	}
 
 	@Roles('any')
@@ -37,14 +36,14 @@ export class UserResolver {
 		}
 
 		const user = await this.userService.get(id);
-		return { data: { user } };
+		return { user };
 	}
 
 	@NoAuth()
 	@Mutation(() => CreateUserOutput, { name: 'UserCreate' })
 	async create(@Args() args: CreateUserArgs): Promise<CreateUserOutput> {
 		const user = await this.userService.create(args);
-		return { data: { user } };
+		return { user };
 	}
 
 	@Roles('any')
@@ -54,13 +53,13 @@ export class UserResolver {
 		@Args() args: UpdateUserArgs,
 	): Promise<UpdateUserOutput> {
 		const user = await this.userService.update(authUser.id, args);
-		return { data: { user } };
+		return { user };
 	}
 
 	@Roles('any')
-	@Mutation(() => CoreOutputWithoutData, { name: 'UserVerifyEmail' })
-	async verifyEmail(@Args() args: VerifyEmailArgs): Promise<CoreOutputWithoutData> {
+	@Mutation(() => Boolean, { name: 'UserVerifyEmail' })
+	async verifyEmail(@Args() args: VerifyEmailArgs): Promise<boolean> {
 		await this.userVerifyService.verifyEmail(args.code);
-		return {};
+		return true;
 	}
 }

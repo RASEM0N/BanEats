@@ -1,5 +1,5 @@
 import { Args, Mutation, Query, Resolver } from '@nestjs/graphql';
-import { CoreOutputWithoutData, PaginationArgs } from '@ubereats/common/dto';
+import { PaginationArgs } from '@ubereats/common/dto';
 import { Roles } from '@/modules/auth/decorators/role.decorator';
 import { AuthUser } from '@/modules/auth/decorators/auth-user.decorator';
 import { User, USER_ROLE } from '@/modules/users/entities/user.entity';
@@ -23,7 +23,7 @@ export class RestaurantResolver {
 	@Query(() => RestaurantsGetAllOutput, { name: 'RestaurantGetAll' })
 	async getAll(@Args() args: PaginationArgs): Promise<RestaurantsGetAllOutput> {
 		const result = await this.restaurantService.getAll(args);
-		return { data: { ...result } };
+		return { ...result };
 	}
 
 	@Roles(USER_ROLE.owner)
@@ -33,7 +33,7 @@ export class RestaurantResolver {
 		@Args() dto: CreateRestaurantArgs,
 	): Promise<CreateRestaurantOutput> {
 		const restaurant = await this.restaurantService.create(user, dto);
-		return { data: { restaurant } };
+		return { restaurant };
 	}
 
 	@Roles(USER_ROLE.owner)
@@ -43,17 +43,16 @@ export class RestaurantResolver {
 		@Args() updateArgs: UpdateRestaurantArgs,
 	): Promise<UpdateRestaurantOutput> {
 		const restaurant = await this.restaurantService.update(user, updateArgs);
-
-		return { data: { restaurant } };
+		return { restaurant };
 	}
 
 	@Roles(USER_ROLE.admin)
-	@Mutation(() => CoreOutputWithoutData, { name: 'RestaurantDelete' })
+	@Mutation(() => Boolean, { name: 'RestaurantDelete' })
 	async delete(
 		@AuthUser() user: User,
 		@Args() args: RestaurantsDeleteArgs,
-	): Promise<CoreOutputWithoutData> {
+	): Promise<boolean> {
 		await this.restaurantService.delete(user, args);
-		return {};
+		return true;
 	}
 }

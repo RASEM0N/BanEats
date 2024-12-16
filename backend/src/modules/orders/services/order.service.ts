@@ -8,7 +8,11 @@ import { CreateOrdersArgs, CreateOrdersOutput } from '../dto/order-create.dto';
 import { Restaurant } from '@/modules/restaurants/entities/restaurant.entity';
 import { RestaurantDish } from '@/modules/restaurants/entities/dish.entity';
 import { UBER_EATS_ERROR, UberEastsException } from '@ubereats/common/error';
-import { GetAllOrdersArgs, GetAllOrdersData, GetOrdersArgs } from '../dto/order-get.dto';
+import {
+	GetAllOrdersArgs,
+	GetAllOrdersOutput,
+	GetOrdersArgs,
+} from '../dto/order-get.dto';
 import { UpdateOrdersArgs } from '../dto/order-update.dto';
 import { SHARED_COMPONENTS } from '@/core/shared.module';
 import { PubSub } from 'graphql-subscriptions';
@@ -106,7 +110,7 @@ export class OrderService {
 	}
 
 	// https://orkhan.gitbook.io/typeorm/docs/find-options
-	async getAll(user: User, { status }: GetAllOrdersArgs): Promise<GetAllOrdersData> {
+	async getAll(user: User, { status }: GetAllOrdersArgs): Promise<GetAllOrdersOutput> {
 		if (user.role === USER_ROLE.client) {
 			const orders = await this.order.find({
 				where: {

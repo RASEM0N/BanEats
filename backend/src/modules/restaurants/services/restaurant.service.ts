@@ -9,10 +9,10 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { User } from '@/modules/users/entities/user.entity';
 import { CategoryService } from './category.service';
 import { RestaurantsDeleteArgs } from '../dto/restaurant-delete.dto';
-import { RestaurantGetAllArgs, RestaurantsGetAllData } from '../dto/restaurant-get.dto';
+import { RestaurantGetAllArgs, RestaurantsGetAllOutput } from '../dto/restaurant-get.dto';
 import {
 	CategoryGetArgs,
-	CategoryGetData,
+	CategoryGetOutput,
 } from '@/modules/restaurants/dto/category-get.dto';
 
 @Injectable()
@@ -41,7 +41,7 @@ export class RestaurantService implements DefaultCRUD<Restaurant> {
 		return restaurant;
 	}
 
-	async getAll(args: RestaurantGetAllArgs): Promise<RestaurantsGetAllData> {
+	async getAll(args: RestaurantGetAllArgs): Promise<RestaurantsGetAllOutput> {
 		const take = 25;
 		const skip = (args.page - 1) * take;
 
@@ -156,7 +156,7 @@ export class RestaurantService implements DefaultCRUD<Restaurant> {
 	async getCategoryWithAllRestaurants({
 		slug,
 		page,
-	}: CategoryGetArgs): Promise<CategoryGetData> {
+	}: CategoryGetArgs): Promise<CategoryGetOutput> {
 		const category = await this.categoryService.get(slug);
 		const paginationResult = await this.getAll({
 			page,

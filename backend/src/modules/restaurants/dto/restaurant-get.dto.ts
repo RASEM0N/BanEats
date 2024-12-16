@@ -1,9 +1,6 @@
 import { ArgsType, Field, ObjectType } from '@nestjs/graphql';
-import { CoreOutput } from '@ubereats/common/dto';
 import { Restaurant } from '../entities/restaurant.entity';
 import { PaginationArgs, PaginationData } from '@ubereats/common/dto';
-
-// -------------
 
 @ArgsType()
 export class RestaurantGetAllArgs extends PaginationArgs {
@@ -15,13 +12,7 @@ export class RestaurantGetAllArgs extends PaginationArgs {
 }
 
 @ObjectType()
-export class RestaurantsGetAllData extends PaginationData {
+export class RestaurantsGetAllOutput extends PaginationData {
 	@Field(() => [Restaurant])
 	restaurants: Restaurant[];
-}
-
-@ObjectType()
-export class RestaurantsGetAllOutput extends CoreOutput<RestaurantsGetAllData> {
-	@Field(() => RestaurantsGetAllData, { nullable: true })
-	data?: RestaurantsGetAllData;
 }
