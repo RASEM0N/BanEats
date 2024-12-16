@@ -12,6 +12,16 @@ async function bootstrap() {
 	// const { httpAdapter } = app.get(HttpAdapterHost);
 	// app.useGlobalFilters(new CatchEverythingFilter(httpAdapter));
 	app.useGlobalPipes(new ValidationPipe());
+	app.enableCors({
+		// @TODO надо настривать
+		// origin: [
+		// 	'http://localhost:5173',
+		// ],
+
+		// пока что оставил для всех
+		origin: true,
+		methods: ['GET', 'POST'],
+	});
 
 	await app.listen(process.env.APP_PORT);
 }
