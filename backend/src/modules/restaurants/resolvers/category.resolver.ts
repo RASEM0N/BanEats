@@ -17,41 +17,17 @@ export class CategoryResolver {
 		private readonly categoryService: CategoryService,
 	) {}
 
-	/**
-	 * Если в каком-то GQL методе есть сушнрсит RestaurantsCategory
-	 * то это дополнительно добавлчть новое поле, которое выполнится
-	 * только если мы попросим
-	 * @see https://docs.nestjs.com/graphql/resolvers#schema-first-resolver
-	 */
-	// @TODO
-	// @Resolver(() => RestaurantsCategory)
-	@ResolveField(() => Int)
+	// ОПТИМИЗАЦИЯ
+	// В любой @ObjectType RestaurantsCategory
+	// добавляем поле restaurantCount,
+	// которое отдельное берется
 
-	// Parent получаем из @Resolver, который может как на методе
-	// так и на классе самом
+	// https://docs.nestjs.com/graphql/resolvers#schema-first-resolver
+	@ResolveField(() => Int)
 	async restaurantCount(@Parent() category: RestaurantsCategory): Promise<number> {
 		return this.restaurantService.count(category.id);
 	}
 
-	/**
-	 * Вместе с методов выше полный ответ будет
-	 *	{
-	 *	   data: {
-	 *	       categories: [
-	 *	           {
-	 *	               name: 'суши и роллы',
-	 *	               slug: 'суши-и-роллы',
-	 *	               restaurantCount: 43
-	 *	           },
-	 *	           {
-	 * 	               name: 'макароны',
-	 * 	               slug: 'макароны',
-	 * 	               restaurantCount: 12
-	 * 	           }
-	 *	       ]
-	 *	   }
-	 *	}
-	 */
 	@Query(() => CategoryGetAllOutput, { name: 'RestaurantCategoryGetAll' })
 	async getAll(): Promise<CategoryGetAllOutput> {
 		const categories = await this.categoryService.getAll();

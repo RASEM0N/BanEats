@@ -20,35 +20,17 @@ export class DishService implements DefaultCRUD<RestaurantDish> {
 	) {}
 
 	async get(): Promise<RestaurantDish> {
-		return {
-			id: 1,
-			name: 'Dish name',
-			createdAt: new Date(),
-			updatedAt: new Date(),
-			price: 1000,
-			description: 'Dish description',
-			options: [],
-			photo: '',
-			restaurantId: 1,
-
-			restaurant: {
-				id: 1,
-				name: 'Restaurant name',
-				address: 'Restaurant address',
-				coverImage: '',
-				ownerId: 1,
-				category: null,
-				owner: null,
-				createdAt: new Date(),
-				updatedAt: new Date(),
-				orders: [],
-				dishes: [],
-			},
-		};
+		throw new UberEastsException({
+			errorCode: UBER_EATS_ERROR.server_error,
+			message: 'Not done method yet',
+		});
 	}
 
 	async getAll(): Promise<RestaurantDish[]> {
-		return [await this.get()];
+		throw new UberEastsException({
+			errorCode: UBER_EATS_ERROR.server_error,
+			message: 'Not done method yet',
+		});
 	}
 
 	async create(user: User, args: CreateDishArgs): Promise<RestaurantDish> {

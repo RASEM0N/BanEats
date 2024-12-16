@@ -1,10 +1,10 @@
-import { Inject, Injectable } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import { Repository } from 'typeorm';
 import { RestaurantsCategory } from '../entities/category.entity';
 import { InjectRepository } from '@nestjs/typeorm';
-import { DefaultCRUD } from '@ubereats/common/services';
 import slugify from 'slugify';
 import { UBER_EATS_ERROR, UberEastsException } from '@ubereats/common/error';
+import { DefaultCRUD } from '@ubereats/common/services';
 
 @Injectable()
 export class CategoryService implements DefaultCRUD<RestaurantsCategory> {
@@ -54,10 +54,16 @@ export class CategoryService implements DefaultCRUD<RestaurantsCategory> {
 	}
 
 	async update(): Promise<RestaurantsCategory> {
-		return undefined;
+		throw new UberEastsException({
+			errorCode: UBER_EATS_ERROR.server_error,
+			message: 'Not done method yet',
+		});
 	}
 
 	async delete(): Promise<void> {
-		return undefined;
+		throw new UberEastsException({
+			errorCode: UBER_EATS_ERROR.server_error,
+			message: 'Not done method yet',
+		});
 	}
 }
