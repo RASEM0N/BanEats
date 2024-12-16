@@ -27,6 +27,7 @@ export class User extends CoreEntity {
 	@Length(4, 40)
 	email: string;
 
+	@Field(() => String)
 	@Column()
 	@Length(10, 40)
 	password: string;
