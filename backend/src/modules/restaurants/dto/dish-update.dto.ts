@@ -3,12 +3,11 @@ import { RestaurantDish } from '../entities/dish.entity';
 import { CoreOutput } from '@ubereats/common/dto';
 
 @ArgsType()
-export class UpdateDishArgs extends PickType(RestaurantDish, [
-	'name',
-	'price',
-	'description',
-	'options',
-]) {
+export class UpdateDishArgs extends PickType(
+	RestaurantDish,
+	['name', 'price', 'description', 'options'],
+	ArgsType,
+) {
 	@Field(() => Number)
 	dishId: number;
 }

@@ -4,6 +4,7 @@ import { IsNumber, IsString, Length } from 'class-validator';
 import { CoreEntity } from '@ubereats/common/entities';
 import { Restaurant } from './restaurant.entity';
 
+@InputType('DishChoiceInput', { isAbstract: true })
 @ObjectType()
 export class DishChoice {
 	@Field(() => String)
@@ -13,6 +14,7 @@ export class DishChoice {
 	extra?: number;
 }
 
+@InputType('DishOptionInput', { isAbstract: true })
 @ObjectType()
 export class DishOption {
 	@Field(() => String)
@@ -25,7 +27,6 @@ export class DishOption {
 	extra?: number;
 }
 
-@InputType({ isAbstract: true })
 @ObjectType()
 @Entity({ name: 'RestaurantsDish' })
 export class RestaurantDish extends CoreEntity {

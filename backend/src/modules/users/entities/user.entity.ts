@@ -1,5 +1,5 @@
 import { BeforeInsert, BeforeUpdate, Column, Entity, OneToMany } from 'typeorm';
-import { Field, InputType, ObjectType, registerEnumType } from '@nestjs/graphql';
+import { Field, ObjectType, registerEnumType } from '@nestjs/graphql';
 import { CoreEntity } from '@ubereats/common/entities';
 import { IsBoolean, IsEmail, IsEnum, Length } from 'class-validator';
 import { hash, genSalt, compare } from 'bcrypt';
@@ -17,7 +17,6 @@ export enum USER_ROLE {
 // @TODO добавить описание
 registerEnumType(USER_ROLE, { name: 'USER_ROLE' });
 
-@InputType({ isAbstract: true })
 @ObjectType()
 @Entity({ name: 'User' })
 export class User extends CoreEntity {

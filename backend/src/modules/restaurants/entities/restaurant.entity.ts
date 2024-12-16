@@ -1,4 +1,4 @@
-import { Field, InputType, ObjectType } from '@nestjs/graphql';
+import { Field, ObjectType } from '@nestjs/graphql';
 import { Column, Entity, ManyToOne, OneToMany, RelationId } from 'typeorm';
 import { IsString, Length } from 'class-validator';
 import { CoreEntity } from '@ubereats/common/entities';
@@ -7,9 +7,6 @@ import { Order } from '@/modules/orders/entities/order.entity';
 import { RestaurantsCategory } from './category.entity';
 import { RestaurantDish } from './dish.entity';
 
-// Чтоб использовать OmitType
-// для create.dto т.к. create.dto это InputType
-@InputType({ isAbstract: true })
 @ObjectType()
 @Entity({ name: 'Restaurant' })
 export class Restaurant extends CoreEntity {

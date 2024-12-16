@@ -4,7 +4,6 @@ import { IsString, Length } from 'class-validator';
 import { CoreEntity } from '@ubereats/common/entities';
 import { Restaurant } from './restaurant.entity';
 
-@InputType({ isAbstract: true })
 @ObjectType()
 @Entity({ name: 'RestaurantsCategory' })
 export class RestaurantsCategory extends CoreEntity {

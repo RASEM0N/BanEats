@@ -8,7 +8,7 @@ import { RestaurantDish } from '@/modules/restaurants/entities/dish.entity';
 
 // Schema must contain uniquely named types
 // but contains multiple types named "OrderItemOption"
-@InputType('OrderItemOptionInputType')
+@InputType('OrderItemOptionInputType', { isAbstract: true })
 @ObjectType()
 export class OrderItemOption {
 	@Field(() => String)
