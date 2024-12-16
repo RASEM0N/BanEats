@@ -1,9 +1,10 @@
 import { Inject, Injectable } from '@nestjs/common';
-import { LoginData, LoginArgs } from '../dto/auth-login.dto';
+import { LoginArgs, LoginData } from '../dto/auth-login.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { User } from '@/modules/users/entities/user.entity';
 import { Repository } from 'typeorm';
 import { JwtService } from '@ubereats/jwt';
+import { UBER_EATS_ERROR, UberEastsException } from '@ubereats/common/error';
 
 @Injectable()
 export class AuthService {
@@ -30,7 +31,7 @@ export class AuthService {
 		});
 
 		if (!user || !(await user.isValidPassword(password))) {
-			throw new Error();
+			throw new UberEastsException({ errorCode: UBER_EATS_ERROR.fail_login });
 		}
 
 		const token = this.jwtService.sign(user.id);
