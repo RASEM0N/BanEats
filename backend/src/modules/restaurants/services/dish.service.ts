@@ -20,11 +20,35 @@ export class DishService implements DefaultCRUD<RestaurantDish> {
 	) {}
 
 	async get(): Promise<RestaurantDish> {
-		return undefined as RestaurantDish;
+		return {
+			id: 1,
+			name: 'Dish name',
+			createdAt: new Date(),
+			updatedAt: new Date(),
+			price: 1000,
+			description: 'Dish description',
+			options: [],
+			photo: '',
+			restaurantId: 1,
+
+			restaurant: {
+				id: 1,
+				name: 'Restaurant name',
+				address: 'Restaurant address',
+				coverImage: '',
+				ownerId: 1,
+				category: null,
+				owner: null,
+				createdAt: new Date(),
+				updatedAt: new Date(),
+				orders: [],
+				dishes: [],
+			},
+		};
 	}
 
 	async getAll(): Promise<RestaurantDish[]> {
-		return undefined as RestaurantDish[];
+		return [await this.get()];
 	}
 
 	async create(user: User, args: CreateDishArgs): Promise<RestaurantDish> {
