@@ -31,6 +31,8 @@ import { Order } from '@/modules/orders/entities/order.entity';
 import { OrderItem } from '@/modules/orders/entities/order-item.entity';
 import { User } from '@/modules/users/entities/user.entity';
 import { AppResolver } from '@/app.resolver';
+import { ValidationError } from 'class-validator';
+import { UBER_EATS_ERROR } from '@ubereats/common/error';
 
 @Module({
 	imports: [
@@ -80,23 +82,37 @@ import { AppResolver } from '@/app.resolver';
 				};
 			},
 			formatError: (formattedError, error: any) => {
+				let message = formattedError.message;
+				let statusCode =
+					error.errorCode ??
+					error.getStatus?.() ??
+					error.originalError?.errorCode ??
+					error.originalError?.getStatus?.() ??
+					UBER_EATS_ERROR.error;
+
+				// @TODO тут слишком много кейсов возможных
+				// можно по разному возвращать ошибку
+				// 1. все ошибки
+				// 2. одну ошибку
+				if (error.originalError?.thrownValue?.[0] instanceof ValidationError) {
+					message = `[${error.originalError?.thrownValue[0].property}]: ${
+						Object.values(error.originalError?.thrownValue[0].constraints)[0]
+					}`;
+					statusCode = UBER_EATS_ERROR.validation_error;
+				}
+
 				// @TODO надо проработать
 				return {
-					message: formattedError.message,
-					statusCode:
-						error.errorCode ??
-						error.getStatus?.() ??
-						error.originalError?.errorCode ??
-						error.originalError?.getStatus?.() ??
-						null,
-					path: formattedError.path,
+					message,
+					statusCode,
 
-					// ...(IS_DEV
-					// 	? {
-					// 			extensions: formattedError.extensions,
-					// 			locations: formattedError.locations,
-					// 		}
-					// 	: {}),
+					path: formattedError.path,
+					...(IS_DEV
+						? {
+								extensions: formattedError.extensions,
+								locations: formattedError.locations,
+							}
+						: {}),
 				};
 			},
 		}),

@@ -11,7 +11,13 @@ async function bootstrap() {
 	// @TODO Вырубил на время
 	// const { httpAdapter } = app.get(HttpAdapterHost);
 	// app.useGlobalFilters(new CatchEverythingFilter(httpAdapter));
-	app.useGlobalPipes(new ValidationPipe());
+	app.useGlobalPipes(
+		new ValidationPipe({
+			exceptionFactory: (errors) => {
+				return errors;
+			},
+		}),
+	);
 	app.enableCors({
 		// @TODO надо настривать
 		// origin: [
