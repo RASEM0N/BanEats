@@ -5,6 +5,8 @@ import { object, string } from 'zod';
 import { useMutation } from '@vue/apollo-composable';
 import { LogoIcon } from '@shared/ui/icons';
 import gql from 'graphql-tag';
+import { MyButton } from '@shared/ui';
+import { computed } from 'vue';
 
 /**
  * @see https://vee-validate.logaretm.com/
@@ -12,7 +14,7 @@ import gql from 'graphql-tag';
  * - взаимодействие с разными кейсами: touched, dirty ...
  */
 
-const { mutate: login, error } = useMutation(gql`
+const login = useMutation(gql`
 	mutation LoginMutation($email: String!, $password: String!) {
 		AuthLogin(email: $email, password: $password) {
 			token
@@ -23,7 +25,7 @@ const { mutate: login, error } = useMutation(gql`
 	}
 `);
 
-const { defineField, errors, handleSubmit } = useForm({
+const { defineField, errors, handleSubmit, meta } = useForm({
 	initialValues: {
 		email: '',
 		password: '',
@@ -42,8 +44,10 @@ const [password, passwordProps] = defineField('password', {
 });
 
 const submit = handleSubmit((values) => {
-	login(values);
+	login.mutate(values);
 });
+
+const canSubmit = computed(() => login.loading.value && meta.value.valid);
 
 </script>
 <template>
@@ -53,8 +57,8 @@ const submit = handleSubmit((values) => {
 			<h4 class="w-full font-medium text-left text-3xl mb-5">
 				Welcome back
 			</h4>
-			<span v-if="error" class="font-medium text-red-500">{{ error }}</span>
-			<form class="flex flex-col mt-5 w-full" @submit="submit">
+			<span v-if="login.error" class="font-medium text-red-500">{{ login.error }}</span>
+			<form class="flex flex-col mt-5 w-full mb-5" @submit="submit">
 				<input
 					placeholder="Email"
 					class="input" type="text"
@@ -71,10 +75,14 @@ const submit = handleSubmit((values) => {
 				<template v-for="error in Object.values(errors)">
 					<span class="font-medium text-red-500">{{ error }}</span>
 				</template>
-				<button class="btn">
-					Submit
-				</button>
+				<my-button :can-click="canSubmit" :is-loading="login.loading.value">Submit</my-button>
 			</form>
+			<div>
+				New to Eats?
+				<router-link to="/register" class="link">
+					Create an Account
+				</router-link>
+			</div>
 		</div>
 	</div>
 </template>
