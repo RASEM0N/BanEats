@@ -3,6 +3,7 @@ import { useForm } from 'vee-validate';
 import { toTypedSchema } from '@vee-validate/zod';
 import { object, string } from 'zod';
 import { useMutation } from '@vue/apollo-composable';
+import { LogoIcon } from '@shared/ui/icons';
 import gql from 'graphql-tag';
 
 /**
@@ -46,11 +47,14 @@ const submit = handleSubmit((values) => {
 
 </script>
 <template>
-	<div class="h-screen flex items-center justify-center bg-gray-800">
-		<div class="bg-white w-full max-w-lg pt-10 pb-7 rounded-lg text-center">
-			<h3 class="text-2xl text-gray-800">Log In</h3>
-			<span class="font-medium text-red-500">{{ error }}</span>
-			<form class="flex flex-col mt-5 px-5" @submit="submit">
+	<div class="h-screen flex items-center flex-col mt-10 lg:mt-28">
+		<div class="w-full max-w-screen-sm flex flex-col px-5 items-center">
+			<logo-icon class="w-52 mb-10" />
+			<h4 class="w-full font-medium text-left text-3xl mb-5">
+				Welcome back
+			</h4>
+			<span v-if="error" class="font-medium text-red-500">{{ error }}</span>
+			<form class="flex flex-col mt-5 w-full" @submit="submit">
 				<input
 					placeholder="Email"
 					class="input" type="text"
