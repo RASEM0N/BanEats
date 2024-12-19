@@ -1,0 +1,1 @@
+export { default as RestaurantsPage } from './ui/RestaurantsPage.vue'
