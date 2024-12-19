@@ -20,13 +20,13 @@ registerEnumType(USER_ROLE, { name: 'USER_ROLE' });
 @ObjectType()
 @Entity({ name: 'User' })
 export class User extends CoreEntity {
-	@Field(() => String)
+	@Field(() => String, { description: 'Min 4, Max 40' })
 	@Column({ unique: true })
 	@IsEmail()
 	@Length(4, 40)
 	email: string;
 
-	@Field(() => String)
+	@Field(() => String, { description: 'Min 10, Max 40' })
 	@Column()
 	@Length(10, 40)
 	password: string;
