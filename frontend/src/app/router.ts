@@ -9,10 +9,16 @@ export const router = createRouter({
 		{
 			path: '/',
 			component: LoginPage,
+			meta: {
+				title: 'Login | BanEats'
+			}
 		},
 		{
 			path: '/register',
 			component: RegisterPage,
+			meta: {
+				title: 'Register | BanEats'
+			}
 		},
 		{
 			path: '/restaurants',
