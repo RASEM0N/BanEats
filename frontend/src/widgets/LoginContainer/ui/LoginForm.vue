@@ -1,6 +1,6 @@
 <script setup lang="ts">
 interface Props {
-	errors: string[];
+	errors?: string[];
 }
 
 const { errors } = defineProps<Props>();
@@ -9,7 +9,7 @@ const { errors } = defineProps<Props>();
 <template>
 	<form class="flex flex-col mt-5 w-full mb-5">
 		<slot></slot>
-		<span v-for="error in errors" class="font-medium text-red-500">{{ error }}</span>
+		<span v-if="errors" v-for="error in errors" class="font-medium text-red-500">{{ error }}</span>
 	</form>
 </template>
 <style></style>
