@@ -6,6 +6,9 @@ import gql from 'graphql-tag';
 
 // https://apollo.vuejs.org/guide/installation.html
 
+// оптимизация apollo client
+// https://habr.com/ru/articles/745848/
+
 export const providerKey = DefaultApolloClient;
 export const apolloClient = new ApolloClient({
 	devtools: { enabled: __IS_DEV__ },
