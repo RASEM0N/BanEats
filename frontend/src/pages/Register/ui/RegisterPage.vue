@@ -38,12 +38,7 @@ const [role, roleProps] = defineField('role', {
 });
 
 const submit = handleSubmit(async (values) => {
-	const result = await register.mutate(values);
-
-	if (!result?.data?.UserCreate) {
-		return;
-	}
-
+	await register.mutate(values);
 	await router.push('/login');
 });
 

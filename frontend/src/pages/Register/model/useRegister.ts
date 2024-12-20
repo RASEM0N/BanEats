@@ -18,7 +18,7 @@ interface Variables {
 }
 
 export const useRegister = () => {
-	return useMutation<Result, Variables>(gql`
+	const gqlMutation = useMutation<Result, Variables>(gql`
         mutation RegisterMutation(
             $email: String!,
             $password: String!,
@@ -36,4 +36,18 @@ export const useRegister = () => {
             }
         }
 	`);
+
+	return {
+		...gqlMutation,
+		mutate: async (values: Variables): Promise<Result> => {
+			const result = await gqlMutation.mutate(values);
+			const data = result?.data;
+
+			if (!data) {
+				throw new Error('Data is empty');
+			}
+
+			return data;
+		},
+	};
 };
