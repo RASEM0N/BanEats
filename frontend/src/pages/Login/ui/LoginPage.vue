@@ -61,7 +61,7 @@ const submit = handleSubmit((values) => {
 			<my-button
 				:can-click="meta.valid"
 				:is-loading="login.loading.value">
-				Submit
+				Login
 			</my-button>
 		</login-form>
 	</login-container>
