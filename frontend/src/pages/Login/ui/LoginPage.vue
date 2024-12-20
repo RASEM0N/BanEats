@@ -46,7 +46,8 @@ const submit = handleSubmit((values) => {
 		<login-form :errors="errors" @submit="submit">
 			<input
 				placeholder="Email"
-				class="input" type="text"
+				class="input"
+				type="email"
 				v-model="email"
 				v-bind="emailProps"
 			/>
