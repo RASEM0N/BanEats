@@ -75,10 +75,14 @@ import { UBER_EATS_ERROR } from '@ubereats/common/error';
 			autoSchemaFile: true,
 			playground: true,
 			context: ({ req, connection }) => {
+
+				// Через это проходят все запросы
+				// как HTTP так и WS
 				return {
-					// т.к. у WS нет Request
-					// и через JWT не проходит
-					authToken: req?.headers['x-jwt'] ?? connection?.context['x-jwt'],
+					user: req?.user,
+					bearerToken:
+						req?.headers['authorization'] ??
+						connection?.context['authorization'],
 				};
 			},
 			formatError: (formattedError, error: any) => {
@@ -107,13 +111,13 @@ import { UBER_EATS_ERROR } from '@ubereats/common/error';
 					statusCode,
 
 					path: formattedError.path,
-					...(IS_DEV
-						? {
-								extensions: formattedError.extensions,
-								locations: formattedError.locations,
-							}
-						: {}),
-				};
+					// ...(IS_DEV
+					// 	? {
+					// 			extensions: formattedError.extensions,
+					// 			locations: formattedError.locations,
+					// 		}
+					// 	: {}),
+				} as typeof formattedError;
 			},
 		}),
 

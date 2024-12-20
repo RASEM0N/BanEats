@@ -62,7 +62,7 @@ export class UserVerifyService {
 			});
 		} catch (e) {
 			// @TODO заменить на логгер
-			console.error(e);
+			// console.error(e);
 		}
 	}
 

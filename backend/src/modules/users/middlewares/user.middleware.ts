@@ -1,22 +1,21 @@
-import { Injectable, NestMiddleware } from '@nestjs/common';
+import { Inject, Injectable, NestMiddleware } from '@nestjs/common';
 import { NextFunction, Request, Response } from 'express';
 import { UserService } from '@/modules/users/services/user.service';
 import { JwtService } from '@ubereats/jwt';
+import { BearerToken, SHARED_COMPONENTS } from '@/core/shared.module';
 
 @Injectable()
 export class UserMiddleware implements NestMiddleware {
 	constructor(
 		private readonly userService: UserService,
 		private readonly jwtService: JwtService,
+		@Inject(SHARED_COMPONENTS.bearerToken) private readonly bearerToken: BearerToken,
 	) {}
 
 	async use(req: Request, res: Response, next: NextFunction): Promise<void> {
-		const bearerToken = req.header('authorization') ?? '';
+		const token = this.bearerToken.extractInitToken(req.header('authorization'));
 
-		// const token = /^Bearer (\S+)/.exec(bearerToken)[1]
-		const token = /(?<=Bearer )(\S+)*(?=$)/.exec(bearerToken)[0];
-
-		if (!bearerToken) {
+		if (!token) {
 			return next();
 		}
 

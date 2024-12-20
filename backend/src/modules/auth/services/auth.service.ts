@@ -5,12 +5,14 @@ import { User } from '@/modules/users/entities/user.entity';
 import { Repository } from 'typeorm';
 import { JwtService } from '@ubereats/jwt';
 import { UBER_EATS_ERROR, UberEastsException } from '@ubereats/common/error';
+import { BearerToken, SHARED_COMPONENTS } from '@/core/shared.module';
 
 @Injectable()
 export class AuthService {
 	constructor(
 		@InjectRepository(User) private readonly user: Repository<User>,
 		@Inject(JwtService) private readonly jwtService: JwtService,
+		@Inject(SHARED_COMPONENTS.bearerToken) private readonly bearerToken: BearerToken,
 	) {}
 
 	async login({ email, password }: LoginArgs): Promise<LoginOutput> {

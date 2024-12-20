@@ -1,19 +1,17 @@
-import { CanActivate, ExecutionContext, Injectable } from '@nestjs/common';
+import { CanActivate, ExecutionContext, Inject, Injectable } from '@nestjs/common';
 import { GqlExecutionContext } from '@nestjs/graphql';
 import { Reflector } from '@nestjs/core';
 import { AllowedRoles, META_KEY as USER_ROLE_KEY } from '../decorators/role.decorator';
 import { META_KEY as NO_AUTH_KEY } from '../decorators/no-auth.decorator';
 import { User, USER_ROLE } from '@/modules/users/entities/user.entity';
-import { UserService } from '@/modules/users/services/user.service';
-import { JwtService } from '@ubereats/jwt';
 import { UBER_EATS_ERROR, UberEastsException } from '@ubereats/common/error';
+import { BearerToken, SHARED_COMPONENTS } from '@/core/shared.module';
 
 @Injectable()
 export class AuthGuard implements CanActivate {
 	constructor(
 		private readonly reflector: Reflector,
-		private readonly jwtService: JwtService,
-		private readonly userService: UserService,
+		@Inject(SHARED_COMPONENTS.bearerToken) private readonly bearerToken: BearerToken,
 	) {}
 
 	async canActivate(ctx: ExecutionContext): Promise<boolean> {
@@ -29,23 +27,18 @@ export class AuthGuard implements CanActivate {
 		}
 
 		if (roles) {
-			try {
-				const userId = +this.jwtService.verify(this.getAuthToken(ctx));
-				const user = await this.userService.get(userId);
-
-				return this.isValidRole(user, roles);
-			} catch (e) {
-				throw new UberEastsException({
-					errorCode: UBER_EATS_ERROR.fail_login,
-					message: e.message,
-				});
-			}
+			const { user } = GqlExecutionContext.create(ctx).getContext();
+			return this.isValidRole(user, roles);
 		}
 
 		return true;
 	}
 
 	private isValidRole(user: User, roles: AllowedRoles[]): boolean {
+		if (!user) {
+			throw new UberEastsException({ errorCode: UBER_EATS_ERROR.fail_login });
+		}
+
 		// @TODO слишком простая логика
 		// по права на ROLE.client должно
 		// подходить и для ROLE.Admin т.к. админ все впитывает в себя
@@ -64,6 +57,8 @@ export class AuthGuard implements CanActivate {
 	}
 
 	private getAuthToken(ctx: ExecutionContext): string | undefined {
-		return GqlExecutionContext.create(ctx).getContext().authToken;
+		return this.bearerToken.extractInitToken(
+			GqlExecutionContext.create(ctx).getContext().bearerToken,
+		);
 	}
 }
