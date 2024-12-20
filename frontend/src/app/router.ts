@@ -8,17 +8,26 @@ export const router = createRouter({
 	routes: [
 		{
 			path: '/',
+			redirect: {
+				path: '/login',
+			},
+			meta: {
+				title: 'Home | BanEats'
+			}
+		},
+		{
+			path: '/login',
 			component: LoginPage,
 			meta: {
-				title: 'Login | BanEats'
-			}
+				title: 'Login | BanEats',
+			},
 		},
 		{
 			path: '/register',
 			component: RegisterPage,
 			meta: {
-				title: 'Register | BanEats'
-			}
+				title: 'Register | BanEats',
+			},
 		},
 		{
 			path: '/restaurants',
