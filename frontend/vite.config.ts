@@ -8,7 +8,7 @@ export default defineConfig({
 	plugins: [vue(), svgLoader()],
 	define: {
 		__APP_URL__: JSON.stringify('http://localhost:8000/graphql'),
-		__IS_DEV__: false,
+		__IS_DEV__: true,
 	},
 	resolve: {
 		alias: {

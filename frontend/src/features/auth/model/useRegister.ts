@@ -5,6 +5,7 @@ import { USER_ROLE } from '@entities/user';
 interface Result {
 	UserCreate: {
 		user: {
+			id: number
 			email: string,
 			role: USER_ROLE
 		};
@@ -30,6 +31,7 @@ export const useRegister = () => {
                 role: $role
             ) {
                 user {
+                    id
                     email
                     role
                 }

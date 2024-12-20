@@ -5,7 +5,7 @@ import { object, string } from 'zod';
 import { MyButton } from '@shared/ui';
 import { computed } from 'vue';
 import { LoginContainer, LoginForm } from '@widgets/loginContainer';
-import { useLogin } from '@/features/auth';
+import { useLogin } from '@features/auth';
 
 
 const login = useLogin();

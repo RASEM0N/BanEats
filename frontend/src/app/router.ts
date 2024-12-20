@@ -2,6 +2,7 @@ import { createRouter, createWebHistory } from 'vue-router';
 import { RestaurantsPage } from '@pages/restaurants';
 import { LoginPage } from '@pages/login';
 import { RegisterPage } from '@pages/register';
+import { getAuthToken } from '@features/auth';
 
 export const router = createRouter({
 	history: createWebHistory(),
@@ -12,8 +13,8 @@ export const router = createRouter({
 				path: '/login',
 			},
 			meta: {
-				title: 'Home | BanEats'
-			}
+				title: 'Home | BanEats',
+			},
 		},
 		{
 			path: '/login',
@@ -45,16 +46,13 @@ router.beforeEach((to, _, next) => {
 
 router.beforeEach((to, _, next) => {
 
-	// @TODO тут еще должна быть логика для проверки
-	// @TODO  если ли у нас пользователь сейчас или нет
-	// чтоб не редиректило
 	if (to.meta.requiredAuth) {
-		return {
-			redirect: '/',
 
-			// Сохраняем результат, чтоб вернутся к нему позже
-			query: { redirect: to.fullPath },
-		};
+		if (getAuthToken()) {
+			return next();
+		}
+
+		return { redirect: '/login', query: { redirect: to.fullPath } };
 	}
 	next();
 });
