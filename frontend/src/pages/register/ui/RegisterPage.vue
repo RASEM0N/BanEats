@@ -1,7 +1,7 @@
 <script setup lang="ts">
-import { LoginContainer, LoginForm } from '@widgets/LoginContainer';
+import { LoginContainer, LoginForm } from '@widgets/loginContainer';
 import { computed } from 'vue';
-import { useRegister } from '../model/useRegister';
+import { useRegister } from '@/features/auth';
 import { useForm } from 'vee-validate';
 import { USER_ROLE } from '@entities/user';
 import { toTypedSchema } from '@vee-validate/zod';

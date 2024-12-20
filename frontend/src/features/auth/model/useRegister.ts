@@ -35,7 +35,7 @@ export const useRegister = () => {
                 }
             }
         }
-	`);
+	`, { fetchPolicy: 'network-only' });
 
 	return {
 		...gqlMutation,

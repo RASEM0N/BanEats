@@ -11,9 +11,12 @@ export class UserMiddleware implements NestMiddleware {
 	) {}
 
 	async use(req: Request, res: Response, next: NextFunction): Promise<void> {
-		const token = req.header('x-jwt');
+		const bearerToken = req.header('authorization') ?? '';
 
-		if (!token) {
+		// const token = /^Bearer (\S+)/.exec(bearerToken)[1]
+		const token = /(?<=Bearer )(\S+)*(?=$)/.exec(bearerToken)[0];
+
+		if (!bearerToken) {
 			return next();
 		}
 

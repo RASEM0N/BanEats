@@ -4,8 +4,8 @@ import { toTypedSchema } from '@vee-validate/zod';
 import { object, string } from 'zod';
 import { MyButton } from '@shared/ui';
 import { computed } from 'vue';
-import { LoginContainer, LoginForm } from '@widgets/LoginContainer';
-import { useLogin } from '../model/useLogin';
+import { LoginContainer, LoginForm } from '@widgets/loginContainer';
+import { useLogin } from '@/features/auth';
 
 
 const login = useLogin();

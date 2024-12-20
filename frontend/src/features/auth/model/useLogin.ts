@@ -1,5 +1,6 @@
 import { useMutation } from '@vue/apollo-composable';
 import gql from 'graphql-tag';
+import { setAuthToken } from './auth';
 
 interface Result {
 	AuthLogin: {
@@ -19,7 +20,7 @@ export const useLogin = () => {
                 token
             }
         }
-	`);
+	`, { fetchPolicy: 'network-only' });
 
 	return {
 		...gqlMutation,
@@ -30,7 +31,7 @@ export const useLogin = () => {
 				throw new Error('Data in empty');
 			}
 
-			localStorage.setItem('AUTH_TOKEN', data.AuthLogin.token);
+			setAuthToken(data.AuthLogin.token);
 			return data;
 		},
 	};

@@ -1,7 +1,7 @@
 import { createRouter, createWebHistory } from 'vue-router';
-import { RestaurantsPage } from '@pages/Restaurants';
-import { LoginPage } from '@pages/Login';
-import { RegisterPage } from '@pages/Register';
+import { RestaurantsPage } from '@pages/restaurants';
+import { LoginPage } from '@pages/login';
+import { RegisterPage } from '@pages/register';
 
 export const router = createRouter({
 	history: createWebHistory(),
