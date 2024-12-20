@@ -15,6 +15,8 @@ const { defineField, errors: formErrors, handleSubmit, meta } = useForm({
 		email: '',
 		password: '',
 	},
+
+	// @TODO вынести в shared
 	validationSchema: toTypedSchema(object({
 		email: string().email(),
 		password: string().min(4).max(40),
