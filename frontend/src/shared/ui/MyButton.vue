@@ -8,7 +8,8 @@ const { canClick = true, isLoading = false } = defineProps<Props>();
 </script>
 <template>
 	<button :class="['btn', {
-		'bg-gray-300 pointer-events-none': !canClick
+		'bg-gray-300': !canClick,
+		'pointer-events-none': !canClick || isLoading
 	}]">
 		<template v-if="isLoading">Loading...</template>
 		<slot v-else></slot>

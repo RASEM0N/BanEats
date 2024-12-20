@@ -9,6 +9,7 @@ import { useLogin } from '../model/useLogin';
 
 
 const login = useLogin();
+const errors = computed(() => [...Object.values(formErrors.value), login.error]);
 
 const { defineField, errors: formErrors, handleSubmit, meta } = useForm({
 	initialValues: {
@@ -33,10 +34,6 @@ const [password, passwordProps] = defineField('password', {
 const submit = handleSubmit((values) => {
 	login.mutate(values);
 });
-
-const errors = computed(() => [...Object.values(formErrors.value), login.error]);
-const canSubmit = computed(() => login.loading.value && meta.value.valid);
-
 </script>
 <template>
 	<login-container
@@ -60,7 +57,11 @@ const canSubmit = computed(() => login.loading.value && meta.value.valid);
 				v-model="password"
 				v-bind="passwordProps"
 			/>
-			<my-button :can-click="canSubmit" :is-loading="login.loading.value">Submit</my-button>
+			<my-button
+				:can-click="meta.valid"
+				:is-loading="login.loading.value">
+				Submit
+			</my-button>
 		</login-form>
 	</login-container>
 </template>
