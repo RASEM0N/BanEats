@@ -1,3 +1,3 @@
 export * from './model/auth';
-export * from './model/useLogin';
-export * from './model/useRegister';
+export * from './model/login';
+export * from './model/register';

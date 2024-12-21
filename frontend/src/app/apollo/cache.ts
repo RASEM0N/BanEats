@@ -16,9 +16,7 @@ export const cache = new InMemoryCache({
 
 		Query: {
 			fields: {
-
-				// query { isLoggedIn @client token @client }
-				isLoggedIn: () => !!getAuthToken(),
+				// query { token @client }
 				token: () => getAuthToken(),
 			},
 		},
