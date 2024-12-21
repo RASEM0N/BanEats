@@ -3,6 +3,7 @@ import { LoginPage } from '@pages/login';
 import { RegisterPage } from '@pages/register';
 import { actualizeTitle, requiredAuth } from '@app/router/guards';
 import { HomePage } from '@pages/home';
+import { NotFoundPage } from '@pages/404'
 
 export const router = createRouter({
 	history: createWebHistory(),
@@ -26,6 +27,10 @@ export const router = createRouter({
 			component: RegisterPage,
 			meta: { title: 'Register | BanEats' },
 		},
+		{
+			path: '/:pathMatch(.*)*',
+			component: NotFoundPage
+		}
 	],
 });
 
