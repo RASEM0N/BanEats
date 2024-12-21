@@ -3,7 +3,8 @@ import { LoginPage } from '@pages/login';
 import { RegisterPage } from '@pages/register';
 import { actualizeTitle, requiredAuth } from '@app/router/guards';
 import { HomePage } from '@pages/home';
-import { NotFoundPage } from '@pages/404'
+import { NotFoundPage } from '@pages/404';
+import { ConfirmEmailPage } from '@pages/confirmEmail';
 
 export const router = createRouter({
 	history: createWebHistory(),
@@ -15,7 +16,12 @@ export const router = createRouter({
 				title: 'BatEats',
 				requiredAuth: true,
 			},
-			children: [],
+			children: [
+				{
+					path: '/confirm',
+					component: ConfirmEmailPage,
+				},
+			],
 		},
 		{
 			path: '/login',
@@ -29,8 +35,8 @@ export const router = createRouter({
 		},
 		{
 			path: '/:pathMatch(.*)*',
-			component: NotFoundPage
-		}
+			component: NotFoundPage,
+		},
 	],
 });
 
