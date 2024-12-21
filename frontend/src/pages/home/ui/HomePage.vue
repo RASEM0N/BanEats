@@ -2,8 +2,8 @@
 import { useQuery } from '@vue/apollo-composable';
 import gql from 'graphql-tag';
 import { USER_ROLE } from '@entities/user';
-import { LogoIcon } from '@shared/ui/icons';
 import { computed } from 'vue';
+import HomeHeader from '@pages/home/ui/HomeHeader.vue';
 
 interface QueryResult {
 	UserMe: {
@@ -34,13 +34,7 @@ const user = computed(() => result.value?.UserMe.user);
 </script>
 <template>
 	<template v-if="user">
-		<header class="py-4">
-			<div class="w-full px-5 xl:px-0 max-w-screen-2xl mx-auto flex justify-between items-center">
-				<router-link to="/">
-					<logo-icon class="w-44" />
-				</router-link>
-			</div>
-		</header>
+		<home-header />
 		<div>{{ user }}</div>
 		<router-view></router-view>
 	</template>
