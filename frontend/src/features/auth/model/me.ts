@@ -16,7 +16,7 @@ interface QueryResult {
 
 export const useMe = () => {
 	const query = useQuery<QueryResult>(gql`
-        query {
+        query UserMeQuery {
             UserMe {
                 user {
                     id
