@@ -6,7 +6,10 @@ import { MyButton } from '@shared/ui';
 import { computed } from 'vue';
 import { LoginContainer, LoginForm } from '@widgets/loginContainer';
 import { useLogin } from '@features/auth';
+import { useRoute, useRouter } from 'vue-router';
 
+const route = useRoute();
+const router = useRouter();
 
 const login = useLogin();
 const errors = computed(() => [...Object.values(formErrors.value), login.error]);
@@ -31,8 +34,14 @@ const [password, passwordProps] = defineField('password', {
 	validateOnModelUpdate: false,
 });
 
-const submit = handleSubmit((values) => {
-	login.mutate(values);
+const submit = handleSubmit(async (values) => {
+	await login.mutate(values);
+
+	if (route.query.redirect) {
+		await router.push(route.query.redirect as string);
+	} else {
+		await router.push('/');
+	}
 });
 </script>
 <template>

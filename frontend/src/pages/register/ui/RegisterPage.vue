@@ -8,8 +8,9 @@ import { toTypedSchema } from '@vee-validate/zod';
 import { object, string } from 'zod';
 import { nativeEnum } from 'zod';
 import { MyButton } from '@shared/ui';
-import { useRouter } from 'vue-router';
+import { useRoute, useRouter } from 'vue-router';
 
+const route = useRoute();
 const router = useRouter();
 const register = useRegister();
 const errors = computed(() => [...Object.values(formErrors.value), register.error.value]);
@@ -39,7 +40,12 @@ const [role, roleProps] = defineField('role', {
 
 const submit = handleSubmit(async (values) => {
 	await register.mutate(values);
-	await router.push('/login');
+	await router.push({
+		path: '/login',
+		query: {
+			redirect: route.query.redirect ?? '',
+		},
+	});
 });
 
 </script>
