@@ -19,6 +19,12 @@ interface Variables {
 }
 
 export const useRegister = () => {
+
+
+	// @TODO сущности надо вынести
+	// @Todo надо бы использовать Fragment
+	// а то заебешься одно и тоже писать
+
 	const gqlMutation = useMutation<Result, Variables>(gql`
         mutation RegisterMutation(
             $email: String!,

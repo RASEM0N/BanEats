@@ -1,0 +1,33 @@
+import { createRouter, createWebHistory } from 'vue-router';
+import { LoginPage } from '@pages/login';
+import { RegisterPage } from '@pages/register';
+import { actualizeTitle, requiredAuth } from '@app/router/guards';
+import { HomePage } from '@pages/home';
+
+export const router = createRouter({
+	history: createWebHistory(),
+	routes: [
+		{
+			path: '/',
+			component: HomePage,
+			meta: {
+				title: 'BatEats',
+				requiredAuth: true,
+			},
+			children: [],
+		},
+		{
+			path: '/login',
+			component: LoginPage,
+			meta: { title: 'Login | BanEats' },
+		},
+		{
+			path: '/register',
+			component: RegisterPage,
+			meta: { title: 'Register | BanEats' },
+		},
+	],
+});
+
+router.beforeEach(actualizeTitle);
+router.beforeEach(requiredAuth);
