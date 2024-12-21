@@ -1,52 +1,17 @@
 <script setup lang="ts">
-import { useQuery } from '@vue/apollo-composable';
-import gql from 'graphql-tag';
-import { USER_ROLE } from '@entities/user';
-import { computed } from 'vue';
-import HomeHeader from '@pages/home/ui/HomeHeader.vue';
+import HomeHeader from './HomeHeader.vue';
+import { useMe } from '@features/auth';
+import { EmptyPage } from '@shared/ui';
 
-interface QueryResult {
-	UserMe: {
-		user: {
-			id: number,
-			email: string
-			role: USER_ROLE,
-			isVerified: boolean
-		}
-	};
-}
-
-const { result, error, loading } = useQuery<QueryResult>(gql`
-	query {
-		UserMe {
-			user {
-				id
-				email
-				role
-				isVerified
-			}
-		}
-	}
-`);
-
-const user = computed(() => result.value?.UserMe.user);
+const { user, error, loading } = useMe();
 
 </script>
 <template>
 	<template v-if="user">
 		<home-header />
-		<div>{{ user }}</div>
 		<router-view></router-view>
 	</template>
-	<template v-else-if="loading">
-		<div class="h-screen flex justify-center items-center">
-			<span class="font-medium text-xl tracking-wide">Loading...</span>
-		</div>
-	</template>
-	<template v-else>
-		<div class="h-screen flex justify-center items-center">
-			<span class="font-medium text-xl tracking-wide">Error {{ error }}</span>
-		</div>
-	</template>
+	<empty-page v-else-if="loading">Loading...</empty-page>
+	<empty-page v-else>Error {{ error }}</empty-page>
 </template>
 <style></style>
