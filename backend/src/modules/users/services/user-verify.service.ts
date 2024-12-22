@@ -8,7 +8,6 @@ import { Repository } from 'typeorm';
 import { QueryRunner } from 'typeorm/query-runner/QueryRunner';
 import { ConfigService } from '@nestjs/config';
 import { USER_OPTIONS } from '@/core/config/config.const';
-import path from 'node:path';
 
 @Injectable()
 export class UserVerifyService {
@@ -67,10 +66,9 @@ export class UserVerifyService {
 	}
 
 	private getVerifyHTML(code: string): string {
-		const verifyLink = path.join(
-			this.configService.get(USER_OPTIONS.verify_url),
-			code,
-		);
+		const url = new URL(this.configService.get(USER_OPTIONS.verify_url));
+		url.searchParams.set('code', code);
+
 		return `
 			<!doctype html>
 			<html lang='en'>
@@ -79,10 +77,11 @@ export class UserVerifyService {
 					<meta name='viewport' content='width=device-width'>
 					<meta http-equiv='Content-Type' content='text/html; charset=UTF-8'>
 					<title>Uber Eats Verify</title>
+					<style></style>
 				</head>
 				<body>
 					Verify link for end registration a <b>${code}</b> or 
-					go to <a href='${verifyLink}' target='_blank'>${verifyLink}</a>
+					go to <a href='${url.href}' target='_blank'>${url.href}</a>
 				</body>
 			</html>
 		`;
