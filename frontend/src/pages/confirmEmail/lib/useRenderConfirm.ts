@@ -4,6 +4,7 @@ import { ApolloError } from '@apollo/client';
 interface RenderConfirmResult {
 	title: string,
 	description: string,
+	highlighted?: string
 	cssClass?: string
 }
 
@@ -26,16 +27,17 @@ export const useRenderConfirm = ({ isVerified, loading, error, code, seconds }: 
 		if (!code) {
 			return {
 				title: 'Error confirm email',
-				description: 'Code is empty.',
-				cssClass: 'text-red',
+				description: 'Code is empty',
+				cssClass: 'text-red-400',
 			};
 		}
 
 		if (isVerified.value) {
 			return {
 				title: 'Success confirm email',
-				description: 'You will be redirected to the main page in 3 seconds.',
-				cssClass: 'text-green',
+				description: 'You will be redirected to the main page in',
+				highlighted: `${secondsLeft.value} seconds`,
+				cssClass: 'text-green-400',
 			};
 		}
 
@@ -43,7 +45,7 @@ export const useRenderConfirm = ({ isVerified, loading, error, code, seconds }: 
 			return {
 				title: 'Error confirm email',
 				description: String(error.value),
-				cssClass: 'text-red',
+				cssClass: 'text-red-400',
 			};
 		}
 
@@ -56,7 +58,7 @@ export const useRenderConfirm = ({ isVerified, loading, error, code, seconds }: 
 
 		return {
 			title: 'Unknown state',
-			description: 'Plz reload page.',
+			description: 'Plz reload page',
 		};
 	});
 
@@ -82,6 +84,7 @@ export const useRenderConfirm = ({ isVerified, loading, error, code, seconds }: 
 				secondsLeft.value -= 1;
 
 				if (secondsLeft.value <= 0) {
+					stopVerifiedRedirect();
 					res();
 				}
 			}, 1000);
