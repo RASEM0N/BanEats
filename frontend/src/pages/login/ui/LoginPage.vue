@@ -1,12 +1,13 @@
 <script setup lang="ts">
 import { useForm } from 'vee-validate';
 import { toTypedSchema } from '@vee-validate/zod';
-import { object, string } from 'zod';
+import { object } from 'zod';
 import { MyButton } from '@shared/ui';
 import { computed } from 'vue';
 import { LoginContainer, LoginForm } from '@widgets/loginContainer';
 import { useLogin } from '@features/auth';
 import { useRoute, useRouter } from 'vue-router';
+import { userSchema } from '@entities/user';
 
 const route = useRoute();
 const router = useRouter();
@@ -19,11 +20,9 @@ const { defineField, errors: formErrors, handleSubmit, meta } = useForm({
 		email: '',
 		password: '',
 	},
-
-	// @TODO вынести в shared
 	validationSchema: toTypedSchema(object({
-		email: string().email(),
-		password: string().min(10).max(40),
+		email: userSchema.email,
+		password: userSchema.password,
 	})),
 });
 

@@ -5,10 +5,10 @@ import { useRegister } from '@features/auth';
 import { useForm } from 'vee-validate';
 import { USER_ROLE } from '@entities/user';
 import { toTypedSchema } from '@vee-validate/zod';
-import { object, string } from 'zod';
-import { nativeEnum } from 'zod';
+import { object } from 'zod';
 import { MyButton } from '@shared/ui';
 import { useRoute, useRouter } from 'vue-router';
+import { userSchema } from '@entities/user';
 
 const route = useRoute();
 const router = useRouter();
@@ -22,9 +22,9 @@ const { defineField, handleSubmit, meta, errors: formErrors } = useForm({
 		role: USER_ROLE.client,
 	},
 	validationSchema: toTypedSchema(object({
-		email: string().email(),
-		password: string().min(10).max(40),
-		role: nativeEnum(USER_ROLE),
+		email: userSchema.email,
+		password: userSchema.password,
+		role: userSchema.role,
 	})),
 });
 
