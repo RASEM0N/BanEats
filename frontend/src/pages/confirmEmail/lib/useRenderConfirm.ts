@@ -20,9 +20,18 @@ export const useRenderConfirm = ({ isVerified, loading, error, code, seconds }: 
 	let guardTimeout: number | undefined;
 	let redirectInterval: number | undefined;
 
+	const isInitVerified = isVerified.value;
 	const secondsLeft = ref(seconds);
 
 	const renderResult = computed<RenderConfirmResult>(() => {
+
+		if (isInitVerified) {
+			return {
+				title: 'Email has been confirmed',
+				description: 'You have already confirmed it before',
+				cssClass: 'text-green-500',
+			};
+		}
 
 		if (!code) {
 			return {
@@ -37,7 +46,7 @@ export const useRenderConfirm = ({ isVerified, loading, error, code, seconds }: 
 				title: 'Success confirm email',
 				description: 'You will be redirected to the main page in',
 				highlighted: `${secondsLeft.value} seconds`,
-				cssClass: 'text-green-400',
+				cssClass: 'text-green-500',
 			};
 		}
 

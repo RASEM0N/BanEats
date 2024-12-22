@@ -18,11 +18,25 @@ const { renderResult, startVerifiedRedirect } = useRenderConfirm({
 });
 
 onMounted(() => {
-	code && confirm(code);
+
+	if (!code) {
+		return;
+	}
+
+	if (isVerified.value) {
+		return;
+	}
+
+	confirm(code);
 });
 
 watch(isVerified, (value) => {
-	value && startVerifiedRedirect().then(() => router.push('/'));
+
+	if (!value) {
+		return;
+	}
+
+	startVerifiedRedirect().then(() => router.push('/'));
 });
 
 </script>
