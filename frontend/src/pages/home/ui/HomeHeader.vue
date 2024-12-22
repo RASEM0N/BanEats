@@ -5,9 +5,18 @@ import { useMe } from '@features/auth';
 const { user } = useMe();
 </script>
 <template>
-	<div v-if="!user?.isVerified" class="bg-red-500 p-3 text-center text-base text-white">
-		<span>Please verify your email.</span>
-	</div>
+	<transition>
+		<div :class="[
+			'bg-red-500 text-center text-base text-white',
+			'transition-[height,padding] delay-300',
+			{
+				'p-0 h-0': user?.isVerified,
+				'p-3 h-12': !user?.isVerified
+			},
+		]">
+			<span>Please verify your email.</span>
+		</div>
+	</transition>
 	<header class="py-4">
 		<div class="w-full px-5 xl:px-0 max-w-screen-2xl mx-auto flex justify-between items-center">
 			<nav>
