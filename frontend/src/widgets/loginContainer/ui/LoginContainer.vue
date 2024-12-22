@@ -1,10 +1,11 @@
 <script setup lang="ts">
 import { LogoIcon } from '@shared/ui/icons';
+import { RouteLocationRaw } from 'vue-router';
 
 interface Props {
 	name: string;
 	link?: {
-		to: string
+		to: RouteLocationRaw
 		description: string
 		toDescription: string
 	};

@@ -49,8 +49,13 @@ const submit = handleSubmit(async (values) => {
 		name="Welcome back"
 		:link="{
 			description: 'New to Eats?',
-			to: '/register',
-			toDescription: 'Create an Account'
+			toDescription: 'Create an Account',
+			to: {
+				path: '/register',
+				query: {
+					redirect: route.query.redirect,
+				},
+			},
 	}">
 		<login-form :errors="errors" @submit="submit">
 			<input

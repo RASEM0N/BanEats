@@ -17,10 +17,10 @@ export const requiredAuth: NavigationGuardWithThis<void> = (to, _, next) => {
 		// как по мне лучше использовать без path
 		// а name у роута, к которому хочешь перейти
 
-		return {
+		return next({
 			path: '/login',
 			query: { redirect: to.fullPath },
-		};
+		});
 	}
 	next();
 };

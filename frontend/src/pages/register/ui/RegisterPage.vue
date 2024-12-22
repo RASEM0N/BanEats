@@ -43,7 +43,7 @@ const submit = handleSubmit(async (values) => {
 	await router.push({
 		path: '/login',
 		query: {
-			redirect: route.query.redirect ?? '',
+			redirect: route.query.redirect,
 		},
 	});
 });
@@ -53,9 +53,14 @@ const submit = handleSubmit(async (values) => {
 	<login-container
 		name="Let's get started"
 		:link="{
-			to: '/login',
 			toDescription: 'Log in now',
-			description: 'Already have an account?'
+			description: 'Already have an account?',
+			to: {
+				path: '/login',
+				query: {
+					redirect: route.query.redirect,
+				},
+			},
 		}"
 	>
 		<login-form :errors="errors" @submit="submit">
