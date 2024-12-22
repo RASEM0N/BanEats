@@ -26,16 +26,25 @@ export const router = createRouter({
 		{
 			path: '/login',
 			component: LoginPage,
-			meta: { title: 'Login | BanEats' },
+			meta: {
+				title: 'Login | BanEats',
+				requiredAuth: false,
+			},
 		},
 		{
 			path: '/register',
 			component: RegisterPage,
-			meta: { title: 'Register | BanEats' },
+			meta: {
+				title: 'Register | BanEats',
+				requiredAuth: false,
+			},
 		},
 		{
 			path: '/:pathMatch(.*)*',
 			component: NotFoundPage,
+			meta: {
+				title: '404 | BanEats',
+			},
 		},
 	],
 });
