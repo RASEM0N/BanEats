@@ -6,6 +6,7 @@ import { HomePage } from '@pages/home';
 import { NotFoundPage } from '@pages/404';
 import { ConfirmEmailPage } from '@pages/confirmEmail';
 import { EditProfilePage } from '@pages/editProfile';
+import { RestaurantsPage } from '@pages/restaurants';
 
 export const router = createRouter({
 	history: createWebHistory(),
@@ -19,8 +20,18 @@ export const router = createRouter({
 			},
 			children: [
 				{
+					path: '/',
+					component: RestaurantsPage,
+					meta: {
+						title: 'Restaurants | BanEats',
+					},
+				},
+				{
 					path: '/confirm',
 					component: ConfirmEmailPage,
+					meta: {
+						title: 'Confirm | BanEats',
+					},
 				},
 
 				// @TODO под вопром название станицы и путь
@@ -33,6 +44,9 @@ export const router = createRouter({
 				{
 					path: '/edit-profile',
 					component: EditProfilePage,
+					meta: {
+						title: 'Profile | BanEats',
+					},
 				},
 			],
 		},
