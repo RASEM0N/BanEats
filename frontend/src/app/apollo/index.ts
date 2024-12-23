@@ -19,4 +19,7 @@ export const apolloClient = new ApolloClient({
 if (__IS_DEV__) {
 	// @ts-ignore
 	window.apollo = { client: apolloClient, cache, gql };
+
+	// apollo.cache.data.data
+	// apollo.cache.storeReader.knownResults
 }

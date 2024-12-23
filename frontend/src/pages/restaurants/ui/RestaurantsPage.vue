@@ -1,14 +1,15 @@
 <script setup lang="ts">
-import { useRoute, useRouter } from 'vue-router';
+import { useRouter } from 'vue-router';
 import { useRestaurants } from '../model/useRestaurants';
 import { Pagination } from '@shared/ui/';
 import Restaurant from './Restaurant.vue';
 import RestaurantCategory from './RestaurantCategory.vue';
+import { refPage } from '../lib/page';
+import { watch } from 'vue';
 
 
-const route = useRoute();
 const router = useRouter();
-const initPage = isNaN(Number(route.query.page)) ? 1 : Number(route.query.page);
+const page = refPage();
 
 const {
 	loading,
@@ -17,15 +18,18 @@ const {
 	restaurantsPagination,
 	result,
 	fetchMore,
-} = useRestaurants(initPage);
+} = useRestaurants(page.value);
 
-// @TODO болванка
-const loadMore = (page: number) => {
-	fetchMore(page);
-	router.push({ query: { page } });
+const loadMore = async (page: number) => {
+	await router.push({ query: { page } });
+	await fetchMore(page);
 };
 
-console.log(`PAGINATION./...`)
+// console.log(`PAGINATION./...`);
+
+watch(result, (value) => {
+	console.log(`VALUE`, value?.RestaurantGetAll.restaurants.map((v) => v.id));
+});
 
 </script>
 <template>
@@ -55,10 +59,10 @@ console.log(`PAGINATION./...`)
 					:restaurant="value" />
 			</div>
 			<pagination
-				:init-page="initPage"
 				:total-pages="restaurantsPagination.totalPages"
 				:total-count="restaurantsPagination.totalCount"
 				:load="loadMore"
+				v-model="page"
 				v-slot="{ page, totalPages }"
 			>
 				<span>Page {{ page }} of {{ totalPages }}</span>

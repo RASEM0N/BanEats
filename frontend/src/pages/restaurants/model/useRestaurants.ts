@@ -10,9 +10,7 @@ export const useRestaurants = (page: number = 1) => {
 	} = useQuery<
 		RestaurantsQueryResult,
 		RestaurantsQueryVariables
-	>(RestaurantsQuery, {
-		page,
-	});
+	>(RestaurantsQuery, () => ({ page }));
 
 	const categories = computed(() => result.value?.RestaurantCategoryGetAll.categories ?? []);
 	const restaurants = computed(() => result.value?.RestaurantGetAll.restaurants ?? []);
@@ -21,12 +19,34 @@ export const useRestaurants = (page: number = 1) => {
 		totalPages: result.value?.RestaurantGetAll.totalPages ?? 0,
 	}));
 
+	const updateQuery: Parameters<typeof fetchMore>[0]['updateQuery'] = (
+		prevValue,
+		{ fetchMoreResult: newValue, variables },
+	) => {
+
+		if (!newValue || !variables) {
+			return prevValue;
+		}
+
+		return {
+			RestaurantCategoryGetAll: newValue.RestaurantCategoryGetAll,
+			RestaurantGetAll: {
+				...newValue.RestaurantGetAll,
+				// restaurants: [
+				// 	...prevValue.RestaurantGetAll.restaurants,
+				// 	...newValue.RestaurantGetAll.restaurants,
+				// ],
+				restaurants: newValue.RestaurantGetAll.restaurants,
+			},
+		};
+	};
+
 	return {
 		result,
 		loading,
 		categories,
 		restaurants,
 		restaurantsPagination,
-		fetchMore: (page: number) => fetchMore({ variables: { page } }),
+		fetchMore: (page: number) => fetchMore({ variables: { page }, updateQuery }),
 	};
 };
