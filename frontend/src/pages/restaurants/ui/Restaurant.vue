@@ -14,7 +14,7 @@ const { restaurant } = defineProps<Props>();
 			 :style="{ backgroundImage: `url(${restaurant.coverImage})` }"
 		></div>
 		<h3 class="text-xl">
-			{{ restaurant.name }}
+			{{ restaurant.id }}: {{ restaurant.name }}
 		</h3>
 		<span v-if="restaurant.category"
 			  class="border-t mt-2 py-2 text-xs opacity-50 border-gray-400">

@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { useRoute, useRouter } from 'vue-router';
 import { useRestaurants } from '../model/useRestaurants';
-import { Pagination } from '@shared/ui';
+import { Pagination } from '@shared/ui/';
 import Restaurant from './Restaurant.vue';
 import RestaurantCategory from './RestaurantCategory.vue';
 
@@ -14,7 +14,7 @@ const {
 	loading,
 	categories,
 	restaurants,
-	pagination,
+	restaurantsPagination,
 	result,
 	fetchMore,
 } = useRestaurants(initPage);
@@ -24,6 +24,8 @@ const loadMore = (page: number) => {
 	fetchMore(page);
 	router.push({ query: { page } });
 };
+
+console.log(`PAGINATION./...`)
 
 </script>
 <template>
@@ -35,18 +37,18 @@ const loadMore = (page: number) => {
 				placeholder="Search restaurants..."
 			/>
 		</form>
-		<template v-if="result && !loading">
-			<div class="max-w-screen-2xl mx-auto mt-8">
-				<div class="flex justify-around max-w-sm mx-auto">
-					<router-link v-for="category in categories"
-								 :key="category.id"
-								 :to="`/category/${category.slug}`"
-					>
-						<restaurant-category :category="category" />
-					</router-link>
-				</div>
+		<div class="max-w-screen-2xl mx-auto mt-8"
+			 v-show="result && !loading"
+		>
+			<div class="flex justify-around max-w-sm mx-auto">
+				<router-link v-for="category in categories"
+							 :key="category.id"
+							 :to="`/category/${category.slug}`"
+				>
+					<restaurant-category :category="category" />
+				</router-link>
 			</div>
-			<div class="grid mt-10 grid-cols-3 gap-x-5 gap-y-10">
+			<div class="grid mt-10 grid-cols-3 gap-x-5 gap-y-10 mx-2">
 				<restaurant
 					v-for="value in restaurants"
 					:key="value.id"
@@ -54,14 +56,14 @@ const loadMore = (page: number) => {
 			</div>
 			<pagination
 				:init-page="initPage"
-				:total-pages="pagination.totalPages"
-				:total-count="pagination.totalCount"
+				:total-pages="restaurantsPagination.totalPages"
+				:total-count="restaurantsPagination.totalCount"
 				:load="loadMore"
 				v-slot="{ page, totalPages }"
 			>
 				<span>Page {{ page }} of {{ totalPages }}</span>
 			</pagination>
-		</template>
+		</div>
 	</div>
 </template>
 <style></style>

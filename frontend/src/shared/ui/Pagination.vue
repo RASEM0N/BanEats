@@ -28,16 +28,18 @@ watch(page, (value) => load(value));
 </script>
 <template>
 	<div class="grid grid-cols-3 text-center max-w-md items-center mx-auto mt-10">
-		<button class="focus:outline-none font-medium text-2xl"
-				v-if="page > 1"
-				@click="prev"
+		<button  @click="prev"
+				 :class="['focus:outline-none font-medium text-4xl', {
+					 'opacity-30 pointer-events-none': page === 1
+				 }]"
 		>
 			&larr;
 		</button>
 		<slot :page="page" :total-pages="totalPages"></slot>
-		<button class="focus:outline-none font-medium text-2xl"
-				v-if="page !== totalPages"
-				@click="next"
+		<button @click="next"
+				:class="['focus:outline-none font-medium text-4xl', {
+					'opacity-40 pointer-events-none': page === totalPages
+				}]"
 		>
 			&rarr;
 		</button>

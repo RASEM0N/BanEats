@@ -26,9 +26,6 @@ export const cache = new InMemoryCache({
 	// __typename:id или _id
 	// https://www.apollographql.com/docs/react/caching/cache-configuration#customizing-identifier-generation-globally
 	dataIdFromObject: (responseObject) => {
-
-		console.log(responseObject);
-
 		switch (responseObject.__typename) {
 			case 'User':
 				return `User:${responseObject.id}`;

@@ -16,7 +16,7 @@ export const useRestaurants = (page: number = 1) => {
 
 	const categories = computed(() => result.value?.RestaurantCategoryGetAll.categories ?? []);
 	const restaurants = computed(() => result.value?.RestaurantGetAll.restaurants ?? []);
-	const pagination = computed(() => ({
+	const restaurantsPagination = computed(() => ({
 		totalCount: result.value?.RestaurantGetAll.totalCount ?? 0,
 		totalPages: result.value?.RestaurantGetAll.totalPages ?? 0,
 	}));
@@ -26,7 +26,7 @@ export const useRestaurants = (page: number = 1) => {
 		loading,
 		categories,
 		restaurants,
-		pagination,
+		restaurantsPagination,
 		fetchMore: (page: number) => fetchMore({ variables: { page } }),
 	};
 };
