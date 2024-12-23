@@ -23,6 +23,14 @@ export class UserVerifyService {
 		user: User,
 		queryRunner: QueryRunner,
 	): Promise<Verification> {
+		const prevVerification = await this.verification.findOne({
+			where: { user: { id: user.id } },
+		});
+
+		if (prevVerification) {
+			await queryRunner.manager.remove(prevVerification);
+		}
+
 		const verification = await queryRunner.manager.save(
 			this.verification.create({
 				user,
@@ -50,6 +58,7 @@ export class UserVerifyService {
 
 		verification.user.isVerified = true;
 		await this.user.save(verification.user);
+		await this.verification.delete(verification.id);
 	}
 
 	async sendVerifyEmail({ email, code }: SendVerifyEmailArgs): Promise<void> {

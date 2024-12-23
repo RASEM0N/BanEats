@@ -1,8 +1,10 @@
 import { User } from '../entities/user.entity';
-import { ArgsType, Field, ObjectType, PickType } from '@nestjs/graphql';
+import { ArgsType, Field, ObjectType, PartialType, PickType } from '@nestjs/graphql';
 
 @ArgsType()
-export class UpdateUserArgs extends PickType(User, ['email', 'password'], ArgsType) {}
+export class UpdateUserArgs extends PartialType(
+	PickType(User, ['email', 'password'], ArgsType),
+) {}
 
 @ObjectType()
 export class UpdateUserOutput {
