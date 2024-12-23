@@ -27,7 +27,11 @@ export class Restaurant extends CoreEntity {
 	address: string;
 
 	@Field(() => RestaurantsCategory)
-	@ManyToOne(() => RestaurantsCategory, (category) => category.restaurants)
+	@ManyToOne(() => RestaurantsCategory, (category) => category.restaurants, {
+		nullable: true,
+		eager: true,
+		onDelete: 'SET NULL',
+	})
 	category: RestaurantsCategory;
 
 	@Field(() => [RestaurantDish])
@@ -35,10 +39,7 @@ export class Restaurant extends CoreEntity {
 	dishes: RestaurantDish[];
 
 	@Field(() => User)
-	@OneToMany(() => User, (user) => user.restaurant, {
-		// удалив пользователя, удалятся рестораны связанные с ним
-		onDelete: 'CASCADE',
-	})
+	@ManyToOne(() => User, (user) => user.restaurant, { onDelete: 'CASCADE' })
 	owner: User;
 
 	@Field(() => [Order])

@@ -18,7 +18,7 @@ export class DishResolver {
 		@AuthUser() user: User,
 		@Args() args: CreateDishArgs,
 	): Promise<CreateDishOutput> {
-		const dish = await this.dishService.create(user, args);
+		const dish = await this.dishService.getOrCreate(user, args);
 		return { dish };
 	}
 

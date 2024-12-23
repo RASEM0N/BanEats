@@ -129,7 +129,7 @@ describe('UserService', () => {
 			usersRepository.findOne.mockResolvedValue(undefined);
 			usersRepository.create.mockResolvedValue(mockUser);
 
-			const createdUser = await usersService.create({
+			const createdUser = await usersService.getOrCreate({
 				email: mockUser.email,
 				role: mockUser.role,
 				password: mockUser.password,
@@ -155,7 +155,7 @@ describe('UserService', () => {
 			usersVerifyService.createVerifyWithTransaction.mockRejectedValue(new Error());
 
 			try {
-				await usersService.create({
+				await usersService.getOrCreate({
 					email: mockUser.email,
 					role: mockUser.role,
 					password: mockUser.password,
@@ -180,7 +180,7 @@ describe('UserService', () => {
 			usersRepository.create.mockResolvedValue(mockUser);
 
 			try {
-				await usersService.create({
+				await usersService.getOrCreate({
 					email: mockUser.email,
 					role: mockUser.role,
 					password: mockUser.password,

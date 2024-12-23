@@ -32,7 +32,7 @@ export class RestaurantResolver {
 		@AuthUser() user: User,
 		@Args() dto: CreateRestaurantArgs,
 	): Promise<CreateRestaurantOutput> {
-		const restaurant = await this.restaurantService.create(user, dto);
+		const restaurant = await this.restaurantService.getOrCreate(user, dto);
 		return { restaurant };
 	}
 

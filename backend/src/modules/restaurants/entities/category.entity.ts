@@ -1,4 +1,4 @@
-import { Field, InputType, ObjectType } from '@nestjs/graphql';
+import { Field, ObjectType } from '@nestjs/graphql';
 import { Column, Entity, OneToMany } from 'typeorm';
 import { IsString, Length } from 'class-validator';
 import { CoreEntity } from '@ubereats/common/entities';
@@ -22,11 +22,6 @@ export class RestaurantsCategory extends CoreEntity {
 	@Column({ nullable: true })
 	@IsString()
 	coverImage?: string;
-
-	@Field(() => String)
-	@Column()
-	@IsString()
-	address: string;
 
 	@Field(() => [Restaurant], { nullable: true })
 	@OneToMany(() => Restaurant, (restaurant) => restaurant.category)

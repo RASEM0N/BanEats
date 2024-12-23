@@ -17,7 +17,7 @@ export class UserService implements DefaultCRUD<User> {
 		@InjectRepository(User) private readonly user: Repository<User>,
 	) {}
 
-	async create({ email, role, password }: CreateUserArgs): Promise<User> {
+	async getOrCreate({ email, role, password }: CreateUserArgs): Promise<User> {
 		/**
 		 * Transaction
 		 * @see https://docs.nestjs.com/techniques/database#typeorm-transactions

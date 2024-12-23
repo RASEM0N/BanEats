@@ -33,7 +33,7 @@ export class DishService implements DefaultCRUD<RestaurantDish> {
 		});
 	}
 
-	async create(user: User, args: CreateDishArgs): Promise<RestaurantDish> {
+	async getOrCreate(user: User, args: CreateDishArgs): Promise<RestaurantDish> {
 		const restaurant = await this.restaurantService.get(args.restaurantId);
 
 		if (restaurant.ownerId !== user.id) {

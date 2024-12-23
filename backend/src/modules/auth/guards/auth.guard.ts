@@ -23,12 +23,26 @@ export class AuthGuard implements CanActivate {
 		}
 
 		if (isNoAuth) {
-			return !this.getAuthToken(ctx);
+			const isHasToken = !!this.getAuthToken(ctx);
+
+			if (isHasToken) {
+				throw new UberEastsException({
+					errorCode: UBER_EATS_ERROR.must_not_be_login,
+				});
+			}
+
+			return true;
 		}
 
 		if (roles) {
 			const { user } = GqlExecutionContext.create(ctx).getContext();
-			return this.isValidRole(user, roles);
+			const isValid = this.isValidRole(user, roles);
+
+			if (!isValid) {
+				throw new UberEastsException({ errorCode: UBER_EATS_ERROR.no_rights });
+			}
+
+			return true;
 		}
 
 		return true;

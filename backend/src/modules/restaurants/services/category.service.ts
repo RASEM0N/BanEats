@@ -13,7 +13,7 @@ export class CategoryService implements DefaultCRUD<RestaurantsCategory> {
 		private readonly category: Repository<RestaurantsCategory>,
 	) {}
 
-	async create(categoryName: string): Promise<RestaurantsCategory> {
+	async getOrCreate(categoryName: string): Promise<RestaurantsCategory> {
 		const name = categoryName.trim().toLowerCase();
 		const slug = slugify(name);
 
@@ -25,13 +25,7 @@ export class CategoryService implements DefaultCRUD<RestaurantsCategory> {
 			return category;
 		}
 
-		const createdCategory = this.category.create({
-			name,
-			slug,
-		});
-
-		await this.category.save(createdCategory);
-		return createdCategory;
+		return this.category.save(this.category.create({ name, slug, restaurants: [] }));
 	}
 
 	async get(slug: string): Promise<RestaurantsCategory> {

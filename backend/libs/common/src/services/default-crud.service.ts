@@ -3,7 +3,7 @@ export interface DefaultCRUD<T> {
 
 	getAll(...args: any): T[] | Promise<T[]> | unknown;
 
-	create(...args: any): T | Promise<T>;
+	getOrCreate(...args: any): T | Promise<T>;
 
 	update(...args: any): T | Promise<T>;
 

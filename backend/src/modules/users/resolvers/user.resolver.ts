@@ -42,7 +42,7 @@ export class UserResolver {
 	@NoAuth()
 	@Mutation(() => CreateUserOutput, { name: 'UserCreate' })
 	async create(@Args() args: CreateUserArgs): Promise<CreateUserOutput> {
-		const user = await this.userService.create(args);
+		const user = await this.userService.getOrCreate(args);
 		return { user };
 	}
 

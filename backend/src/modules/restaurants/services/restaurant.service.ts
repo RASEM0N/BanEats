@@ -62,14 +62,13 @@ export class RestaurantService implements DefaultCRUD<Restaurant> {
 		};
 	}
 
-	async create(user: User, dto: CreateRestaurantArgs): Promise<Restaurant> {
-		const category = await this.categoryService.create(dto.categoryName);
-
+	async getOrCreate(user: User, dto: CreateRestaurantArgs): Promise<Restaurant> {
 		const restaurant = this.restaurant.create({
 			...dto,
 		});
 
-		restaurant.category = category;
+		restaurant.owner = user;
+		restaurant.category = await this.categoryService.getOrCreate(dto.categoryName);
 		return await this.restaurant.save(restaurant);
 	}
 
@@ -92,7 +91,7 @@ export class RestaurantService implements DefaultCRUD<Restaurant> {
 		}
 
 		if (updateArgs.categoryName) {
-			restaurant.category = await this.categoryService.create(
+			restaurant.category = await this.categoryService.getOrCreate(
 				updateArgs.categoryName,
 			);
 		}
