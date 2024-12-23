@@ -25,7 +25,7 @@ const { user } = useMe();
 				</router-link>
 			</nav>
 			<nav>
-				<router-link class="text-base font-bold" to="/my-profile">
+				<router-link class="text-base font-bold" to="/edit-profile">
 					MY <span class="text-[#5FB709]">PROFILE</span>
 				</router-link>
 			</nav>

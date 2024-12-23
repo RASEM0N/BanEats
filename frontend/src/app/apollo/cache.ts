@@ -31,7 +31,7 @@ export const cache = new InMemoryCache({
 
 		switch (responseObject.__typename) {
 			case 'User':
-				return `User:${responseObject.id}:${responseObject.email}`;
+				return `User:${responseObject.id}`;
 
 			case 'Restaurant':
 				return `Restaurant:${responseObject.id}`;

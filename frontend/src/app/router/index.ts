@@ -5,6 +5,7 @@ import { actualizeTitle, requiredAuth } from '@app/router/guards';
 import { HomePage } from '@pages/home';
 import { NotFoundPage } from '@pages/404';
 import { ConfirmEmailPage } from '@pages/confirmEmail';
+import { EditProfilePage } from '@pages/editProfile';
 
 export const router = createRouter({
 	history: createWebHistory(),
@@ -20,6 +21,18 @@ export const router = createRouter({
 				{
 					path: '/confirm',
 					component: ConfirmEmailPage,
+				},
+
+				// @TODO под вопром название станицы и путь
+				// по идее это просто идет
+
+				// ProfilePage
+				// и EditProfileFeature
+
+				// надо будет разнести потом это
+				{
+					path: '/edit-profile',
+					component: EditProfilePage,
 				},
 			],
 		},
