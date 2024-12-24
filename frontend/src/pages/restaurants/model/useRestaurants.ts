@@ -44,6 +44,6 @@ export const useRestaurants = () => {
 		categories,
 		restaurants,
 		restaurantsPagination,
-		load: (page: number) => load(null, { page }),
+		load: ({ page, query }: RestaurantsQueryVariables) => load(null, { page, query }),
 	};
 };

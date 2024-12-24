@@ -3,13 +3,11 @@ import { watch } from 'vue';
 
 interface Props {
 	totalPages: number;
-	totalCount: number;
-	load: (page: number) => Promise<void>;
 }
 
 const { totalPages, load } = defineProps<Props>();
 const page = defineModel({ default: 1 });
-const emits = defineEmits(['prev', 'next']);
+const emits = defineEmits(['prev', 'next', 'load']);
 
 
 const prev = () => {
@@ -22,7 +20,7 @@ const next = () => {
 	page.value++;
 };
 
-watch(page, (value) => load(value));
+watch(page, (value) => emits('load', value));
 
 </script>
 <template>

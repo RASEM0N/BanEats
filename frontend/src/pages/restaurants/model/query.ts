@@ -1,7 +1,8 @@
 import gql from 'graphql-tag';
 
 export type RestaurantsQueryVariables = {
-	page: number;
+	page?: number;
+	query?: string
 }
 
 export interface RestaurantsQueryResult {

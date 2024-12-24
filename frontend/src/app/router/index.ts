@@ -21,6 +21,14 @@ export const router = createRouter({
 			children: [
 				{
 					path: '/',
+					redirect: () => {
+					    return {
+							path: '/restaurants'
+						}
+					},
+				},
+				{
+					path: '/restaurants',
 					component: RestaurantsPage,
 					meta: {
 						title: 'Restaurants | BanEats',
