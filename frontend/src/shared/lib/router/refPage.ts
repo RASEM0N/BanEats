@@ -1,6 +1,6 @@
 import { useRoute, useRouter } from 'vue-router';
 import { ref, watch } from 'vue';
-import { onHistory } from '@shared/lib/router';
+import { onHistory } from './history';
 
 export const refPage = (value: number = 1) => {
 	const route = useRoute();
