@@ -24,7 +24,6 @@ export const refPage = (value: number = 1) => {
 	return page;
 };
 
-
 const normalizeQuery = (query?: any, value: number = 1) => {
 	const numQuery = Number(query);
 	return isNaN(numQuery) ? value : numQuery;

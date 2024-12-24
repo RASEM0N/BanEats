@@ -1,15 +1,12 @@
 <script setup lang="ts">
 import { onMounted } from 'vue';
-import { useRouter } from 'vue-router';
 import { useRestaurants } from '../model/useRestaurants';
 import { Pagination } from '@shared/ui/';
 import { Restaurant, RestaurantCategory } from '@entities/restaurant';
-import { refPage } from '../lib/page';
+import { refPage } from '@shared/lib/router';
 import RestaurantsSearch from './RestaurantsSearch.vue';
 
-const router = useRouter();
 const page = refPage();
-
 const {
 	loading,
 	categories,
