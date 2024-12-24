@@ -7,10 +7,6 @@ import { Restaurant, RestaurantCategory } from '@entities/restaurant';
 import { refPage } from '../lib/page';
 import RestaurantsSearch from './RestaurantsSearch.vue';
 
-onMounted(() => {
-	loadMore(page.value);
-});
-
 const router = useRouter();
 const page = refPage();
 
@@ -24,11 +20,6 @@ const {
 } = useRestaurants();
 
 const loadMore = async (page: number) => {
-
-	// @TODO надо чтоб при возвращения назад в Браузере
-	// так же изменялось состояние page.value
-	// Сейчас page.value в такой кейсе не соотвествует query
-
 	await router.push({ query: { page } });
 	await load({ page });
 };
@@ -38,6 +29,9 @@ const loadSearch = async (query: string) => {
 	await load({ query });
 };
 
+onMounted(() => {
+	loadMore(page.value);
+});
 </script>
 <template>
 	<div>
