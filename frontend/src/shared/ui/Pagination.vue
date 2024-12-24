@@ -5,10 +5,9 @@ interface Props {
 	totalPages: number;
 }
 
-const { totalPages, load } = defineProps<Props>();
+const { totalPages } = defineProps<Props>();
 const page = defineModel({ default: 1 });
 const emits = defineEmits(['prev', 'next', 'load']);
-
 
 const prev = () => {
 	emits('prev');

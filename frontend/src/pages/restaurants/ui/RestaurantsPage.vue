@@ -20,12 +20,10 @@ const {
 } = useRestaurants();
 
 const loadMore = async (page: number) => {
-	await router.push({ query: { page } });
 	await load({ page });
 };
 
 const loadSearch = async (query: string) => {
-	await router.push({ query: { query } });
 	await load({ query });
 };
 
