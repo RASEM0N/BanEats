@@ -1,6 +1,6 @@
 import gql from 'graphql-tag';
 
-export interface RestaurantsQueryVariables {
+export type RestaurantsQueryVariables = {
 	page: number;
 }
 
@@ -18,6 +18,7 @@ export interface RestaurantsQueryResult {
 	RestaurantGetAll: {
 		totalCount: number
 		totalPages: number
+		page: number
 
 		restaurants: {
 			id: number
@@ -48,6 +49,7 @@ export const RestaurantsQuery = gql`
         RestaurantGetAll(page: $page) {
             totalCount
             totalPages
+            page
             restaurants {
                 id
                 name

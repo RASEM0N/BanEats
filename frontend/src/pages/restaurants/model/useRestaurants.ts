@@ -1,45 +1,42 @@
-import { useQuery } from '@vue/apollo-composable';
+import { useLazyQuery } from '@vue/apollo-composable';
 import { RestaurantsQueryResult, RestaurantsQueryVariables, RestaurantsQuery } from './query';
 import { computed } from 'vue';
 
-export const useRestaurants = (page: number = 1) => {
+export const useRestaurants = () => {
+
+	// используем useLazyQuery ибо
+	// есть проблемы с пагинцией и кэшированием
+
+	// при использование fetchMore
+	// - некорректно работа кэширование - всегда запросы отправляется
+	// - не меняется variables - всегда начальное значение отправляется
+	// с этим всегда страницы 1-ой загрузки показыется.
+	// В тот же policy fields read(prev, new, { args: { page } })
+	// в качестве аргумент всегда начальное значение отправляется
+
+
+	// https://github.com/apollographql/apollo-client/issues/7430
 	const {
 		result,
 		loading,
-		fetchMore,
-	} = useQuery<
+		load,
+	} = useLazyQuery<
 		RestaurantsQueryResult,
 		RestaurantsQueryVariables
-	>(RestaurantsQuery, () => ({ page }));
+	>(RestaurantsQuery,
+		{ page: NaN },
+		{
+			fetchPolicy: 'cache-first',
+		},
+	);
 
-	const categories = computed(() => result.value?.RestaurantCategoryGetAll.categories ?? []);
+	const categories = computed(() => result.value?.RestaurantCategoryGetAll?.categories ?? []);
 	const restaurants = computed(() => result.value?.RestaurantGetAll.restaurants ?? []);
 	const restaurantsPagination = computed(() => ({
 		totalCount: result.value?.RestaurantGetAll.totalCount ?? 0,
 		totalPages: result.value?.RestaurantGetAll.totalPages ?? 0,
 	}));
 
-	const updateQuery: Parameters<typeof fetchMore>[0]['updateQuery'] = (
-		prevValue,
-		{ fetchMoreResult: newValue, variables },
-	) => {
-
-		if (!newValue || !variables) {
-			return prevValue;
-		}
-
-		return {
-			RestaurantCategoryGetAll: newValue.RestaurantCategoryGetAll,
-			RestaurantGetAll: {
-				...newValue.RestaurantGetAll,
-				// restaurants: [
-				// 	...prevValue.RestaurantGetAll.restaurants,
-				// 	...newValue.RestaurantGetAll.restaurants,
-				// ],
-				restaurants: newValue.RestaurantGetAll.restaurants,
-			},
-		};
-	};
 
 	return {
 		result,
@@ -47,6 +44,6 @@ export const useRestaurants = (page: number = 1) => {
 		categories,
 		restaurants,
 		restaurantsPagination,
-		fetchMore: (page: number) => fetchMore({ variables: { page }, updateQuery }),
+		load: (page: number) => load(null, { page }),
 	};
 };

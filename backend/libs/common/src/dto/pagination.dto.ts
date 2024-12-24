@@ -13,4 +13,7 @@ export class PaginationData {
 
 	@Field(() => Number)
 	totalCount: number;
+
+	@Field(() => Number)
+	page: number;
 }

@@ -5,8 +5,7 @@ import { Pagination } from '@shared/ui/';
 import Restaurant from './Restaurant.vue';
 import RestaurantCategory from './RestaurantCategory.vue';
 import { refPage } from '../lib/page';
-import { watch } from 'vue';
-
+import { onMounted } from 'vue';
 
 const router = useRouter();
 const page = refPage();
@@ -17,18 +16,16 @@ const {
 	restaurants,
 	restaurantsPagination,
 	result,
-	fetchMore,
-} = useRestaurants(page.value);
+	load,
+} = useRestaurants();
 
 const loadMore = async (page: number) => {
 	await router.push({ query: { page } });
-	await fetchMore(page);
+	await load(page);
 };
 
-// console.log(`PAGINATION./...`);
-
-watch(result, (value) => {
-	console.log(`VALUE`, value?.RestaurantGetAll.restaurants.map((v) => v.id));
+onMounted(() => {
+	load(page.value);
 });
 
 </script>

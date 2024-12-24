@@ -59,6 +59,7 @@ export class RestaurantService implements DefaultCRUD<Restaurant> {
 			restaurants,
 			totalPages,
 			totalCount,
+			page: args.page,
 		};
 	}
 
