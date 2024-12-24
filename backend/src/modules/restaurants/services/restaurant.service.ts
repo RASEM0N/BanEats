@@ -23,9 +23,8 @@ export class RestaurantService implements DefaultCRUD<Restaurant> {
 		@Inject(CategoryService) private readonly categoryService: CategoryService,
 	) {}
 
-	async get(id: number): Promise<Restaurant> {
+	async get(user: User, id: number): Promise<Restaurant> {
 		const restaurant = await this.restaurant.findOne({
-			relations: ['menu'],
 			where: {
 				id,
 			},
@@ -35,6 +34,12 @@ export class RestaurantService implements DefaultCRUD<Restaurant> {
 			throw new UberEastsException({
 				errorCode: UBER_EATS_ERROR.no_entity,
 				message: `There is no restaurant`,
+			});
+		}
+
+		if (restaurant.ownerId !== user.id) {
+			throw new UberEastsException({
+				errorCode: UBER_EATS_ERROR.no_rights,
 			});
 		}
 

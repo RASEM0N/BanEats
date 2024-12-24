@@ -7,6 +7,7 @@ import { NotFoundPage } from '@pages/404';
 import { ConfirmEmailPage } from '@pages/confirmEmail';
 import { EditProfilePage } from '@pages/editProfile';
 import { RestaurantsPage } from '@pages/restaurants';
+import { RestaurantPage } from '@pages/restaurant';
 
 export const router = createRouter({
 	history: createWebHistory(),
@@ -22,9 +23,9 @@ export const router = createRouter({
 				{
 					path: '/',
 					redirect: () => {
-					    return {
-							path: '/restaurants'
-						}
+						return {
+							path: '/restaurants',
+						};
 					},
 				},
 				{
@@ -32,6 +33,13 @@ export const router = createRouter({
 					component: RestaurantsPage,
 					meta: {
 						title: 'Restaurants | BanEats',
+					},
+				},
+				{
+					path: '/restaurants/:restaurantId',
+					component: RestaurantPage,
+					meta: {
+						title: 'Restaurant | BanEats',
 					},
 				},
 				{

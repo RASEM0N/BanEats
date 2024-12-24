@@ -14,11 +14,24 @@ import {
 	UpdateRestaurantOutput,
 } from '../dto/restaurant-update.dto';
 import { RestaurantsDeleteArgs } from '../dto/restaurant-delete.dto';
-import { RestaurantsGetAllOutput } from '../dto/restaurant-get.dto';
+import {
+	RestaurantGetArgs,
+	RestaurantGetOutput,
+	RestaurantsGetAllOutput,
+} from '../dto/restaurant-get.dto';
 
 @Resolver(() => Number)
 export class RestaurantResolver {
 	constructor(private readonly restaurantService: RestaurantService) {}
+
+	@Query(() => RestaurantGetOutput, { name: 'RestaurantGet' })
+	async get(
+		@AuthUser() user: User,
+		@Args() args: RestaurantGetArgs,
+	): Promise<RestaurantGetOutput> {
+		const restaurant = await this.restaurantService.get(user, args.restaurantId);
+		return { restaurant };
+	}
 
 	@Query(() => RestaurantsGetAllOutput, { name: 'RestaurantGetAll' })
 	async getAll(@Args() args: PaginationArgs): Promise<RestaurantsGetAllOutput> {

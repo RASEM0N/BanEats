@@ -34,13 +34,7 @@ export class DishService implements DefaultCRUD<RestaurantDish> {
 	}
 
 	async getOrCreate(user: User, args: CreateDishArgs): Promise<RestaurantDish> {
-		const restaurant = await this.restaurantService.get(args.restaurantId);
-
-		if (restaurant.ownerId !== user.id) {
-			throw new UberEastsException({
-				errorCode: UBER_EATS_ERROR.no_rights,
-			});
-		}
+		const restaurant = await this.restaurantService.get(user, args.restaurantId);
 
 		return this.dish.save(
 			this.dish.create({

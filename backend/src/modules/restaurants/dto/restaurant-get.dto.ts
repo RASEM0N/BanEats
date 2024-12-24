@@ -1,6 +1,18 @@
-import { ArgsType, Field, ObjectType } from '@nestjs/graphql';
+import { ArgsType, Field, ID, ObjectType } from '@nestjs/graphql';
 import { Restaurant } from '../entities/restaurant.entity';
 import { PaginationArgs, PaginationData } from '@ubereats/common/dto';
+
+@ArgsType()
+export class RestaurantGetArgs {
+	@Field(() => ID!)
+	restaurantId: number;
+}
+
+@ObjectType()
+export class RestaurantGetOutput {
+	@Field(() => Restaurant)
+	restaurant: Restaurant;
+}
 
 @ArgsType()
 export class RestaurantGetAllArgs extends PaginationArgs {
