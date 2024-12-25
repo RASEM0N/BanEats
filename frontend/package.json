@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "@apollo/client": "^3.12.3",
+    "@unhead/vue": "^1.11.14",
     "@vee-validate/zod": "^4.14.7",
     "@vue/apollo-composable": "^4.2.1",
     "graphql": "^16.10.0",

@@ -1,56 +1,30 @@
 <script lang="ts" setup>
 import { useRoute } from 'vue-router';
-import { useQuery } from '@vue/apollo-composable';
-import gql from 'graphql-tag';
-import { computed } from 'vue';
+import { useRestaurant } from '../model/useRestaurant';
+import { useHead } from '@unhead/vue';
 
 const route = useRoute();
-const restaurantId = +route.params.restaurantId;
+const { restaurant } = useRestaurant(+route.params.restaurantId);
 
-// @TODO надо с ресторанами фрагменты использовать
-// тогда вроде кэшироватся нормально будет
-
-interface RestaurantQueryVariables {
-	id: number;
-}
-
-interface RestaurantQueryResult {
-	RestaurantGet: {
-		restaurant: {
-			id: number
-			name: string
-			coverImage: string
-			address: string
-			category: {
-				id: number
-				name: string
+useHead({
+	title: () => restaurant.value
+		? `${restaurant.value.name} | BanEats`
+		: window.document.title,
+	meta: [
+		{
+			name: 'description',
+			content: () => {
+				const value = restaurant.value;
+				return value
+					? `${value.category.name} restaurant ${value.name} at the address ${value.address}`
+					: 'restaurant | BanEats';
 			},
-		};
-	}
-}
-
-const { result, loading, error } = useQuery<RestaurantQueryResult, RestaurantQueryVariables>(gql`
-	query RestaurantQuery($id: ID!) {
-		RestaurantGet(restaurantId: $id) {
-			restaurant {
-				id
-                name
-                coverImage
-                category {
-                    id
-                    name
-                }
-                address
-			}
-		}
-	}
-`, { id: restaurantId });
-
-const restaurant = computed(() => result.value?.RestaurantGet.restaurant);
+		},
+	],
+});
 
 </script>
 <template>
-	{{ error }}
 	<div>
 		<div
 			v-if="restaurant"
