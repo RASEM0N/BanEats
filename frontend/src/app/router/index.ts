@@ -8,6 +8,7 @@ import { ConfirmEmailPage } from '@pages/confirmEmail';
 import { EditProfilePage } from '@pages/editProfile';
 import { RestaurantsPage } from '@pages/restaurants';
 import { RestaurantPage } from '@pages/restaurant';
+import { CategoryPage } from '@pages/category';
 
 export const router = createRouter({
 	history: createWebHistory(),
@@ -40,6 +41,13 @@ export const router = createRouter({
 					component: RestaurantPage,
 					meta: {
 						title: 'Restaurant | BanEats',
+					},
+				},
+				{
+					path: '/restaurants/category/:slug',
+					component: CategoryPage,
+					meta: {
+						title: 'Category | BanEats',
 					},
 				},
 				{
