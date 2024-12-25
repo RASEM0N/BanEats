@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { watch } from 'vue';
+import { computed, watch } from 'vue';
 
 interface Props {
 	totalPages: number;
@@ -8,6 +8,8 @@ interface Props {
 const { totalPages } = defineProps<Props>();
 const page = defineModel({ default: 1 });
 const emits = defineEmits(['prev', 'next', 'load']);
+
+const calcPage = computed(() => totalPages < 1 ? 0 : page.value);
 
 const prev = () => {
 	emits('prev');
@@ -25,16 +27,18 @@ watch(page, (value) => emits('load', value));
 <template>
 	<div class="grid grid-cols-3 text-center max-w-md items-center mx-auto mt-10">
 		<button @click="prev"
+				data-action="prev"
 				:class="['focus:outline-none font-medium text-4xl', {
-					 'opacity-30 pointer-events-none': page === 1
+					 'opacity-30 pointer-events-none': calcPage <= 1
 				 }]"
 		>
 			&larr;
 		</button>
-		<slot :page="page" :total-pages="totalPages"></slot>
+		<slot :page="calcPage" :total-pages="totalPages"></slot>
 		<button @click="next"
+				data-action="next"
 				:class="['focus:outline-none font-medium text-4xl', {
-					'opacity-40 pointer-events-none': page === totalPages
+					'opacity-40 pointer-events-none': calcPage === totalPages
 				}]"
 		>
 			&rarr;
