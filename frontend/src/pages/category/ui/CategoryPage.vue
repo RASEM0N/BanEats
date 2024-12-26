@@ -55,8 +55,8 @@ const restaurants = computed(() => result.value?.RestaurantCategoryGetBySlug.res
 useHead({
 	title: () => category.value
 		? `Category ${category.value?.name} | BanEats`
-		: `Category | BanEats`
-})
+		: `Category | BanEats`,
+});
 
 </script>
 <template>
@@ -72,10 +72,25 @@ useHead({
 				</h5>
 			</div>
 		</div>
-		<ul>
-			<li v-for="value in restaurants" :key="value.id">
-				{{ value }}
-			</li>
-		</ul>
+		<div class="m-10 flex flex-wrap justify-center gap-5">
+			<router-link v-for="value in restaurants"
+						 :key="value.id"
+						 :to="`/restaurants/${value.id}`"
+			>
+				<div
+					class="relative w-[100px] h-[100px] rounded-[50%]"
+					:style="{
+					 	backgroundImage: `url(${value.coverImage})`,
+					 	backgroundRepeat: 'no-repeat',
+					 	backgroundPosition: 'center',
+					 	backgroundSize: 'cover'
+				 	}"
+				>
+					<span class="absolute h-full w-full flex justify-center items-center uppercase overflow-hidden bg-gray-950/[.4] text-white rounded-[50%] hover:bg-gray-950/[.2]">
+						{{ value.name }}
+					</span>
+				</div>
+			</router-link>
+		</div>
 	</div>
 </template>
