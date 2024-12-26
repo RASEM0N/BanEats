@@ -4,11 +4,7 @@ import { RegisterPage } from '@pages/register';
 import { actualizeTitle, requiredAuth } from '@app/router/guards';
 import { HomePage } from '@pages/home';
 import { NotFoundPage } from '@pages/404';
-import { ConfirmEmailPage } from '@pages/confirmEmail';
-import { EditProfilePage } from '@pages/editProfile';
-import { RestaurantsPage } from '@pages/restaurants';
-import { RestaurantPage } from '@pages/restaurant';
-import { CategoryPage } from '@pages/category';
+import { authRoutes } from './auth';
 
 export const router = createRouter({
 	history: createWebHistory(),
@@ -23,55 +19,11 @@ export const router = createRouter({
 			children: [
 				{
 					path: '/',
-					redirect: () => {
-						return {
-							path: '/restaurants',
-						};
-					},
+					redirect: {
+						path: '/restaurants'
+					}
 				},
-				{
-					path: '/restaurants',
-					component: RestaurantsPage,
-					meta: {
-						title: 'Restaurants | BanEats',
-					},
-				},
-				{
-					path: '/restaurants/:restaurantId',
-					component: RestaurantPage,
-					meta: {
-						title: 'Restaurant | BanEats',
-					},
-				},
-				{
-					path: '/restaurants/category/:slug',
-					component: CategoryPage,
-					meta: {
-						title: 'Category | BanEats',
-					},
-				},
-				{
-					path: '/confirm',
-					component: ConfirmEmailPage,
-					meta: {
-						title: 'Confirm | BanEats',
-					},
-				},
-
-				// @TODO под вопром название станицы и путь
-				// по идее это просто идет
-
-				// ProfilePage
-				// и EditProfileFeature
-
-				// надо будет разнести потом это
-				{
-					path: '/edit-profile',
-					component: EditProfilePage,
-					meta: {
-						title: 'Profile | BanEats',
-					},
-				},
+				...authRoutes,
 			],
 		},
 		{
