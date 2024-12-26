@@ -9,6 +9,7 @@ import { userSchema } from '@entities/user';
 import { useEditUser } from '@pages/editProfile/model/useEditUser';
 import { computed } from 'vue';
 import { nullishWithTransform } from '@shared/lib/zod';
+import { toast } from 'vue3-toastify';
 
 const editUser = useEditUser();
 const { user } = useMe();
@@ -30,7 +31,12 @@ const errors = computed(() => [...Object.values(formErrors.value), editUser.erro
 
 
 const submit = handleSubmit((values) => {
-	editUser.mutate(values);
+	editUser.mutate(values).then(() => {
+		toast('User data has changed', {
+			position: toast.POSITION.TOP_RIGHT,
+			type: 'success',
+		});
+	});
 });
 </script>
 <template>

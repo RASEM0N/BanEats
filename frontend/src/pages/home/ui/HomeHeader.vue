@@ -20,12 +20,12 @@ const { user } = useMe();
 	<header class="py-4">
 		<div class="w-full px-5 xl:px-0 max-w-screen-2xl mx-auto flex justify-between items-center">
 			<nav>
-				<router-link to="/">
+				<router-link id="nav-home" to="/">
 					<logo-icon class="w-44" />
 				</router-link>
 			</nav>
 			<nav>
-				<router-link class="text-base font-bold" to="/edit-profile">
+				<router-link id="nav-edit-profile" class="text-base font-bold" to="/edit-profile">
 					MY <span class="text-[#5FB709]">PROFILE</span>
 				</router-link>
 			</nav>
