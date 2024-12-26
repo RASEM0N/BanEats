@@ -6,12 +6,14 @@ const { user } = useMe();
 </script>
 <template>
 	<transition>
-		<div :class="[
+		<div
+			id="user-confirm-email"
+			:class="[
 			'bg-red-500 text-center text-base text-white',
 			'transition-[height,padding] delay-300',
 			{
-				'p-0 h-0': user?.isVerified,
-				'p-3 h-12': !user?.isVerified
+				'verified': user?.isVerified,
+				'no-verified': !user?.isVerified
 			},
 		]">
 			<span>Please verify your email.</span>
@@ -32,3 +34,12 @@ const { user } = useMe();
 		</div>
 	</header>
 </template>
+<style scoped>
+.verified {
+	@apply p-0 h-0;
+}
+
+.no-verified {
+	@apply p-3 h-12;
+}
+</style>
