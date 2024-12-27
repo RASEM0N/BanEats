@@ -1,29 +1,27 @@
 import { RouteRecordRaw } from 'vue-router';
-import { ConfirmEmailPage } from '@pages/confirmEmail';
-import { EditProfilePage } from '@pages/editProfile';
-import { clientRoutes } from './clientRoutes';
-import { ownerRoutes } from './ownerRoutes';
-import { deliveryRoutes } from './deliveryRoutes';
-import { adminRoutes } from './adminRoutes';
+import { HomePage } from '@pages/home';
+import { commonRoutes } from './commonRoutes';
+import { ownerRoutes } from './role/ownerRoutes';
+import { deliveryRoutes } from './role/deliveryRoutes';
+import { clientRoutes } from './role/clientRoutes';
+import { adminRoutes } from './role/adminRoutes';
+import { roleMeta } from './lib/roleMeta';
+import { USER_ROLE } from '@entities/user';
 
 export const authRoutes: RouteRecordRaw[] = [
-	...adminRoutes,
-	...clientRoutes,
-	...ownerRoutes,
-	...deliveryRoutes,
-
 	{
-		path: '/confirm',
-		component: ConfirmEmailPage,
+		path: '/',
+		component: HomePage,
 		meta: {
-			title: 'Confirm | BanEats',
+			title: 'BatEats',
+			requiredAuth: true,
 		},
-	},
-	{
-		path: '/edit-profile',
-		component: EditProfilePage,
-		meta: {
-			title: 'Profile | BanEats',
-		},
+		children: [
+			...roleMeta(clientRoutes, USER_ROLE.client),
+			...roleMeta(adminRoutes, USER_ROLE.admin),
+			...roleMeta(ownerRoutes, USER_ROLE.owner),
+			...roleMeta(deliveryRoutes, USER_ROLE.delivery),
+			...commonRoutes,
+		],
 	},
 ];

@@ -1,31 +1,14 @@
 import { createRouter, createWebHistory } from 'vue-router';
 import { LoginPage } from '@pages/login';
 import { RegisterPage } from '@pages/register';
-import { actualizeTitle, requiredAuth } from '@app/router/guards';
-import { HomePage } from '@pages/home';
+import { actualizeTitle, requiredAuth, role } from './guards';
 import { NotFoundPage } from '@pages/404';
 import { authRoutes } from './auth';
 
 export const router = createRouter({
 	history: createWebHistory(),
 	routes: [
-		{
-			path: '/',
-			component: HomePage,
-			meta: {
-				title: 'BatEats',
-				requiredAuth: true,
-			},
-			children: [
-				{
-					path: '/',
-					redirect: {
-						path: '/restaurants'
-					}
-				},
-				...authRoutes,
-			],
-		},
+		...authRoutes,
 		{
 			path: '/login',
 			component: LoginPage,
@@ -54,3 +37,4 @@ export const router = createRouter({
 
 router.beforeEach(actualizeTitle);
 router.beforeEach(requiredAuth);
+router.beforeEach(role);

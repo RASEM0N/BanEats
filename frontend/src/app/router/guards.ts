@@ -1,5 +1,6 @@
 import { NavigationGuardWithThis } from 'vue-router';
 import { getAuthToken } from '@features/auth';
+import { USER_ROLE } from '@entities/user';
 
 export const actualizeTitle: NavigationGuardWithThis<void> = (to, _, next) => {
 	document.title = String(to.meta.title ?? document.title);
@@ -33,4 +34,20 @@ export const requiredAuth: NavigationGuardWithThis<void> = (to, _, next) => {
 	}
 
 	return next();
+};
+
+export const role: NavigationGuardWithThis<void> = async (to, _, next) => {
+
+	if (!to.meta.role) {
+		return next();
+	}
+
+	// @TODO добавить логику обращения к GQL
+	const user = await { role: USER_ROLE.client };
+
+	if (to.meta.role === user.role) {
+		return next();
+	}
+
+	return next({ path: '/' });
 };
