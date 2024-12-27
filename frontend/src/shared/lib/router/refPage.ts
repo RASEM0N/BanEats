@@ -7,6 +7,10 @@ export const refPage = (value: number = 1) => {
 	const router = useRouter();
 	const page = ref(normalizeQuery(route.query['page'], value));
 
+	// @TODO
+	// тут вроде как можно сделать
+	// watch(() => route.query.page, (page) => ...
+
 	// page.value обновляем значение, чтоб при Prev/Next перендарилось
 	onHistory(() => {
 		page.value = normalizeQuery(queryFromLocation(), value);
