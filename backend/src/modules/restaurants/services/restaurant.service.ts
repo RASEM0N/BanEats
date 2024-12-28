@@ -9,7 +9,11 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { User } from '@/modules/users/entities/user.entity';
 import { CategoryService } from './category.service';
 import { RestaurantsDeleteArgs } from '../dto/restaurant-delete.dto';
-import { RestaurantGetAllArgs, RestaurantsGetAllOutput } from '../dto/restaurant-get.dto';
+import {
+	RestaurantGetAllArgs,
+	RestaurantsGetAllMyOutput,
+	RestaurantsGetAllOutput,
+} from '../dto/restaurant-get.dto';
 import {
 	CategoryGetArgs,
 	CategoryGetOutput,
@@ -66,6 +70,15 @@ export class RestaurantService implements DefaultCRUD<Restaurant> {
 			totalCount,
 			page: args.page,
 		};
+	}
+
+	async getAllMyRestaurants(user: User): Promise<RestaurantsGetAllMyOutput> {
+		const restaurants = await this.restaurant.find({
+			where: {
+				owner: { id: user.id },
+			},
+		});
+		return { restaurants };
 	}
 
 	async getOrCreate(user: User, dto: CreateRestaurantArgs): Promise<Restaurant> {

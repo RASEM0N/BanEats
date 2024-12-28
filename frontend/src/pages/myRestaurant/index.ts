@@ -1,1 +1,1 @@
-export { default as MyRestaurantsPage } from './ui/MyRestaurantPage.vue'
+export { default as MyRestaurantsPage } from './ui/MyRestaurantsPage.vue'

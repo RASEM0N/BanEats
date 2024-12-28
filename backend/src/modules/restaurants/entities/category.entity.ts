@@ -10,7 +10,7 @@ export class RestaurantsCategory extends CoreEntity {
 	@Field(() => String)
 	@Column({ unique: true })
 	@IsString()
-	@Length(5)
+	@Length(5, 60)
 	name: string;
 
 	@Field(() => String)

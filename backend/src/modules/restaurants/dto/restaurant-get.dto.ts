@@ -28,3 +28,9 @@ export class RestaurantsGetAllOutput extends PaginationData {
 	@Field(() => [Restaurant])
 	restaurants: Restaurant[];
 }
+
+@ObjectType()
+export class RestaurantsGetAllMyOutput {
+	@Field(() => [Restaurant])
+	restaurants: Restaurant[];
+}

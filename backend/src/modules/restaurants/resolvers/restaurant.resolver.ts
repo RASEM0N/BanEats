@@ -17,6 +17,7 @@ import { RestaurantsDeleteArgs } from '../dto/restaurant-delete.dto';
 import {
 	RestaurantGetArgs,
 	RestaurantGetOutput,
+	RestaurantsGetAllMyOutput,
 	RestaurantsGetAllOutput,
 } from '../dto/restaurant-get.dto';
 
@@ -36,6 +37,13 @@ export class RestaurantResolver {
 	@Query(() => RestaurantsGetAllOutput, { name: 'RestaurantGetAll' })
 	async getAll(@Args() args: PaginationArgs): Promise<RestaurantsGetAllOutput> {
 		const result = await this.restaurantService.getAll(args);
+		return { ...result };
+	}
+
+	@Roles(USER_ROLE.owner)
+	@Query(() => RestaurantsGetAllMyOutput, { name: 'RestaurantGetAllMy' })
+	async getMyRestaurants(@AuthUser() user: User): Promise<RestaurantsGetAllMyOutput> {
+		const result = await this.restaurantService.getAllMyRestaurants(user);
 		return { ...result };
 	}
 

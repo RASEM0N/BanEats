@@ -43,7 +43,7 @@ export const role: NavigationGuardWithThis<void> = async (to, _, next) => {
 	}
 
 	// @TODO добавить логику обращения к GQL
-	const user = await { role: USER_ROLE.client };
+	const user = await { role: USER_ROLE.owner };
 
 	if (to.meta.role === user.role) {
 		return next();
