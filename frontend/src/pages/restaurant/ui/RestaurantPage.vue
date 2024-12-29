@@ -2,9 +2,31 @@
 import { useRoute } from 'vue-router';
 import { useRestaurant } from '../model/useRestaurant';
 import { useHead } from '@unhead/vue';
+import { RestaurantDish } from '@features/entites';
+import { useMutation } from '@vue/apollo-composable';
+import gql from 'graphql-tag';
+import { computed, ref } from 'vue';
+import { toast } from 'vue3-toastify';
 
 const route = useRoute();
-const { restaurant } = useRestaurant(+route.params.restaurantId);
+const restaurantId = (+route.params.restaurantId);
+const { restaurant } = useRestaurant(restaurantId);
+
+const { mutate } = useMutation(gql`
+	mutation CreateOrderMutation(
+		$restaurantId: Float!
+		$items: [CreateOrderItemArgs!]!
+	) {
+		OrderCreate(
+			restaurantId: $restaurantId
+			items: $items
+		) {
+			order {
+				id
+			}
+		}
+	}
+`);
 
 useHead({
 	title: () => restaurant.value
@@ -23,6 +45,61 @@ useHead({
 	],
 });
 
+
+const isStartSelectOrder = ref<boolean>(false);
+const orders = ref<any[]>([]);
+
+const selectDish = (dish: any) => {
+	isSelected(dish)
+		? addDishOrder(dish)
+		: removeDishOrder(dish);
+};
+
+const isSelected = (dish: any): boolean => {
+	return !!orders.value.find((v) => v.dishId === dish.id);
+};
+
+const addDishOrder = (dish: any) => {
+	orders.value.push({ dishId: dish.id, options: [] });
+};
+
+const removeDishOrder = (dish: any) => {
+	orders.value = orders.value.map((v) => v.id !== dish.id);
+};
+
+const isSelectOption = (dishId: number, option: any): boolean => {
+	const dish = orders.value.find((v) => v.dishId === dishId);
+	if (!dish) {
+		return false;
+	}
+
+	return !!dish.options.find((v) => v === option);
+};
+
+const selectOption = (selectedDish: any, option: any) => {
+	const dish = orders.value.find((v) => v.dishId === selectedDish.id);
+	if (!dish) {
+		return;
+	}
+
+	isSelectOption(selectedDish.dishId, option)
+		? dish.push(option)
+		: (dish.options = dish.options.filter((v) => v !== option));
+};
+
+const startOrder = () => {
+
+	if (!orders.value.length) {
+		toast('Can\'t place empty order', {
+			position: toast.POSITION.TOP_RIGHT,
+			type: toast.TYPE.ERROR
+		})
+	}
+
+	// @TODO добавить проверку на данные
+	mutate({ restaurantId, options: orders });
+};
+
 </script>
 <template>
 	<div>
@@ -39,6 +116,32 @@ useHead({
 				<h6 class="text-sm font-light">
 					{{ restaurant.address }}
 				</h6>
+			</div>
+		</div>
+		<div class="container pb-32 flex flex-col items-end mt-20">
+			<button v-if="!isStartSelectOrder"
+					@click="isStartSelectOrder = true"
+					class="btn px-10">
+				Start Order
+			</button>
+			<div v-else class="flex items-center">
+				<button @click="startOrder" class="btn px-10 mr-3">
+					Confirm Order
+				</button>
+				<button @click="isStartSelectOrder = false" class="btn px-10 bg-black hover:bg-black">
+					Cancel Order
+				</button>
+			</div>
+			<div class="w-full grid mt-16 md:grid-cols-3 gap-x-5 gap-y-10">
+				<restaurant-dish
+					@click="selectDish(dish)"
+					@click-option="selectOption"
+					v-for="dish in restaurant?.dishes"
+					:dish="dish"
+					:key="dish.id"
+					:is-selected="isSelected(dish)"
+					:is-selected-option="isSelectOption"
+				/>
 			</div>
 		</div>
 	</div>

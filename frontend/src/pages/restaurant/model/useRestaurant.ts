@@ -17,6 +17,17 @@ interface RestaurantQueryResult {
 				id: number
 				name: string
 			},
+
+			dishes: {
+				id: number
+				name: string
+				description: string
+				price: number
+				options: {
+					name: string
+					extra: number
+				}
+			}[]
 		};
 	};
 }
@@ -33,11 +44,21 @@ export const useRestaurant = (restaurantId: number) => {
                     id
                     name
                     coverImage
+                    address
                     category {
                         id
                         name
                     }
-                    address
+                    dishes {
+                        id
+                        name
+                        description
+                        price
+                        options {
+                            name
+                            extra
+                        }
+                    }
                 }
             }
         }

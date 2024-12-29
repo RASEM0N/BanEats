@@ -12,7 +12,7 @@ import 'vue3-toastify/dist/index.css';
 createApp(App)
 
 	// https://vue3-toastify.js-bridge.com/get-started/installation.html
-	.use(Vue3Toastify, { autoClose: 3000 } as ToastContainerOptions)
+	.use(Vue3Toastify, { autoClose: 3000, position: 'top-right' } as ToastContainerOptions)
 
 	// https://unhead.unjs.io/setup/vue/installation
 	.use(createHead())
