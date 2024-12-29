@@ -37,16 +37,5 @@ export const ownerRoutes: RouteRecordRaw[] = [
 			// @TODO динамическое
 			title: 'Add dish | BanEats',
 		},
-	},
-	{
-		path: '/restaurants/:restaurantId/buy-promotion',
-		component: h({
-			template: `<h1>Buy Promotion</h1>`,
-		}),
-		meta: {
-
-			// @TODO динамическое
-			title: 'Add dish | BanEats',
-		},
-	},
+	}
 ];

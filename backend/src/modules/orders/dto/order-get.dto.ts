@@ -14,9 +14,9 @@ export class GetAllOrdersOutput {
 }
 
 @ArgsType()
-export class GetOrdersArgs {
+export class GetOrderArgs {
 	@Field(() => Number)
-	id: number;
+	orderId: number;
 }
 
 @ObjectType()

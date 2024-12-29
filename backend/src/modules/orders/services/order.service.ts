@@ -11,7 +11,7 @@ import { UBER_EATS_ERROR, UberEastsException } from '@ubereats/common/error';
 import {
 	GetAllOrdersArgs,
 	GetAllOrdersOutput,
-	GetOrdersArgs,
+	GetOrderArgs,
 } from '../dto/order-get.dto';
 import { UpdateOrdersArgs } from '../dto/order-update.dto';
 import { SHARED_COMPONENTS } from '@/core/shared.module';
@@ -164,11 +164,11 @@ export class OrderService {
 		};
 	}
 
-	async get(user: User, { id }: GetOrdersArgs): Promise<Order> {
+	async get(user: User, { orderId }: GetOrderArgs): Promise<Order> {
 		const order = await this.order.findOneOrFail({
 			relations: ['restaurant'],
 			where: {
-				id,
+				orderId,
 			},
 		});
 

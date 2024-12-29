@@ -9,7 +9,7 @@ import {
 	GetAllOrdersArgs,
 	GetAllOrdersOutput,
 	GetOrderOutput,
-	GetOrdersArgs,
+	GetOrderArgs,
 } from '../dto/order-get.dto';
 import { UpdateOrdersArgs, UpdateOrdersOutput } from '../dto/order-update.dto';
 import { Order } from '@/modules/orders/entities/order.entity';
@@ -50,7 +50,7 @@ export class OrderResolver {
 	}
 
 	@Query(() => GetOrderOutput, { name: 'OrderGet' })
-	async get(@AuthUser() user: User, args: GetOrdersArgs): Promise<GetOrderOutput> {
+	async get(@AuthUser() user: User, @Args() args: GetOrderArgs): Promise<GetOrderOutput> {
 		const order = await this.ordersService.get(user, args);
 		return { order };
 	}
