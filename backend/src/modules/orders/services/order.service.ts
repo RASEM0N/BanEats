@@ -8,11 +8,7 @@ import { CreateOrdersArgs, CreateOrdersOutput } from '../dto/order-create.dto';
 import { Restaurant } from '@/modules/restaurants/entities/restaurant.entity';
 import { RestaurantDish } from '@/modules/restaurants/entities/dish.entity';
 import { UBER_EATS_ERROR, UberEastsException } from '@ubereats/common/error';
-import {
-	GetAllOrdersArgs,
-	GetAllOrdersOutput,
-	GetOrderArgs,
-} from '../dto/order-get.dto';
+import { GetAllOrdersArgs, GetAllOrdersOutput, GetOrderArgs } from '../dto/order-get.dto';
 import { UpdateOrdersArgs } from '../dto/order-update.dto';
 import { SHARED_COMPONENTS } from '@/core/shared.module';
 import { PubSub } from 'graphql-subscriptions';
@@ -181,9 +177,9 @@ export class OrderService {
 		return order;
 	}
 
-	async update(user: User, updateArgs: UpdateOrdersArgs): Promise<Order> {
-		const order = await this.get(user, updateArgs);
-		const canEdit = this.canEdit(user, updateArgs.status);
+	async update(user: User, { id, status }: UpdateOrdersArgs): Promise<Order> {
+		const order = await this.get(user, { orderId: id });
+		const canEdit = this.canEdit(user, status);
 
 		if (!canEdit) {
 			throw new UberEastsException({
@@ -193,7 +189,7 @@ export class OrderService {
 
 		const newOrder = await this.order.save({
 			...order,
-			status: updateArgs.status,
+			status,
 		});
 
 		await this.pubSub.publish('pubsub:orders.updateOrder', {

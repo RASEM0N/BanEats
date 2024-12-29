@@ -1,8 +1,10 @@
 <script lang="ts" setup>
-import { useQuery, useSubscription } from '@vue/apollo-composable';
+import { useMutation, useQuery } from '@vue/apollo-composable';
 import gql from 'graphql-tag';
 import { useRoute } from 'vue-router';
 import { computed } from 'vue';
+import { useMe } from '@features/auth';
+import { USER_ROLE } from '@entities/user';
 
 interface OrderUpdateSubscriptionVars {
 	id: number;
@@ -38,7 +40,9 @@ interface GetOrderQueryVars {
 }
 
 const route = useRoute();
+const { user } = useMe();
 const orderId = +route.params.orderId;
+
 
 const subscriptionGQL = gql`
 	subscription OrderUpdateSubscription($id: ID!) {
@@ -104,7 +108,30 @@ subscribeToMore<OrderUpdateSubscriptionVars, OrderUpdateSubscriptionResult>({
 	},
 });
 
+interface OrderUpdateMutateVars {
+	id: number;
+	status: string;
+}
+
+const { mutate: updateOrder } = useMutation<void, OrderUpdateMutateVars>(gql`
+	mutation OrderUpdateMutate($id: ID!, $status: ORDER_STATUS!) {
+		OrderUpdate(id: $id, status: $status) {
+			__typename
+		}
+	}
+`);
+
 const order = computed(() => result.value?.OrderGet.order);
+
+// @TODO надо кнопки блокировать
+
+const cookingOrder = () => {
+	updateOrder({ id: orderId, status: 'cooking' });
+};
+
+const cookedOrder = () => {
+	updateOrder({ id: orderId, status: 'cooked' });
+};
 
 </script>
 <template>
@@ -128,9 +155,24 @@ const order = computed(() => result.value?.OrderGet.order);
 				<div class="border-t border-b py-5 border-gray-700">
 					Driver: <span class="font-medium">{{ order.driver?.email ?? 'Not yet.' }}</span>
 				</div>
-				<span class=" text-center mt-5 mb-3 text-2xl text-lime-600">
+				<span class="text-center mt-5 mb-3 text-2xl text-lime-600">
 					Status: {{ order.status }}
 				</span>
+
+				<!--TODO надо WS на изменение статуса заказа добавить-->
+				<template v-if="user?.role === USER_ROLE.owner">
+					<button v-if="order.status === 'pending'"
+							@click="cookingOrder"
+							class="btn">
+						Accept Order
+					</button>
+					<button v-if="order.status === 'cooking'"
+							@click="cookedOrder"
+							class="btn"
+					>
+						Order Cooked
+					</button>
+				</template>
 			</div>
 		</div>
 	</div>

@@ -11,7 +11,11 @@ import {
 	GetOrderOutput,
 	GetOrderArgs,
 } from '../dto/order-get.dto';
-import { UpdateOrdersArgs, UpdateOrdersOutput } from '../dto/order-update.dto';
+import {
+	OnUpdateOrdersArgs,
+	UpdateOrdersArgs,
+	UpdateOrdersOutput,
+} from '../dto/order-update.dto';
 import { Order } from '@/modules/orders/entities/order.entity';
 import { SHARED_COMPONENTS } from '@/core/shared.module';
 import { PubSub } from 'graphql-subscriptions';
@@ -62,7 +66,7 @@ export class OrderResolver {
 		name: 'OnOrderUpdate',
 		filter: (
 			{ order }: UpdateOrdersOutput,
-			{ id }: UpdateOrdersArgs,
+			{ id }: OnUpdateOrdersArgs,
 			{ user }: { user: User },
 		) => {
 			if (
@@ -76,7 +80,7 @@ export class OrderResolver {
 			return order.id === id
 		},
 	})
-	async onUpdate(@Args() args: UpdateOrdersArgs) {
+	async onUpdate(@Args() args: OnUpdateOrdersArgs) {
 		this.pubSub.asyncIterator('pubsub:orders.updateOrder');
 	}
 
