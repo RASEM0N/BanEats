@@ -4,7 +4,7 @@ import { getAuthToken } from '@features/auth';
 import { WebSocketLink } from '@apollo/client/link/ws';
 import { getMainDefinition } from '@apollo/client/utilities';
 
-const httpLink = createHttpLink({ uri: __APP_URL__ });
+const httpLink = createHttpLink({ uri: import.meta.env.VITE_APP_URL_GQL });
 const authLink = setContext((_, { headers }) => {
 	const token = getAuthToken();
 
@@ -17,7 +17,7 @@ const authLink = setContext((_, { headers }) => {
 });
 
 const wsLink = new WebSocketLink({
-	uri: __APP_WS__,
+	uri: import.meta.env.VITE_APP_WS_GQL,
 	options: {
 		reconnect: true,
 		connectionParams: () => {
@@ -39,5 +39,6 @@ export const link = split(
 			definition.operation === 'subscription'
 		);
 	},
-	from([wsLink, authLink, httpLink]),
+	wsLink,
+	from([authLink, httpLink]),
 );

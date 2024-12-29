@@ -6,11 +6,6 @@ import path from 'node:path';
 // https://vite.dev/config/
 export default defineConfig({
 	plugins: [vue(), svgLoader()],
-	define: {
-		__APP_URL__: JSON.stringify('http://localhost:8000/graphql'),
-		__APP_WS__: JSON.stringify('ws://localhost:8000/graphql'),
-		__IS_DEV__: true,
-	},
 	resolve: {
 		alias: {
 			'@app': path.join(__dirname, 'src/app'),

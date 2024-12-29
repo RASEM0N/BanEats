@@ -7,6 +7,7 @@ import { createHead } from '@unhead/vue';
 import Vue3Toastify, { ToastContainerOptions } from 'vue3-toastify';
 import './index.css';
 import 'vue3-toastify/dist/index.css';
+import { createYmaps } from 'vue-yandex-maps';
 
 
 createApp(App)
@@ -23,8 +24,16 @@ createApp(App)
 	// https://router.vuejs.org/installation.html
 	.use(router)
 
+	// https://yandex-maps-unofficial.github.io/vue-yandex-maps/guide/vue3.html
+	.use(createYmaps({
+		apikey: import.meta.env.VITE_YANDEX_MAP_KEY,
+		lang: import.meta.env.VITE_YANDEX_MAP_LANG,
+	}))
+
 	// https://apollo.vuejs.org/guide-composable/setup.html
 	.provide(providerKey, apolloClient)
+
+
 
 	// ...
 	.mount('#app');

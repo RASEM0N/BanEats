@@ -11,12 +11,12 @@ import gql from 'graphql-tag';
 
 export const providerKey = DefaultApolloClient;
 export const apolloClient = new ApolloClient({
-	devtools: { enabled: __IS_DEV__ },
+	devtools: { enabled: import.meta.env.DEV },
 	link,
 	cache,
 });
 
-if (__IS_DEV__) {
+if (import.meta.env.DEV) {
 	// @ts-ignore
 	window.apollo = { client: apolloClient, cache, gql };
 
