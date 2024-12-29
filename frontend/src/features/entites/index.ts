@@ -1,0 +1,1 @@
+export { default as RestaurantDish } from './ui/RestaurantDish.vue';

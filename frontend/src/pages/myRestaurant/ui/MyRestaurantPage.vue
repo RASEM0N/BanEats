@@ -3,6 +3,7 @@ import { useQuery } from '@vue/apollo-composable';
 import gql from 'graphql-tag';
 import { useRoute } from 'vue-router';
 import { computed } from 'vue';
+import { RestaurantDish } from '@features/entites';
 
 
 // @TODO надо блять в модуль это вынести
@@ -21,6 +22,12 @@ interface MyRestaurantPageQueryResult {
 			coverImage: string
 			name: string
 			address: string
+			dishes: {
+				id: number
+				name: string
+				description: string
+				price: number
+			}[]
 		}
 	};
 }
@@ -35,6 +42,12 @@ const { result } = useQuery<MyRestaurantPageQueryResult, MyRestaurantPageQueryVa
 				coverImage
 				name
 				address
+				dishes {
+					id
+					name
+					description
+					price
+				}
 			}
 		}
 	}
@@ -59,11 +72,32 @@ const restaurant = computed(() => result.value?.RestaurantGet.restaurant!);
 			<router-link :to="`/restaurants/${restaurant.id}/add-dish`" class="mr-8 text-white bg-gray-800 py-3 px-10">
 				Add Dish
 			</router-link>
+
+			<!--@TODO лень пиздец делать -->
 			<router-link :to="`/restaurants/${restaurant.id}/buy-promotion`" class="text-white bg-lime-700 py-3 px-10">
 				Buy Promotion
 			</router-link>
 			<div class="mt-10">
-				<h4 class="text-xl mb-5">Please upload a dish!</h4>
+				<div v-if="restaurant.dishes.length"
+					 class="grid mt-16 md:grid-cols-3 gap-x-5 gap-y-10"
+				>
+					<restaurant-dish
+						v-for="dish in restaurant.dishes"
+						:dish="dish"
+						:key="dish.id"
+					/>
+				</div>
+				<h4 v-else class="text-xl mb-5">
+					Please upload a dish!
+				</h4>
+			</div>
+
+			<!--@TODO лень пиздец делать -->
+			<div class="mt-20 mb-10">
+				<h4 class="text-center text-2xl font-medium">Sales</h4>
+				<div class=" max-w-lg w-full mx-auto">
+					Diagrams...
+				</div>
 			</div>
 		</div>
 	</div>
