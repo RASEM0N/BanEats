@@ -1,0 +1,1 @@
+export { default as AddDishPage } from './ui/AddDishPage.vue';

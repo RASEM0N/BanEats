@@ -17,6 +17,12 @@ export const authRoutes: RouteRecordRaw[] = [
 			requiredAuth: true,
 		},
 		children: [
+
+			// @TODO надо по другому продумать
+			// ЩА ДЛЯ ОДИНАКОВЫХ РОУТОВ НЕ ЗАГРУЗИТСЯ НИЧЕ
+			// ЕСЛИ В CLIENT И OWNER ОДИНАКОВЫЕ РОУТЫ
+			// НИХУЯ НЕ БУДЭ
+
 			...roleMeta(clientRoutes, USER_ROLE.client),
 			...roleMeta(adminRoutes, USER_ROLE.admin),
 			...roleMeta(ownerRoutes, USER_ROLE.owner),

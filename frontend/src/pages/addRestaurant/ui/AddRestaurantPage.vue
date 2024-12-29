@@ -10,10 +10,12 @@ import { computed } from 'vue';
 import { toast } from 'vue3-toastify';
 import { useRouter } from 'vue-router';
 
+debugger
+
 // @TODO бан,
 // надо логику с ресторанами вынести в отдельный модуль
 // заебешься а то говно писать
-import { MyRestaurantsQuery } from '@pages/myRestaurant/gql';
+import { MyRestaurantsQuery } from '@pages/myRestaurants/gql';
 
 interface RestaurantCreateMutationResult {
 	RestaurantCreate: {

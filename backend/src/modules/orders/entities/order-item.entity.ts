@@ -14,8 +14,8 @@ export class OrderItemOption {
 	@Field(() => String)
 	name: string;
 
-	@Field(() => String, { nullable: true })
-	choice: string;
+	@Field(() => Number, { nullable: true })
+	choice?: string;
 }
 
 @ObjectType()

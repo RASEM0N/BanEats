@@ -1,7 +1,7 @@
 import { RouteRecordRaw } from 'vue-router';
 import { RestaurantsPage } from '@pages/restaurants';
-import { RestaurantPage } from '@pages/restaurant';
 import { CategoryPage } from '@pages/category';
+// import { RestaurantPage } from '@pages/restaurant';
 
 export const clientRoutes: RouteRecordRaw[] = [
 	{
@@ -11,13 +11,16 @@ export const clientRoutes: RouteRecordRaw[] = [
 			title: 'Restaurants | BanEats',
 		},
 	},
-	{
-		path: '/restaurants/:restaurantId',
-		component: RestaurantPage,
-		meta: {
-			title: 'Restaurant | BanEats',
-		},
-	},
+
+	// @TODO расскоментить
+	// {
+	// 	path: '/restaurants/:restaurantId',
+	// 	component: RestaurantPage,
+	// 	meta: {
+	// 		title: 'Restaurant | BanEats',
+	// 	},
+	// },
+
 	{
 		path: '/restaurants/category/:slug',
 		component: CategoryPage,
