@@ -1,8 +1,18 @@
 <script lang="ts" setup>
-import { useQuery } from '@vue/apollo-composable';
+import { useQuery, useSubscription } from '@vue/apollo-composable';
 import gql from 'graphql-tag';
 import { useRoute } from 'vue-router';
 import { computed } from 'vue';
+
+interface OrderUpdateSubscriptionVars {
+	id: number;
+}
+
+interface OrderUpdateSubscriptionResult {
+	OnOrderUpdate: {
+		order: GetOrderQueryResult['OrderGet']['order']
+	};
+}
 
 interface GetOrderQueryResult {
 	OrderGet: {
@@ -30,9 +40,31 @@ interface GetOrderQueryVars {
 const route = useRoute();
 const orderId = +route.params.orderId;
 
+const subscriptionGQL = gql`
+	subscription OrderUpdateSubscription($id: ID!) {
+		OnOrderUpdate(id: $id) {
+			order {
+				id
+				status
+				total
+				driver {
+					email
+				}
+				customer {
+					email
+				}
+				restaurant {
+					name
+				}
+			}
+		}
+	}
+`;
+
+
 // @TODO надо везде
 // @TODO обработку ошибок сделать и загрузки
-const { result } = useQuery<GetOrderQueryResult, GetOrderQueryVars>(gql`
+const { result, subscribeToMore } = useQuery<GetOrderQueryResult, GetOrderQueryVars>(gql`
 	query GetOrderQuery($orderId: Float!) {
 		OrderGet(orderId: $orderId) {
 			order {
@@ -52,6 +84,25 @@ const { result } = useQuery<GetOrderQueryResult, GetOrderQueryVars>(gql`
 		}
 	}
 `, { orderId });
+
+// Можно через хук useSubscription обновлять данные
+subscribeToMore<OrderUpdateSubscriptionVars, OrderUpdateSubscriptionResult>({
+	document: subscriptionGQL,
+	variables: {
+		id: orderId,
+	},
+	updateQuery: (previousQueryResult, { subscriptionData }) => {
+		const order = subscriptionData?.data?.OnOrderUpdate?.order;
+
+		if (!order) {
+			return previousQueryResult;
+		}
+
+		return {
+			OrderGet: { order },
+		};
+	},
+});
 
 const order = computed(() => result.value?.OrderGet.order);
 

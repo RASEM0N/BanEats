@@ -50,24 +50,33 @@ export class OrderResolver {
 	}
 
 	@Query(() => GetOrderOutput, { name: 'OrderGet' })
-	async get(@AuthUser() user: User, @Args() args: GetOrderArgs): Promise<GetOrderOutput> {
+	async get(
+		@AuthUser() user: User,
+		@Args() args: GetOrderArgs,
+	): Promise<GetOrderOutput> {
 		const order = await this.ordersService.get(user, args);
 		return { order };
 	}
 
-	@Subscription(() => Order, {
+	@Subscription(() => UpdateOrdersOutput, {
 		name: 'OnOrderUpdate',
 		filter: (
 			{ order }: UpdateOrdersOutput,
-			_: UpdateOrdersArgs,
+			{ id }: UpdateOrdersArgs,
 			{ user }: { user: User },
 		) => {
-			return [order.driver.id, order.customer.id, order.restaurant.id].includes(
-				user.id,
-			);
+			if (
+				![order.driver.id, order.customer.id, order.restaurant.id].includes(
+					user.id,
+				)
+			) {
+				return false;
+			}
+
+			return order.id === id
 		},
 	})
-	async onUpdate() {
+	async onUpdate(@Args() args: UpdateOrdersArgs) {
 		this.pubSub.asyncIterator('pubsub:orders.updateOrder');
 	}
 

@@ -34,7 +34,6 @@ export class UserResolver {
 		if (autUser.role !== USER_ROLE.admin && autUser.id !== id) {
 			throw new UberEastsException({ errorCode: UBER_EATS_ERROR.no_rights });
 		}
-
 		const user = await this.userService.get(id);
 		return { user };
 	}
