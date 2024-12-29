@@ -27,6 +27,10 @@ interface MyRestaurantPageQueryResult {
 				name: string
 				description: string
 				price: number
+				options: {
+					name: string
+					extra: number
+				}[]
 			}[]
 		}
 	};
@@ -47,6 +51,10 @@ const { result } = useQuery<MyRestaurantPageQueryResult, MyRestaurantPageQueryVa
 					name
 					description
 					price
+					options {
+						name
+						extra
+					}
 				}
 			}
 		}
