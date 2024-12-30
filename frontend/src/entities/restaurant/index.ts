@@ -7,4 +7,4 @@ export * as gqlSchema from './model/gql/schemas';
 
 export * from './model/types';
 export * from './model/gql/types';
-export * from './model/services/useRestaurantCreate'
+export * from './model/services/restaurantCreate'
