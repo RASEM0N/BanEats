@@ -1,6 +1,7 @@
 <script lang="ts" setup>
 import { useRoute } from 'vue-router';
-import { useRestaurantGet, RestaurantDish } from '@entities/restaurant';
+import { RestaurantDish } from '@entities/restaurant';
+import { useRestaurantGet } from '@features/restaurant/get';
 
 const route = useRoute();
 const { restaurant } = useRestaurantGet(+route.params.restaurantId);

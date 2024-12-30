@@ -1,20 +1,19 @@
 <script lang="ts" setup>
-import { useConfirmEmail } from '../model/confirm';
 import { useRoute, useRouter } from 'vue-router';
 import { onMounted, watch } from 'vue';
-import { useRenderConfirm } from '../lib/useRenderConfirm';
+import { useConfirmEmail, useRenderConfirmEmail } from '@features/user/confirmEmail';
 
 const route = useRoute();
 const router = useRouter();
 const code = route.query.code as string;
 
 const { confirm, error, loading, isVerified } = useConfirmEmail();
-const { renderResult, startVerifiedRedirect } = useRenderConfirm({
+const { renderResult, startVerifiedRedirect } = useRenderConfirmEmail({
 	loading,
 	error,
 	isVerified,
-	seconds: 3,
 	code,
+	seconds: 3,
 });
 
 onMounted(() => {
@@ -47,7 +46,9 @@ watch(isVerified, (value) => {
 		</h2>
 		<h4 class="text-gray-700 text-sm">
 			{{ renderResult.description }}
-			<span v-if="renderResult.highlighted" class="font-bold">{{ renderResult.highlighted }}</span>
+			<span v-if="renderResult.highlighted" class="font-bold">
+				{{ renderResult.highlighted }}
+			</span>
 		</h4>
 	</div>
 </template>

@@ -1,51 +1,25 @@
 <script lang="ts" setup>
-import { useRoute } from 'vue-router';
-import { useForm, useFieldArray, Field } from 'vee-validate';
-import { toTypedSchema } from '@vee-validate/zod';
-import { array, number, object, string } from 'zod';
-import { computed } from 'vue';
+import { Field } from 'vee-validate';
 import { MyButton } from '@shared/ui';
 import { LoginForm } from '@widgets/loginContainer';
-import { useRestaurantDishAdd } from '@entities/restaurant';
+import { useRestaurantDishCreateForm } from '@features/restaurant/createDish';
 
-const route = useRoute();
-const restaurantId = String(route.params.restaurantId);
-const { mutate, loading, error } = useRestaurantDishAdd()
+const {
+	submit,
+	fields,
+	meta,
+	loading,
+	errors,
+} = useRestaurantDishCreateForm();
 
-const { defineField, handleSubmit, errors: formErrors, meta } = useForm({
-	initialValues: {
-		name: '',
-		description: '',
-		price: undefined,
-		options: [],
-	},
-	validationSchema: toTypedSchema(object({
-		name: string().min(4).max(255),
-		price: number().positive(),
-		description: string().min(4).max(255),
-		options: array(object({
-			name: string().min(4),
-			extra: number().int().positive().optional(),
-		})),
-	})),
-});
+const {
+	name: [name, nameProps],
+	price: [price, priceProps],
+	description: [description, descriptionProps],
+	options,
+} = fields;
 
-const [name, nameProps] = defineField('name');
-const [price, priceProps] = defineField('price');
-const [description, descriptionProps] = defineField('description');
-const { fields, remove, push } = useFieldArray('options');
-
-const submit = handleSubmit((values) => {
-	mutate({
-		name: values.name,
-		description: values.description,
-		price: values.price,
-		options: values.options ?? [],
-		restaurantId,
-	});
-});
-
-const errors = computed(() => [...Object.values(formErrors.value), error.value])
+const { fields: optionsFields } = options;
 
 
 </script>
@@ -77,13 +51,13 @@ const errors = computed(() => [...Object.values(formErrors.value), error.value])
 			<div class="my-10">
 				<h4 class="font-medium  mb-3 text-lg">Dish Options</h4>
 				<button class="cursor-pointer text-white bg-gray-900 py-1 px-2 mt-5 bg-"
-						@click="push({ name: '', choice: undefined })"
+						@click="options.push({ name: '', choice: undefined })"
 						type="button"
 				>
 					Add Dish Option
 				</button>
 				<div class="mt-5"
-					 v-for="(field, idx) in fields"
+					 v-for="(field, idx) in optionsFields"
 					 :key="field.key"
 				>
 					<field
@@ -101,7 +75,7 @@ const errors = computed(() => [...Object.values(formErrors.value), error.value])
 						placeholder="Option Extra"
 					/>
 					<button class="cursor-pointer text-white bg-red-500 ml-3 py-3 px-4 mt-5"
-							@click="remove(idx)"
+							@click="options.remove(idx)"
 							type="button"
 					>
 						Delete Option

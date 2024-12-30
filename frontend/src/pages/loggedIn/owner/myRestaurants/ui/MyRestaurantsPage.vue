@@ -1,6 +1,7 @@
 <script lang="ts" setup>
-import { Restaurant, useMyRestaurants } from '@entities/restaurant';
-const { restaurants } = useMyRestaurants()
+import { useRestaurantGetMyAll } from '@features/restaurant/get';
+
+const { restaurants } = useRestaurantGetMyAll();
 </script>
 <template>
 	<div>

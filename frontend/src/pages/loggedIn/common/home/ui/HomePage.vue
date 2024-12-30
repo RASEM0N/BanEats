@@ -20,6 +20,7 @@ watchEffect(() => {
 		return;
 	}
 
+	// @TODO
 	switch (user.value.role) {
 		case USER_ROLE.client:
 			return router.push('/restaurants');

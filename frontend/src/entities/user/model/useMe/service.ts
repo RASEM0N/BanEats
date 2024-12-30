@@ -1,7 +1,7 @@
 import { useQuery } from '@vue/apollo-composable';
-import { computed } from 'vue';
-import { UserMeQueryResult, USER_ME_QUERY } from '@features/auth/me/model/schema';
+import { USER_ME_QUERY, UserMeQueryResult } from './schema';
 import { resetAuthToken } from '@entities/auth';
+import { computed } from 'vue';
 
 export const useMe = () => {
 	const query = useQuery<UserMeQueryResult>(USER_ME_QUERY);

@@ -1,43 +1,22 @@
 <script lang="ts" setup>
-import { useMe } from '@features/auth';
-import { LoginForm } from '@widgets/loginContainer';
-import { useForm } from 'vee-validate';
 import { MyButton } from '@shared/ui';
-import { toTypedSchema } from '@vee-validate/zod';
-import { object } from 'zod';
-import { userSchema } from '@entities/user';
-import { useEditUser } from '@pages/editProfile/model/useEditUser';
-import { computed } from 'vue';
-import { nullishWithTransform } from '@shared/lib/zod';
-import { toast } from 'vue3-toastify';
+import { LoginForm } from '@widgets/loginContainer';
+import { useUpdateUserForm } from '@features/user/update';
 
-const editUser = useEditUser();
-const { user } = useMe();
+const {
+	loading,
+	meta,
+	submit,
+	errors,
+	fields,
+} = useUpdateUserForm();
 
-const { defineField, handleSubmit, meta, errors: formErrors } = useForm({
-	initialValues: {
-		email: user.value?.email,
-		password: undefined,
-	},
-	validationSchema: toTypedSchema(object({
-		email: userSchema.email,
-		password: nullishWithTransform(userSchema.password, undefined),
-	})),
-});
-const [email, emailProps] = defineField('email');
-const [password, passwordProps] = defineField('password');
-
-const errors = computed(() => [...Object.values(formErrors.value), editUser.error.value]);
+const {
+	email: [email, emailProps],
+	password: [password, passwordProps]
+} = fields
 
 
-const submit = handleSubmit((values) => {
-	editUser.mutate(values).then(() => {
-		toast('User data has changed', {
-			position: toast.POSITION.TOP_RIGHT,
-			type: 'success',
-		});
-	});
-});
 </script>
 <template>
 	<div class="mt-52 flex flex-col justify-center items-center">
@@ -58,7 +37,7 @@ const submit = handleSubmit((values) => {
 				v-bind="passwordProps"
 			>
 			<my-button
-				:is-loading="editUser.loading.value"
+				:is-loading="loading"
 				:can-click="meta.valid"
 			>
 				Save Profile

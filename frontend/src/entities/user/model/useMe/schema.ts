@@ -21,12 +21,12 @@ export const USER_ME_QUERY = gql`
 
 // @TODO User fragment
 export interface UserMeQueryResult {
-    UserMe: {
-        user: {
-            id: number,
-            email: string
-            role: USER_ROLE,
-            isVerified: boolean
-        }
-    };
+	UserMe: {
+		user: {
+			id: number,
+			email: string
+			role: USER_ROLE,
+			isVerified: boolean
+		}
+	};
 }

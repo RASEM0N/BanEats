@@ -16,7 +16,7 @@ interface RenderConfirmParams {
 	seconds: number
 }
 
-export const useRenderConfirm = ({ isVerified, loading, error, code, seconds }: RenderConfirmParams) => {
+export const useRenderConfirmEmail = ({ isVerified, loading, error, code, seconds }: RenderConfirmParams) => {
 	let guardTimeout: number | undefined;
 	let redirectInterval: number | undefined;
 
@@ -110,4 +110,3 @@ export const useRenderConfirm = ({ isVerified, loading, error, code, seconds }: 
 		stopVerifiedRedirect,
 	};
 };
-
