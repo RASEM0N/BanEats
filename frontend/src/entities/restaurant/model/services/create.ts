@@ -1,7 +1,7 @@
 import { useMutation } from '@vue/apollo-composable';
 
 import {
-	MY_RESTAURANT_QUERY,
+	MY_RESTAURANTS_QUERY,
 	RESTAURANT_CREATE_MUTATION,
 } from '../gql/schemas';
 
@@ -19,14 +19,14 @@ export const useRestaurantCreate = () => {
 		fetchPolicy: 'network-only',
 		update: (cache, result) => {
 			const restaurant = result.data?.RestaurantCreate.restaurant;
-			const resultQuery = cache.readQuery<MyRestaurantQueryResult>({ query: MY_RESTAURANT_QUERY });
+			const resultQuery = cache.readQuery<MyRestaurantQueryResult>({ query: MY_RESTAURANTS_QUERY });
 
 			if (!resultQuery || !restaurant) {
 				return;
 			}
 
 			cache.writeQuery<MyRestaurantQueryResult>({
-				query: MY_RESTAURANT_QUERY,
+				query: MY_RESTAURANTS_QUERY,
 				data: {
 					RestaurantGetAllMy: {
 						...resultQuery.RestaurantGetAllMy,

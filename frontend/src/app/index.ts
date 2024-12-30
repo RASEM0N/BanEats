@@ -33,7 +33,5 @@ createApp(App)
 	// https://apollo.vuejs.org/guide-composable/setup.html
 	.provide(providerKey, apolloClient)
 
-
-
 	// ...
 	.mount('#app');

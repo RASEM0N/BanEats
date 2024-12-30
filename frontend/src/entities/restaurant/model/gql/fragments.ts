@@ -22,16 +22,6 @@ export const RESTAURANT_CATEGORY = gql`
     }
 `;
 
-export const RESTAURANT_DISH = gql`
-    fragment RestaurantDishFragment on RestaurantDish {
-        id
-        name
-        price
-        description
-        photo
-    }
-`;
-
 export const RESTAURANT_DISH_CHOICE = gql`
     fragment RestaurantDishChoiceFragment on DishChoice {
         name
@@ -48,4 +38,18 @@ export const RESTAURANT_DISH_OPTION = gql`
         }
     }
     ${RESTAURANT_DISH_CHOICE}
+`;
+
+export const RESTAURANT_DISH = gql`
+    fragment RestaurantDishFragment on RestaurantDish {
+        id
+        name
+        price
+        description
+        photo
+        options {
+            ...RestaurantDishOptionFragment
+        }
+    }
+    ${RESTAURANT_DISH_OPTION}
 `;

@@ -1,13 +1,6 @@
 <script lang="ts" setup>
-import { useQuery } from '@vue/apollo-composable';
-import { computed } from 'vue';
-import { Restaurant } from '@entities/restaurant';
-import { gqlSchema } from '@entities/restaurant';
-import { MyRestaurantQueryResult } from '@entities/restaurant';
-
-const { result } = useQuery<MyRestaurantQueryResult>(gqlSchema.MY_RESTAURANT_QUERY);
-const restaurants = computed(() => result.value?.RestaurantGetAllMy.restaurants);
-
+import { Restaurant, useMyRestaurants } from '@entities/restaurant';
+const { restaurants } = useMyRestaurants()
 </script>
 <template>
 	<div>

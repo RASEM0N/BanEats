@@ -13,6 +13,11 @@ export type IRestaurantFragment = Pick<
 	'id' | 'name' | 'coverImage' | 'address' | 'category'
 >
 
+export type IRestaurantWithDishesFragment = Pick<
+	IRestaurant,
+	'id' | 'name' | 'coverImage' | 'address' | 'category' | 'dishes'
+>
+
 export type IRestaurantCategoryFragment = Pick<
 	IRestaurantCategory,
 	'id' | 'name' | 'slug' | 'coverImage'
@@ -20,7 +25,7 @@ export type IRestaurantCategoryFragment = Pick<
 
 export type IRestaurantDishFragment = Pick<
 	IRestaurantDish,
-	'id' | 'name' | 'price' | 'description' | 'photo'
+	'id' | 'name' | 'price' | 'description' | 'photo' | 'options'
 >
 
 export type IRestaurantDishOptionFragment = Pick<
@@ -41,6 +46,8 @@ export interface MyRestaurantQueryResult {
 	};
 }
 
+// --------------  --------------  --------------
+
 export interface RestaurantCreateMutationResult {
 	RestaurantCreate: {
 		restaurant: IRestaurantFragment
@@ -52,6 +59,34 @@ export interface RestaurantCreateMutationVars {
 	address: string;
 	categoryName: string;
 	coverImage: string;
+}
+
+// --------------  --------------  --------------
+
+export interface RestaurantGetQueryResult {
+	RestaurantGet: {
+		restaurant: IRestaurantWithDishesFragment
+	};
+}
+
+export interface RestaurantGetQueryVars {
+	restaurantId: number;
+}
+
+// --------------  --------------  --------------
+
+export interface RestaurantDishCreateMutationResult {
+	RestaurantDishCreate: {
+		dish: IRestaurantDishFragment
+	};
+}
+
+export interface RestaurantDishCreateMutationVars {
+	name: string;
+	description: string;
+	price: number;
+	restaurantId: string;
+	options: Omit<IRestaurantDishOptionFragment, 'choices'>[];
 }
 
 

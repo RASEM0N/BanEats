@@ -7,4 +7,10 @@ export * as gqlSchema from './model/gql/schemas';
 
 export * from './model/types';
 export * from './model/gql/types';
-export * from './model/services/restaurantCreate'
+
+// @TODO надо объеденить это все в объект
+export * from './model/services/create'
+export * from './model/services/getAllMy'
+export * from './model/services/get'
+export * from './model/services/update'
+export * from './model/services/addDish'

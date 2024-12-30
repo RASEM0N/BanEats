@@ -1,69 +1,9 @@
 <script lang="ts" setup>
-import { useQuery } from '@vue/apollo-composable';
-import gql from 'graphql-tag';
 import { useRoute } from 'vue-router';
-import { computed } from 'vue';
-import { RestaurantDish } from '@features/entites';
-
-
-// @TODO надо блять в модуль это вынести
-// а то ебать шлак такой
-
-// это потом сделаю
-// пока что лень
-interface MyRestaurantPageQueryVars {
-	id: string;
-}
-
-interface MyRestaurantPageQueryResult {
-	RestaurantGet: {
-		restaurant: {
-			id: number
-			coverImage: string
-			name: string
-			address: string
-			dishes: {
-				id: number
-				name: string
-				description: string
-				price: number
-				options: {
-					name: string
-					extra: number
-				}[]
-			}[]
-		}
-	};
-}
+import { useRestaurantGet, RestaurantDish } from '@entities/restaurant';
 
 const route = useRoute();
-const restaurantId = String(route.params.restaurantId);
-const { result } = useQuery<MyRestaurantPageQueryResult, MyRestaurantPageQueryVars>(gql`
-	query MyRestaurantPageQuery($id: ID!) {
-		RestaurantGet(restaurantId: $id) {
-			restaurant {
-				id
-				coverImage
-				name
-				address
-				dishes {
-					id
-					name
-					description
-					price
-					options {
-						name
-						extra
-					}
-				}
-			}
-		}
-	}
-`, {
-	id: restaurantId,
-});
-
-const restaurant = computed(() => result.value?.RestaurantGet.restaurant!);
+const { restaurant } = useRestaurantGet(+route.params.restaurantId);
 
 </script>
 <template>

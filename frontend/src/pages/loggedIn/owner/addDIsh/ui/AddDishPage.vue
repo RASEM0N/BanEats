@@ -1,64 +1,16 @@
 <script lang="ts" setup>
 import { useRoute } from 'vue-router';
-import { useMutation } from '@vue/apollo-composable';
-import gql from 'graphql-tag';
 import { useForm, useFieldArray, Field } from 'vee-validate';
-import { LoginForm } from '@widgets/loginContainer';
 import { toTypedSchema } from '@vee-validate/zod';
 import { array, number, object, string } from 'zod';
-import { MyButton } from '@shared/ui';
 import { computed } from 'vue';
-
-interface RestaurantDishCreateMutationVars {
-	name: string;
-	description: string;
-	price: number;
-	restaurantId: string;
-	options: { name: string, extra?: number }[];
-}
-
-interface RestaurantDishCreateMutationResult {
-	RestaurantDishCreate: {
-		dish: {
-			id: number
-			name: string
-			description: string
-			restaurantId: number
-			price: number
-			photo: string
-		}
-	};
-}
+import { MyButton } from '@shared/ui';
+import { LoginForm } from '@widgets/loginContainer';
+import { useRestaurantDishAdd } from '@entities/restaurant';
 
 const route = useRoute();
 const restaurantId = String(route.params.restaurantId);
-
-const { mutate, loading, error } = useMutation<RestaurantDishCreateMutationResult, RestaurantDishCreateMutationVars>(gql`
-	mutation RestaurantDishCreateMutation(
-		$name: String!
-		$description: String!
-		$price: Float!
-		$restaurantId: Float!
-		$options: [DishOptionInput!]
-	) {
-		RestaurantDishCreate(
-			name: $name
-			price: $price
-			description: $description
-			restaurantId: $restaurantId
-			options: $options
-		) {
-			dish {
-				id
-				name
-				description
-				restaurantId
-				price
-				photo
-			}
-		}
-	}
-`);
+const { mutate, loading, error } = useRestaurantDishAdd()
 
 const { defineField, handleSubmit, errors: formErrors, meta } = useForm({
 	initialValues: {
