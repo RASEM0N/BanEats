@@ -28,6 +28,8 @@ const {
 		<div class="mb-5">
 			<h3 class="text-lg font-medium">
 				<span>{{ dish.name }}</span>
+
+				<!--@TODO вынести в feat - это ебалда через слоты должны залетать-->
 				<button
 					@click="emits('click')"
 					:class="['ml-3 py-1 px-3 focus:outline-none text-sm text-white', {

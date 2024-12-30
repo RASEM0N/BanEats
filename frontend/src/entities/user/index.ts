@@ -1,2 +1,2 @@
+export * as schema from './lib/schema';
 export * from './model/types';
-export * as userSchema from './lib/schema';
