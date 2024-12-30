@@ -2,25 +2,10 @@
 import { useQuery } from '@vue/apollo-composable';
 import { computed } from 'vue';
 import { Restaurant } from '@entities/restaurant';
-import { MyRestaurantsQuery } from '../gql';
+import { gqlSchema } from '@entities/restaurant';
+import { MyRestaurantQueryResult } from '@entities/restaurant';
 
-interface MyRestaurantsQueryResult {
-	RestaurantGetAllMy: {
-		restaurants: {
-			id: number
-			name: string
-			coverImage: string
-			category: {
-				id: string
-				name: string
-			}
-			address: string
-		}[]
-	};
-}
-
-const { result, loading, error } = useQuery<MyRestaurantsQueryResult>(MyRestaurantsQuery);
-
+const { result } = useQuery<MyRestaurantQueryResult>(gqlSchema.MY_RESTAURANT_QUERY);
 const restaurants = computed(() => result.value?.RestaurantGetAllMy.restaurants);
 
 </script>

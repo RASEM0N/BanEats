@@ -27,7 +27,7 @@ export interface IRestaurantDish extends CoreEntity {
 	name: string;
 	description: string;
 	price: number;
-	phone: string;
+	photo: string;
 
 	restaurantId: IRestaurant['id'];
 	restaurant: IRestaurant;
