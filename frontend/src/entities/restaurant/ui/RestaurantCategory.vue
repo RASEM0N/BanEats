@@ -1,9 +1,8 @@
 <script lang="ts" setup>
-import { RestaurantsQueryResult } from '@pages/restaurants/model/query';
+import { IRestaurantCategoryFragment } from '../model/gql/types';
 
-// @TODO да это жестко
 interface Props {
-	category: RestaurantsQueryResult['RestaurantCategoryGetAll']['categories'][0];
+	category: IRestaurantCategoryFragment
 }
 
 const { category } = defineProps<Props>();

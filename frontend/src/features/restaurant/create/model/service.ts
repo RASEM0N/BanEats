@@ -1,18 +1,17 @@
 import { useMutation } from '@vue/apollo-composable';
-
 import {
+	MyRestaurantQueryResult,
 	MY_RESTAURANTS_QUERY,
-	RESTAURANT_CREATE_MUTATION,
-} from '../gql/schemas';
+} from '@entities/restaurant';
 
 import {
+	RESTAURANT_CREATE_MUTATION,
 	RestaurantCreateMutationResult,
 	RestaurantCreateMutationVars,
-	MyRestaurantQueryResult,
-} from '../gql/types';
+} from './schema';
 
 export const useRestaurantCreate = () => {
-	const mutation = useMutation<
+	const { mutate, ...mutation } = useMutation<
 		RestaurantCreateMutationResult,
 		RestaurantCreateMutationVars
 	>(RESTAURANT_CREATE_MUTATION, {
@@ -39,6 +38,6 @@ export const useRestaurantCreate = () => {
 
 	return {
 		...mutation,
-		mutate: (params: RestaurantCreateMutationVars) => mutation.mutate(params),
+		create: (params: RestaurantCreateMutationVars) => mutate(params),
 	};
 };

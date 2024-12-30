@@ -1,16 +1,11 @@
 <script lang="ts" setup>
+import { IRestaurantDishFragment } from '../model/gql/types';
 
 interface Props {
 	isSelected?: boolean;
 	isSelectedOption?: (dishId: number, options: any[]) => boolean;
 
-	dish: {
-		id: number
-		name: string,
-		description: string,
-		price: number
-		options?: { name: string, extra: number }[]
-	};
+	dish: IRestaurantDishFragment
 }
 
 const emits = defineEmits(['click', 'clickOption']);

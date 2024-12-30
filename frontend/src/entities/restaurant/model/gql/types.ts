@@ -46,47 +46,5 @@ export interface MyRestaurantQueryResult {
 	};
 }
 
-// --------------  --------------  --------------
-
-export interface RestaurantCreateMutationResult {
-	RestaurantCreate: {
-		restaurant: IRestaurantFragment
-	};
-}
-
-export interface RestaurantCreateMutationVars {
-	name: string;
-	address: string;
-	categoryName: string;
-	coverImage: string;
-}
-
-// --------------  --------------  --------------
-
-export interface RestaurantGetQueryResult {
-	RestaurantGet: {
-		restaurant: IRestaurantWithDishesFragment
-	};
-}
-
-export interface RestaurantGetQueryVars {
-	restaurantId: number;
-}
-
-// --------------  --------------  --------------
-
-export interface RestaurantDishCreateMutationResult {
-	RestaurantDishCreate: {
-		dish: IRestaurantDishFragment
-	};
-}
-
-export interface RestaurantDishCreateMutationVars {
-	name: string;
-	description: string;
-	price: number;
-	restaurantId: string;
-	options: Omit<IRestaurantDishOptionFragment, 'choices'>[];
-}
 
 
