@@ -1,47 +1,24 @@
 <script setup lang="ts">
-import { useForm } from 'vee-validate';
-import { toTypedSchema } from '@vee-validate/zod';
-import { object } from 'zod';
 import { MyButton } from '@shared/ui';
-import { computed } from 'vue';
 import { LoginContainer, LoginForm } from '@widgets/loginContainer';
-import { useLogin } from '@features/auth';
-import { useRoute, useRouter } from 'vue-router';
-import { userSchema } from '@entities/user';
+import { useRoute } from 'vue-router';
+import { useLoginForm } from '@features/auth/login';
 
 const route = useRoute();
-const router = useRouter();
 
-const login = useLogin();
-const errors = computed(() => [...Object.values(formErrors.value), login.error]);
+const {
+	errors,
+	submit,
+	meta,
+	loading,
+	fields,
+} = useLoginForm();
 
-const { defineField, errors: formErrors, handleSubmit, meta } = useForm({
-	initialValues: {
-		email: '',
-		password: '',
-	},
-	validationSchema: toTypedSchema(object({
-		email: userSchema.email,
-		password: userSchema.password,
-	})),
-});
+const {
+	email: [email, emailProps],
+	password: [password, passwordProps],
+} = fields;
 
-const [email, emailProps] = defineField('email', {
-	validateOnModelUpdate: false,
-});
-const [password, passwordProps] = defineField('password', {
-	validateOnModelUpdate: false,
-});
-
-const submit = handleSubmit(async (values) => {
-	await login.mutate(values);
-
-	if (route.query.redirect) {
-		await router.push(route.query.redirect as string);
-	} else {
-		await router.push('/');
-	}
-});
 </script>
 <template>
 	<login-container
@@ -73,7 +50,7 @@ const submit = handleSubmit(async (values) => {
 			/>
 			<my-button
 				:can-click="meta.valid"
-				:is-loading="login.loading.value">
+				:is-loading="loading">
 				Login
 			</my-button>
 		</login-form>

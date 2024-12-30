@@ -16,4 +16,3 @@ export const setAuthToken = (token: string) => {
 export const resetAuthToken = () => {
 	localStorage.removeItem(LC_AUTH_KEY);
 };
-

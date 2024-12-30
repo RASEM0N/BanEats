@@ -1,52 +1,25 @@
 <script setup lang="ts">
 import { LoginContainer, LoginForm } from '@widgets/loginContainer';
-import { computed } from 'vue';
-import { useRegister } from '@features/auth';
-import { useForm } from 'vee-validate';
 import { USER_ROLE } from '@entities/user';
-import { toTypedSchema } from '@vee-validate/zod';
-import { object } from 'zod';
 import { MyButton } from '@shared/ui';
-import { useRoute, useRouter } from 'vue-router';
-import { userSchema } from '@entities/user';
+import { useRegisterForm } from '@features/auth/register';
+import { useRoute } from 'vue-router';
 
 const route = useRoute();
-const router = useRouter();
-const register = useRegister();
-const errors = computed(() => [...Object.values(formErrors.value), register.error.value]);
 
-const { defineField, handleSubmit, meta, errors: formErrors } = useForm({
-	initialValues: {
-		email: '',
-		password: '',
-		role: USER_ROLE.client,
-	},
-	validationSchema: toTypedSchema(object({
-		email: userSchema.email,
-		password: userSchema.password,
-		role: userSchema.role,
-	})),
-});
+const {
+	errors,
+	submit,
+	meta,
+	loading,
+	fields,
+} = useRegisterForm();
 
-const [email, emailProps] = defineField('email', {
-	validateOnModelUpdate: false,
-});
-const [password, passwordProps] = defineField('password', {
-	validateOnModelUpdate: false,
-});
-const [role, roleProps] = defineField('role', {
-	validateOnModelUpdate: false,
-});
-
-const submit = handleSubmit(async (values) => {
-	await register.mutate(values);
-	await router.push({
-		path: '/login',
-		query: {
-			redirect: route.query.redirect,
-		},
-	});
-});
+const {
+	role: [role, roleProps],
+	email: [email, emailProps],
+	password: [password, passwordProps]
+} = fields;
 
 </script>
 <template>
@@ -88,7 +61,7 @@ const submit = handleSubmit(async (values) => {
 			</select>
 			<MyButton
 				:can-click="meta.valid"
-				:is-loading="register.loading.value"
+				:is-loading="loading"
 			>
 				Create Account
 			</MyButton>
