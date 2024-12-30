@@ -1,4 +1,5 @@
 import gql from 'graphql-tag';
+import { IUser } from '@entities/user';
 
 // --------------  --------------  --------------
 
@@ -18,7 +19,4 @@ export interface LoginMutationResult {
     };
 }
 
-export interface LoginMutationVars {
-    email: string;
-    password: string;
-}
+export type LoginMutationVars = Pick<IUser, 'email' | 'password'>

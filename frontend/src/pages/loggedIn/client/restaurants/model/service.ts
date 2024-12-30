@@ -1,6 +1,10 @@
 import { useLazyQuery } from '@vue/apollo-composable';
-import { RestaurantsQueryResult, RestaurantsQueryVariables, RestaurantsQuery } from './query';
 import { computed } from 'vue';
+import {
+	RestaurantsQueryResult,
+	RestaurantsQueryVariables,
+	RestaurantsQuery,
+} from './schema';
 
 export const useRestaurants = () => {
 
@@ -13,7 +17,6 @@ export const useRestaurants = () => {
 	// с этим всегда страницы 1-ой загрузки показыется.
 	// В тот же policy fields read(prev, new, { args: { page } })
 	// в качестве аргумент всегда начальное значение отправляется
-
 
 	// https://github.com/apollographql/apollo-client/issues/7430
 	const {
@@ -36,7 +39,6 @@ export const useRestaurants = () => {
 		totalCount: result.value?.RestaurantGetAll.totalCount ?? 0,
 		totalPages: result.value?.RestaurantGetAll.totalPages ?? 0,
 	}));
-
 
 	return {
 		result,

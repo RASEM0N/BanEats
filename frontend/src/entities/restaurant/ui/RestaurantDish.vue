@@ -3,9 +3,9 @@ import { IRestaurantDishFragment } from '../model/gql/types';
 
 interface Props {
 	isSelected?: boolean;
-	isSelectedOption?: (dishId: number, options: any[]) => boolean;
+	isSelectedOption?: (dishId: number, name: string) => boolean;
 
-	dish: IRestaurantDishFragment
+	dish: IRestaurantDishFragment;
 }
 
 const emits = defineEmits(['click', 'clickOption']);
@@ -45,8 +45,8 @@ const {
 					 :key="idx"
 					 @click="emits('clickOption', dish, option)"
 					 :class="['flex items-center', {
-					 'border-gray-800': isSelected && isSelectedOption(dish.id, dish.options)
-				 }]"
+					 	'border-gray-800': isSelected && isSelectedOption(dish.id, option.name)
+					 }]"
 				>
 					<span class="mr-2">{{ option.name }}</span>
 					<span class="text-sm opacity-75">({{ option.extra }})</span>

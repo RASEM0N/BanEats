@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { onMounted } from 'vue';
-import { useRestaurants } from '../model/useRestaurants';
+import { useRestaurants } from '../model/service';
 import { Pagination } from '@shared/ui/';
 import { Restaurant, RestaurantCategory } from '@entities/restaurant';
 import { refPage } from '@shared/lib/router';

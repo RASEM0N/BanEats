@@ -1,5 +1,5 @@
 import gql from 'graphql-tag';
-import { USER_ROLE } from '@entities/user';
+import { IUser} from '@entities/user';
 
 // --------------  --------------  --------------
 
@@ -21,8 +21,4 @@ export const REGISTER_MUTATION = gql`
 
 // --------------  --------------  --------------
 
-export interface RegisterMutationVars {
-    email: string,
-    password: string,
-    role: USER_ROLE
-}
+export type RegisterMutationVars = Pick<IUser, 'email' | 'password' | 'role'>

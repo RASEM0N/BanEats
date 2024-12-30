@@ -1,33 +1,19 @@
-
-// @TODO user fragments plz...
-
 import gql from 'graphql-tag';
+import { USER, IUserFragment, IUser } from '@entities/user';
 
 export const UPDATE_USER_MUTATION = gql`
     mutation EditUserMutation($email: String $password: String) {
         UserUpdate(email: $email password: $password) {
-            user {
-                id,
-                email,
-                isVerified
-            }
+            user { ...UserFragment }
         }
     }
+    ${USER}
 `;
 
 
-export interface UpdateUserMutationVars {
-	email?: string,
-	password?: string
-}
+export type UpdateUserMutationVars = Partial<Pick<IUser, 'email' | 'password'>>
 
 export interface UpdateUserMutationResult {
-	UserUpdate: {
-		user: {
-			id: number,
-			email: string
-			isVerified: string
-		}
-	};
+	UserUpdate: { user: IUserFragment };
 }
 

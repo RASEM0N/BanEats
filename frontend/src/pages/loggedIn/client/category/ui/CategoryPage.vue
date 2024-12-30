@@ -1,56 +1,13 @@
 <script lang="ts" setup>
 import { useRoute } from 'vue-router';
-import { useQuery } from '@vue/apollo-composable';
-import gql from 'graphql-tag';
-import { computed } from 'vue';
 import { useHead } from '@unhead/vue';
+import { useRestaurantCategoryGet } from '@features/restaurant/get';
 
 const route = useRoute();
-const slug = String(route.params.slug);
-
-interface CategoryQueryVariables {
-	page: number;
-	slug: string;
-}
-
-interface CategoryQueryResult {
-	RestaurantCategoryGetBySlug: {
-		category: {
-			id: number
-			name: string
-			coverImage: string
-			restaurantCount: number
-		}
-		restaurants: {
-			id: number
-			name: string
-			coverImage: string
-			address: string
-		}[]
-	};
-}
-
-const { result } = useQuery<CategoryQueryResult, CategoryQueryVariables>(gql`
-	query CategoryQuery($page: Float!, $slug: String!) {
-		RestaurantCategoryGetBySlug(page: $page, slug: $slug) {
-			category {
-				id
-				name
-				coverImage
-				restaurantCount
-			}
-			restaurants {
-				id
-                name
-                coverImage
-                address
-			}
-		}
-	}
-`, { slug, page: 1 });
-
-const category = computed(() => result.value?.RestaurantCategoryGetBySlug.category);
-const restaurants = computed(() => result.value?.RestaurantCategoryGetBySlug.restaurants);
+const { category, restaurants } = useRestaurantCategoryGet({
+	slug: String(route.params.slug),
+	page: 1,
+});
 
 useHead({
 	title: () => category.value
@@ -86,7 +43,8 @@ useHead({
 					 	backgroundSize: 'cover'
 				 	}"
 				>
-					<span class="absolute h-full w-full flex justify-center items-center uppercase overflow-hidden bg-gray-950/[.4] text-white rounded-[50%] hover:bg-gray-950/[.2]">
+					<span
+						class="absolute h-full w-full flex justify-center items-center uppercase overflow-hidden bg-gray-950/[.4] text-white rounded-[50%] hover:bg-gray-950/[.2]">
 						{{ value.name }}
 					</span>
 				</div>

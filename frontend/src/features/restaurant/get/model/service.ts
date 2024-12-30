@@ -1,7 +1,14 @@
 import { useQuery } from '@vue/apollo-composable';
-import { RESTAURANT_GET_QUERY, RestaurantGetQueryResult, RestaurantGetQueryVars } from './schema';
 import { computed } from 'vue';
 import { MY_RESTAURANTS_QUERY, MyRestaurantQueryResult } from '@entities/restaurant';
+import {
+	RESTAURANT_GET_QUERY,
+	RESTAURANT_CATEGORY_QUERY,
+	RestaurantGetQueryResult,
+	RestaurantGetQueryVars,
+	RestaurantCategoryQueryResult,
+	RestaurantCategoryQueryVars,
+} from './schema';
 
 export const useRestaurantGet = (restaurantId: number) => {
 	const query = useQuery<
@@ -21,5 +28,21 @@ export const useRestaurantGetMyAll = () => {
 	return {
 		...query,
 		restaurants: computed(() => query.result.value?.RestaurantGetAllMy.restaurants),
+	};
+};
+
+export const useRestaurantCategoryGet = ({ page = 1, slug }: RestaurantCategoryQueryVars) => {
+	const query = useQuery<
+		RestaurantCategoryQueryResult,
+		RestaurantCategoryQueryVars
+	>(RESTAURANT_CATEGORY_QUERY, { page, slug });
+
+	const category = computed(() => query.result.value?.RestaurantCategoryGetBySlug.category!);
+	const restaurants = computed(() => query.result.value?.RestaurantCategoryGetBySlug.restaurants!);
+
+	return {
+		...query,
+		category,
+		restaurants,
 	};
 };

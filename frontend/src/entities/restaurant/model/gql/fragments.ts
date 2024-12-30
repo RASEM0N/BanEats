@@ -1,16 +1,23 @@
 import gql from 'graphql-tag';
 
-export const RESTAURANT = gql`
-    fragment RestaurantFragment on Restaurant {
+export const RESTAURANT_WITHOUT_CATEGORY = gql`
+    fragment RestaurantWithoutCategoryFragment on Restaurant {
         id
         name
         coverImage
         address
+    }
+`
+
+export const RESTAURANT = gql`
+    fragment RestaurantFragment on Restaurant {
+        ...RestaurantWithoutCategoryFragment
         category {
             id
             name
         }
     }
+    ${RESTAURANT_WITHOUT_CATEGORY}
 `;
 
 export const RESTAURANT_CATEGORY = gql`

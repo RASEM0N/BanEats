@@ -1,6 +1,7 @@
 import {
 	IRestaurant,
 	IRestaurantCategory,
+	IRestaurantCategoryWithCount,
 	IRestaurantDish,
 	IRestaurantDishChoice,
 	IRestaurantDishOption,
@@ -18,9 +19,19 @@ export type IRestaurantWithDishesFragment = Pick<
 	'id' | 'name' | 'coverImage' | 'address' | 'category' | 'dishes'
 >
 
+export type IRestaurantWithoutCategoryFragment = Pick<
+	IRestaurant,
+	'id' | 'name' | 'coverImage' | 'address'
+>
+
 export type IRestaurantCategoryFragment = Pick<
 	IRestaurantCategory,
 	'id' | 'name' | 'slug' | 'coverImage'
+>
+
+export type IRestaurantCategoryWithCountFragment = Pick<
+	IRestaurantCategoryWithCount,
+	'id' | 'name' | 'slug' | 'coverImage' | 'restaurantCount'
 >
 
 export type IRestaurantDishFragment = Pick<

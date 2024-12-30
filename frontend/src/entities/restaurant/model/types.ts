@@ -23,6 +23,10 @@ export interface IRestaurantCategory extends CoreEntity {
 	restaurants?: IRestaurant[];
 }
 
+export interface IRestaurantCategoryWithCount extends IRestaurantCategory {
+	restaurantCount: number
+}
+
 export interface IRestaurantDish extends CoreEntity {
 	name: string;
 	description: string;
