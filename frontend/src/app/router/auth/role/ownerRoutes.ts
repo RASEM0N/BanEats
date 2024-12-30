@@ -1,9 +1,8 @@
 import { RouteRecordRaw } from 'vue-router';
-import { MyRestaurantsPage } from '@pages/myRestaurants';
-import { AddRestaurantPage } from '@pages/addRestaurant';
-import { MyRestaurantPage } from '@pages/myRestaurant';
-import { h } from 'vue';
-import { AddDishPage } from '@pages/addDIsh';
+import { MyRestaurantsPage } from '@pages/loggedIn/owner/myRestaurants';
+import { AddRestaurantPage } from '@pages/loggedIn/owner/addRestaurant';
+import { MyRestaurantPage } from '@pages/loggedIn/owner/myRestaurant';
+import { AddDishPage } from '@pages/loggedIn/owner/addDIsh';
 
 export const ownerRoutes: RouteRecordRaw[] = [
 	{

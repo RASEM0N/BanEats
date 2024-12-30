@@ -1,7 +1,7 @@
 import { RouteRecordRaw } from 'vue-router';
-import { ConfirmEmailPage } from '@pages/confirmEmail';
-import { EditProfilePage } from '@pages/editProfile';
-import { OrderPage } from '@pages/orders';
+import { ConfirmEmailPage } from '@pages/loggedIn/common/confirmEmail';
+import { EditProfilePage } from '@pages/loggedIn/common/editProfile';
+import { OrderPage } from '@pages/loggedIn/common/orders';
 
 export const commonRoutes: RouteRecordRaw[] = [
 	{

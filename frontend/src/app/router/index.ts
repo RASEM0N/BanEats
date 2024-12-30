@@ -1,8 +1,8 @@
 import { createRouter, createWebHistory } from 'vue-router';
-import { LoginPage } from '@pages/login';
-import { RegisterPage } from '@pages/register';
+import { LoginPage } from '@pages/common/login';
+import { RegisterPage } from '@pages/common/register';
+import { NotFoundPage } from '@pages/common/404';
 import { actualizeTitle, requiredAuth, role } from './guards';
-import { NotFoundPage } from '@pages/404';
 import { authRoutes } from './auth';
 
 export const router = createRouter({

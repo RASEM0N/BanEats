@@ -1,7 +1,7 @@
 import { RouteRecordRaw } from 'vue-router';
-import { RestaurantsPage } from '@pages/restaurants';
-import { CategoryPage } from '@pages/category';
-// import { RestaurantPage } from '@pages/restaurant';
+import { RestaurantsPage } from '@pages/loggedIn/client/restaurants';
+import { CategoryPage } from '@pages/loggedIn/client/category';
+// import { RestaurantPage } from '@pages/loggedIn/client/restaurant';
 
 export const clientRoutes: RouteRecordRaw[] = [
 	{
