@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 import { MyButton } from '@shared/ui';
-import { LoginForm } from '@widgets/loginContainer';
+import { MyForm } from '@shared/ui/MyForm';
 import { useUpdateUserForm } from '@features/user/update';
 
 const {
@@ -21,7 +21,7 @@ const {
 <template>
 	<div class="mt-52 flex flex-col justify-center items-center">
 		<h4 class="font-semibold text-2xl mb-3">Edit Profile</h4>
-		<login-form @submit="submit" :errors="errors" class="gap-3 max-w-screen-sm">
+		<my-form @submit="submit" :errors="errors" class="gap-3 max-w-screen-sm">
 			<input
 				type="email"
 				placeholder="Email"
@@ -42,6 +42,6 @@ const {
 			>
 				Save Profile
 			</my-button>
-		</login-form>
+		</my-form>
 	</div>
 </template>

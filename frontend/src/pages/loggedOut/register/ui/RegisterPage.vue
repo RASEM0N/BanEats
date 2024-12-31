@@ -1,9 +1,10 @@
 <script setup lang="ts">
-import { LoginContainer, LoginForm } from '@widgets/loginContainer';
+import { LoginContainer } from '@widgets/loginContainer';
 import { USER_ROLE } from '@entities/user';
 import { MyButton } from '@shared/ui';
 import { useRegisterForm } from '@features/auth/register';
 import { useRoute } from 'vue-router';
+import { MyForm } from '@shared/ui/MyForm';
 
 const route = useRoute();
 
@@ -36,7 +37,7 @@ const {
 			},
 		}"
 	>
-		<login-form :errors="errors" @submit="submit">
+		<my-form :errors="errors" @submit="submit">
 			<input
 				class="input"
 				placeholder="Email"
@@ -65,7 +66,7 @@ const {
 			>
 				Create Account
 			</MyButton>
-		</login-form>
+		</my-form>
 	</login-container>
 </template>
 <style></style>

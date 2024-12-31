@@ -1,8 +1,9 @@
 <script setup lang="ts">
 import { MyButton } from '@shared/ui';
-import { LoginContainer, LoginForm } from '@widgets/loginContainer';
+import { LoginContainer } from '@widgets/loginContainer';
 import { useRoute } from 'vue-router';
 import { useLoginForm } from '@features/auth/login';
+import { MyForm } from '@shared/ui/MyForm';
 
 const route = useRoute();
 
@@ -33,7 +34,7 @@ const {
 				},
 			},
 	}">
-		<login-form :errors="errors" @submit="submit">
+		<my-form :errors="errors" @submit="submit">
 			<input
 				placeholder="Email"
 				class="input"
@@ -53,6 +54,6 @@ const {
 				:is-loading="loading">
 				Login
 			</my-button>
-		</login-form>
+		</my-form>
 	</login-container>
 </template>

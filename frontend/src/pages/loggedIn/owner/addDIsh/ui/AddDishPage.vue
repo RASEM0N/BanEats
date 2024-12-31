@@ -1,7 +1,7 @@
 <script lang="ts" setup>
 import { Field } from 'vee-validate';
 import { MyButton } from '@shared/ui';
-import { LoginForm } from '@widgets/loginContainer';
+import { MyForm } from '@shared/ui/MyForm';
 import { useRestaurantDishCreateForm } from '@features/restaurant/createDish';
 
 const {
@@ -26,7 +26,7 @@ const { fields: optionsFields } = options;
 <template>
 	<div class="container flex flex-col items-center mt-52 px-10">
 		<h4 class="font-semibold text-2xl mb-3">Add Dish</h4>
-		<login-form @submit="submit" :errors="errors">
+		<my-form @submit="submit" :errors="errors">
 			<input
 				class="input"
 				type="text"
@@ -88,6 +88,6 @@ const { fields: optionsFields } = options;
 			>
 				Create dish
 			</my-button>
-		</login-form>
+		</my-form>
 	</div>
 </template>

@@ -1,7 +1,7 @@
 <script lang="ts" setup>
 import { MyButton } from '@shared/ui';
-import { LoginForm } from '@widgets/loginContainer';
 import { useRestaurantCreateForm } from '@features/restaurant/create';
+import { MyForm } from '@shared/ui/MyForm';
 
 const { submit, errors, meta, fields, loading } = useRestaurantCreateForm();
 
@@ -15,7 +15,7 @@ const {
 <template>
 	<div class="container flex flex-col items-center mt-40 px-10">
 		<h1>Add Restaurant</h1>
-		<login-form @submit="submit" :errors="errors">
+		<my-form @submit="submit" :errors="errors">
 			<input
 				class="input"
 				type="text"
@@ -40,6 +40,6 @@ const {
 			>
 				Create restaurant
 			</my-button>
-		</login-form>
+		</my-form>
 	</div>
 </template>
