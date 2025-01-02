@@ -1,7 +1,7 @@
 schema: ./generate/graphql/schema.graphql
 extensions:
   endpoints:
-    Uber Eats:
+    Ban Eats:
       url: http://localhost:8000/graphql
       headers:
         user-agent: JS GraphQL

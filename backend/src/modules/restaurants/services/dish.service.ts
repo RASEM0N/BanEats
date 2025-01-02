@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { Repository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
-import { DefaultCRUD } from '@ubereats/common/services';
+import { DefaultCRUD } from '@baneats/common/services';
 import { User } from '@/modules/users/entities/user.entity';
 
 import { RestaurantService } from './restaurant.service';
@@ -9,7 +9,7 @@ import { RestaurantDish } from '../entities/dish.entity';
 import { CreateDishArgs } from '../dto/dish-create.dto';
 import { UpdateDishArgs } from '../dto/dish-update.dto';
 import { DeleteDishArgs } from '../dto/dish-delete.dto';
-import { UBER_EATS_ERROR, UberEastsException } from '@ubereats/common/error';
+import { BAN_EATS_ERROR, BanEastsException } from '@baneats/common/error';
 
 @Injectable()
 export class DishService implements DefaultCRUD<RestaurantDish> {
@@ -20,8 +20,8 @@ export class DishService implements DefaultCRUD<RestaurantDish> {
 	) {}
 
 	async get(): Promise<RestaurantDish> {
-		throw new UberEastsException({
-			errorCode: UBER_EATS_ERROR.server_error,
+		throw new BanEastsException({
+			errorCode: BAN_EATS_ERROR.server_error,
 			message: 'Not done method yet',
 		});
 	}
@@ -31,8 +31,8 @@ export class DishService implements DefaultCRUD<RestaurantDish> {
 	}
 
 	async getAll(): Promise<RestaurantDish[]> {
-		throw new UberEastsException({
-			errorCode: UBER_EATS_ERROR.server_error,
+		throw new BanEastsException({
+			errorCode: BAN_EATS_ERROR.server_error,
 			message: 'Not done method yet',
 		});
 	}
@@ -57,15 +57,15 @@ export class DishService implements DefaultCRUD<RestaurantDish> {
 		});
 
 		if (!dish) {
-			throw new UberEastsException({
-				errorCode: UBER_EATS_ERROR.no_entity,
+			throw new BanEastsException({
+				errorCode: BAN_EATS_ERROR.no_entity,
 				message: 'There is no dish',
 			});
 		}
 
 		if (dish.restaurant.ownerId !== user.id) {
-			throw new UberEastsException({
-				errorCode: UBER_EATS_ERROR.no_entity,
+			throw new BanEastsException({
+				errorCode: BAN_EATS_ERROR.no_entity,
 			});
 		}
 
@@ -85,15 +85,15 @@ export class DishService implements DefaultCRUD<RestaurantDish> {
 		});
 
 		if (!dish) {
-			throw new UberEastsException({
-				errorCode: UBER_EATS_ERROR.no_entity,
+			throw new BanEastsException({
+				errorCode: BAN_EATS_ERROR.no_entity,
 				message: 'There is no dish',
 			});
 		}
 
 		if (dish.restaurant.ownerId !== user.id) {
-			throw new UberEastsException({
-				errorCode: UBER_EATS_ERROR.no_rights,
+			throw new BanEastsException({
+				errorCode: BAN_EATS_ERROR.no_rights,
 			});
 		}
 

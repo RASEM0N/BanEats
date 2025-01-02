@@ -4,7 +4,7 @@ import { Reflector } from '@nestjs/core';
 import { AllowedRoles, META_KEY as USER_ROLE_KEY } from '../decorators/role.decorator';
 import { META_KEY as NO_AUTH_KEY } from '../decorators/no-auth.decorator';
 import { User, USER_ROLE } from '@/modules/users/entities/user.entity';
-import { UBER_EATS_ERROR, UberEastsException } from '@ubereats/common/error';
+import { BAN_EATS_ERROR, BanEastsException } from '@baneats/common/error';
 import { BearerToken, SHARED_COMPONENTS } from '@/core/shared.module';
 
 @Injectable()
@@ -19,15 +19,15 @@ export class AuthGuard implements CanActivate {
 		const roles = this.getRoles(ctx);
 
 		if (roles && isNoAuth) {
-			throw new UberEastsException({ errorCode: UBER_EATS_ERROR.server_error });
+			throw new BanEastsException({ errorCode: BAN_EATS_ERROR.server_error });
 		}
 
 		if (isNoAuth) {
 			const isHasToken = !!this.getAuthToken(ctx);
 
 			if (isHasToken) {
-				throw new UberEastsException({
-					errorCode: UBER_EATS_ERROR.must_not_be_login,
+				throw new BanEastsException({
+					errorCode: BAN_EATS_ERROR.must_not_be_login,
 				});
 			}
 
@@ -39,7 +39,7 @@ export class AuthGuard implements CanActivate {
 			const isValid = this.isValidRole(user, roles);
 
 			if (!isValid) {
-				throw new UberEastsException({ errorCode: UBER_EATS_ERROR.no_rights });
+				throw new BanEastsException({ errorCode: BAN_EATS_ERROR.no_rights });
 			}
 
 			return true;
@@ -50,7 +50,7 @@ export class AuthGuard implements CanActivate {
 
 	private isValidRole(user: User, roles: AllowedRoles[]): boolean {
 		if (!user) {
-			throw new UberEastsException({ errorCode: UBER_EATS_ERROR.fail_login });
+			throw new BanEastsException({ errorCode: BAN_EATS_ERROR.fail_login });
 		}
 
 		// @TODO слишком простая логика

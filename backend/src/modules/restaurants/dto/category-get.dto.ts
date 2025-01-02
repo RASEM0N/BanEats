@@ -1,7 +1,7 @@
 import { ArgsType, Field, ObjectType } from '@nestjs/graphql';
 import { RestaurantsCategory } from '../entities/category.entity';
 import { Restaurant } from '@/modules/restaurants/entities/restaurant.entity';
-import { PaginationArgs } from '@ubereats/common/dto';
+import { PaginationArgs } from '@baneats/common/dto';
 
 @ObjectType()
 export class CategoryGetAllOutput {

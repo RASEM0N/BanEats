@@ -1,5 +1,4 @@
 # Проект
-- переименовать все что связанно с UberEats на BanEats. Чтоб Uber нигде не было
 - настроить git linter, чтоб не забывать front или back в коммитах fix/feat/test/...(front|back)
 - Настроить github actions
 

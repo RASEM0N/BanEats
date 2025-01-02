@@ -1,7 +1,7 @@
 import { Inject, Injectable, NestMiddleware } from '@nestjs/common';
 import { NextFunction, Request, Response } from 'express';
 import { UserService } from '@/modules/users/services/user.service';
-import { JwtService } from '@ubereats/jwt';
+import { JwtService } from '@baneats/jwt';
 import { BearerToken, SHARED_COMPONENTS } from '@/core/shared.module';
 
 @Injectable()

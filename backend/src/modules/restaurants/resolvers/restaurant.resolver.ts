@@ -1,5 +1,5 @@
 import { Args, Mutation, Parent, Query, ResolveField, Resolver } from '@nestjs/graphql';
-import { PaginationArgs } from '@ubereats/common/dto';
+import { PaginationArgs } from '@baneats/common/dto';
 import { Roles } from '@/modules/auth/decorators/role.decorator';
 import { AuthUser } from '@/modules/auth/decorators/auth-user.decorator';
 import { User, USER_ROLE } from '@/modules/users/entities/user.entity';

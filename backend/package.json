@@ -88,10 +88,10 @@
       "<rootDir>/libs/"
     ],
     "moduleNameMapper": {
-      "^@ubereats/mailer(|/.*)$": "<rootDir>/libs/mailer/src/$1",
-      "^@ubereats/jwt(|/.*)$": "<rootDir>/libs/jwt/src/$1",
-      "^@ubereats/common(|/.*)$": "<rootDir>/libs/common/src/$1",
-      "^@ubereats/test(|/.*)$": "<rootDir>/libs/test/src/$1"
+      "^@baneats/mailer(|/.*)$": "<rootDir>/libs/mailer/src/$1",
+      "^@baneats/jwt(|/.*)$": "<rootDir>/libs/jwt/src/$1",
+      "^@baneats/common(|/.*)$": "<rootDir>/libs/common/src/$1",
+      "^@baneats/test(|/.*)$": "<rootDir>/libs/test/src/$1"
     }
   }
 }

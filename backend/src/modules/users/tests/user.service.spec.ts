@@ -2,12 +2,12 @@ import { UserService } from '../services/user.service';
 import { UserVerifyService } from '../services/user-verify.service';
 import { testingModule } from './lib/mock-module';
 import { User } from '../entities/user.entity';
-import { MockRepository, MockDataSource, MockComponent } from '@ubereats/test';
+import { MockRepository, MockDataSource, MockComponent } from '@baneats/test';
 import {
 	createMockUserData,
 	MockUserData,
 } from '@/modules/users/tests/lib/mock-user-entity';
-import { UberEastsException } from '@ubereats/common/error';
+import { BanEastsException } from '@baneats/common/error';
 
 describe('UserService', () => {
 	let usersService: UserService;
@@ -93,7 +93,7 @@ describe('UserService', () => {
 			try {
 				await usersService.get(1);
 			} catch (e) {
-				expect(e).toBeInstanceOf(UberEastsException);
+				expect(e).toBeInstanceOf(BanEastsException);
 				expect(e.errorCode).toBe(400);
 			}
 		});
@@ -161,7 +161,7 @@ describe('UserService', () => {
 					password: mockUser.password,
 				});
 			} catch (e) {
-				expect(e).toBeInstanceOf(UberEastsException);
+				expect(e).toBeInstanceOf(BanEastsException);
 				expect(e.errorCode).toBe(400);
 			}
 
@@ -192,7 +192,7 @@ describe('UserService', () => {
 					usersVerifyService.createVerifyWithTransaction,
 				).not.toHaveBeenCalled();
 
-				expect(e).toThrow(UberEastsException);
+				expect(e).toThrow(BanEastsException);
 				expect(e.errorCode).toBe(400);
 			}
 		});
@@ -260,7 +260,7 @@ describe('UserService', () => {
 			try {
 				await usersService.update(mockUser.id, updateData);
 			} catch (e) {
-				expect(e).toBeInstanceOf(UberEastsException);
+				expect(e).toBeInstanceOf(BanEastsException);
 				expect(e.errorCode).toBe(400);
 			}
 
@@ -283,7 +283,7 @@ describe('UserService', () => {
 					password: '1234568910',
 				});
 			} catch (e) {
-				expect(e).toThrow(UberEastsException);
+				expect(e).toThrow(BanEastsException);
 				expect(e.errorCode).toBe(400);
 			}
 

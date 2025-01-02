@@ -1,5 +1,5 @@
 import { Query, Resolver } from '@nestjs/graphql';
-import { UBER_EATS_ERROR, UberEastsException } from '@ubereats/common/error';
+import { BAN_EATS_ERROR, BanEastsException } from '@baneats/common/error';
 
 @Resolver()
 export class AppResolver {
@@ -13,10 +13,10 @@ export class AppResolver {
 		throw new Error('Some error for test');
 	}
 
-	@Query(() => String, { name: 'testWithUberEatsException' })
-	withUberEatsException(): string {
-		throw new UberEastsException({
-			errorCode: UBER_EATS_ERROR.no_rights,
+	@Query(() => String, { name: 'testWithBanEatsException' })
+	withBanEatsException(): string {
+		throw new BanEastsException({
+			errorCode: BAN_EATS_ERROR.no_rights,
 		});
 	}
 }

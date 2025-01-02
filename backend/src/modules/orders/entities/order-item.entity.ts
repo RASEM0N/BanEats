@@ -1,6 +1,6 @@
 import { Field, InputType, ObjectType } from '@nestjs/graphql';
 import { Column, Entity, ManyToOne } from 'typeorm';
-import { CoreEntity } from '@ubereats/common/entities';
+import { CoreEntity } from '@baneats/common/entities';
 import { RestaurantDish } from '@/modules/restaurants/entities/dish.entity';
 
 // Чтоб ошикби не было

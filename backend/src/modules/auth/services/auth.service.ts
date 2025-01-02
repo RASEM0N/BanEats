@@ -3,8 +3,8 @@ import { LoginArgs, LoginOutput } from '../dto/auth-login.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { User } from '@/modules/users/entities/user.entity';
 import { Repository } from 'typeorm';
-import { JwtService } from '@ubereats/jwt';
-import { UBER_EATS_ERROR, UberEastsException } from '@ubereats/common/error';
+import { JwtService } from '@baneats/jwt';
+import { BAN_EATS_ERROR, BanEastsException } from '@baneats/common/error';
 import { BearerToken, SHARED_COMPONENTS } from '@/core/shared.module';
 
 @Injectable()
@@ -33,7 +33,7 @@ export class AuthService {
 		});
 
 		if (!user || !(await user.isValidPassword(password))) {
-			throw new UberEastsException({ errorCode: UBER_EATS_ERROR.fail_login });
+			throw new BanEastsException({ errorCode: BAN_EATS_ERROR.fail_login });
 		}
 
 		const token = this.jwtService.sign(user.id);

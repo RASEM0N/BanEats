@@ -11,8 +11,8 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 
 import { IS_DEV, IS_PROD } from '@/core/constants/env';
-import { JwtModule } from '@ubereats/jwt';
-import { MailerModule } from '@ubereats/mailer';
+import { JwtModule } from '@baneats/jwt';
+import { MailerModule } from '@baneats/mailer';
 import { configDb } from '@/core/db/db.config';
 import { configSchema } from '@/core/config/config.schema';
 import { JWT_OPTIONS, MAILER_OPTIONS } from '@/core/config/config.const';
@@ -32,7 +32,7 @@ import { OrderItem } from '@/modules/orders/entities/order-item.entity';
 import { User } from '@/modules/users/entities/user.entity';
 import { AppResolver } from '@/app.resolver';
 import { ValidationError } from 'class-validator';
-import { UBER_EATS_ERROR } from '@ubereats/common/error';
+import { BAN_EATS_ERROR } from '@baneats/common/error';
 
 @Module({
 	imports: [
@@ -92,7 +92,7 @@ import { UBER_EATS_ERROR } from '@ubereats/common/error';
 					error.getStatus?.() ??
 					error.originalError?.errorCode ??
 					error.originalError?.getStatus?.() ??
-					UBER_EATS_ERROR.error;
+					BAN_EATS_ERROR.error;
 
 				// @TODO тут слишком много кейсов возможных
 				// можно по разному возвращать ошибку
@@ -102,7 +102,7 @@ import { UBER_EATS_ERROR } from '@ubereats/common/error';
 					message = `[${error.originalError?.thrownValue[0].property}]: ${
 						Object.values(error.originalError?.thrownValue[0].constraints)[0]
 					}`;
-					statusCode = UBER_EATS_ERROR.validation_error;
+					statusCode = BAN_EATS_ERROR.validation_error;
 				}
 
 				// @TODO надо проработать

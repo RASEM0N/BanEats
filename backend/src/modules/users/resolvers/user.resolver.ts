@@ -9,7 +9,7 @@ import { VerifyEmailArgs } from '../dto/user-verify-email.dto';
 import { UserVerifyService } from '../services/user-verify.service';
 import { Roles } from '@/modules/auth/decorators/role.decorator';
 import { UsersMeOutput } from '@/modules/users/dto/user-me.dto';
-import { UBER_EATS_ERROR, UberEastsException } from '@ubereats/common/error';
+import { BAN_EATS_ERROR, BanEastsException } from '@baneats/common/error';
 import { NoAuth } from '@/modules/auth/decorators/no-auth.decorator';
 
 @Resolver()
@@ -32,7 +32,7 @@ export class UserResolver {
 		@Args() { id }: GetUserArgs,
 	): Promise<GetUserOutput> {
 		if (autUser.role !== USER_ROLE.admin && autUser.id !== id) {
-			throw new UberEastsException({ errorCode: UBER_EATS_ERROR.no_rights });
+			throw new BanEastsException({ errorCode: BAN_EATS_ERROR.no_rights });
 		}
 		const user = await this.userService.get(id);
 		return { user };

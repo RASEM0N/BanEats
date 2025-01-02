@@ -21,28 +21,28 @@
       "@/*": [
         "src/*"
       ],
-      "@ubereats/mailer": [
+      "@baneats/mailer": [
         "libs/mailer/src"
       ],
-      "@ubereats/mailer/*": [
+      "@baneats/mailer/*": [
         "libs/mailer/src/*"
       ],
-      "@ubereats/jwt": [
+      "@baneats/jwt": [
         "libs/jwt/src"
       ],
-      "@ubereats/jwt/*": [
+      "@baneats/jwt/*": [
         "libs/jwt/src/*"
       ],
-      "@ubereats/common": [
+      "@baneats/common": [
         "libs/common/src"
       ],
-      "@ubereats/common/*": [
+      "@baneats/common/*": [
         "libs/common/src/*"
       ],
-      "@ubereats/test": [
+      "@baneats/test": [
         "libs/test/src"
       ],
-      "@ubereats/test/*": [
+      "@baneats/test/*": [
         "libs/test/src/*"
       ]
     }

@@ -3,8 +3,8 @@ import { FindManyOptions, FindOptionsWhere, Raw, Repository } from 'typeorm';
 import { Restaurant } from '../entities/restaurant.entity';
 import { CreateRestaurantArgs } from '../dto/restaurant-create.dto';
 import { UpdateRestaurantArgs } from '../dto/restaurant-update.dto';
-import { DefaultCRUD } from '@ubereats/common/services';
-import { UBER_EATS_ERROR, UberEastsException } from '@ubereats/common/error';
+import { DefaultCRUD } from '@baneats/common/services';
+import { BAN_EATS_ERROR, BanEastsException } from '@baneats/common/error';
 import { InjectRepository } from '@nestjs/typeorm';
 import { User } from '@/modules/users/entities/user.entity';
 import { CategoryService } from './category.service';
@@ -33,15 +33,15 @@ export class RestaurantService implements DefaultCRUD<Restaurant> {
 		});
 
 		if (!restaurant) {
-			throw new UberEastsException({
-				errorCode: UBER_EATS_ERROR.no_entity,
+			throw new BanEastsException({
+				errorCode: BAN_EATS_ERROR.no_entity,
 				message: `There is no restaurant`,
 			});
 		}
 
 		if (restaurant.ownerId !== user.id) {
-			throw new UberEastsException({
-				errorCode: UBER_EATS_ERROR.no_rights,
+			throw new BanEastsException({
+				errorCode: BAN_EATS_ERROR.no_rights,
 			});
 		}
 
@@ -95,15 +95,15 @@ export class RestaurantService implements DefaultCRUD<Restaurant> {
 		});
 
 		if (!restaurant) {
-			throw new UberEastsException({
-				errorCode: UBER_EATS_ERROR.no_entity,
+			throw new BanEastsException({
+				errorCode: BAN_EATS_ERROR.no_entity,
 				message: 'There is no restaurant',
 			});
 		}
 
 		if (user.id !== restaurant.id) {
-			throw new UberEastsException({
-				errorCode: UBER_EATS_ERROR.no_rights,
+			throw new BanEastsException({
+				errorCode: BAN_EATS_ERROR.no_rights,
 			});
 		}
 
@@ -129,8 +129,8 @@ export class RestaurantService implements DefaultCRUD<Restaurant> {
 		}
 
 		if (restaurant.ownerId !== user.id) {
-			throw new UberEastsException({
-				errorCode: UBER_EATS_ERROR.no_rights,
+			throw new BanEastsException({
+				errorCode: BAN_EATS_ERROR.no_rights,
 			});
 		}
 

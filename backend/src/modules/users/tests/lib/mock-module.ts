@@ -1,13 +1,13 @@
 import { Test } from '@nestjs/testing';
 import { getRepositoryToken } from '@nestjs/typeorm';
-import { MailerService } from '@ubereats/mailer';
+import { MailerService } from '@baneats/mailer';
 import { UserService } from '../../services/user.service';
 import { UserVerifyService } from '../../services/user-verify.service';
 import { User } from '../../entities/user.entity';
 import { Verification } from '../../entities/verification.entity';
-import { createMockRepository } from '@ubereats/test/mock-repository';
+import { createMockRepository } from '@baneats/test/mock-repository';
 import { DataSource } from 'typeorm';
-import { createMockDataSource, MockDataSource, MockComponent } from '@ubereats/test';
+import { createMockDataSource, MockDataSource, MockComponent } from '@baneats/test';
 
 export interface TestingModuleParams {
 	usersService?: MockComponent<UserService>;

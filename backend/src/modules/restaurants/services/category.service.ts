@@ -3,8 +3,8 @@ import { Repository } from 'typeorm';
 import { RestaurantsCategory } from '../entities/category.entity';
 import { InjectRepository } from '@nestjs/typeorm';
 import slugify from 'slugify';
-import { UBER_EATS_ERROR, UberEastsException } from '@ubereats/common/error';
-import { DefaultCRUD } from '@ubereats/common/services';
+import { BAN_EATS_ERROR, BanEastsException } from '@baneats/common/error';
+import { DefaultCRUD } from '@baneats/common/services';
 
 @Injectable()
 export class CategoryService implements DefaultCRUD<RestaurantsCategory> {
@@ -34,8 +34,8 @@ export class CategoryService implements DefaultCRUD<RestaurantsCategory> {
 		});
 
 		if (!restaurant) {
-			throw new UberEastsException({
-				errorCode: UBER_EATS_ERROR.no_entity,
+			throw new BanEastsException({
+				errorCode: BAN_EATS_ERROR.no_entity,
 				message: 'There is no category',
 			});
 		}
@@ -48,15 +48,15 @@ export class CategoryService implements DefaultCRUD<RestaurantsCategory> {
 	}
 
 	async update(): Promise<RestaurantsCategory> {
-		throw new UberEastsException({
-			errorCode: UBER_EATS_ERROR.server_error,
+		throw new BanEastsException({
+			errorCode: BAN_EATS_ERROR.server_error,
 			message: 'Not done method yet',
 		});
 	}
 
 	async delete(): Promise<void> {
-		throw new UberEastsException({
-			errorCode: UBER_EATS_ERROR.server_error,
+		throw new BanEastsException({
+			errorCode: BAN_EATS_ERROR.server_error,
 			message: 'Not done method yet',
 		});
 	}

@@ -2,7 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { User } from '../entities/user.entity';
 import { Verification } from '../entities/verification.entity';
-import { MailerService } from '@ubereats/mailer';
+import { MailerService } from '@baneats/mailer';
 import { SendVerifyEmailArgs } from '../dto/user-verify-send-email.dto';
 import { Repository } from 'typeorm';
 import { QueryRunner } from 'typeorm/query-runner/QueryRunner';
@@ -65,7 +65,7 @@ export class UserVerifyService {
 		try {
 			await this.mailerService.sendEmail({
 				to: email,
-				subject: '[Uber Eats] Код подтверждения',
+				subject: '[Ban Eats] Код подтверждения',
 				html: this.getVerifyHTML(code),
 			});
 		} catch (e) {
@@ -85,7 +85,7 @@ export class UserVerifyService {
 					<meta charset='UTF-8'>
 					<meta name='viewport' content='width=device-width'>
 					<meta http-equiv='Content-Type' content='text/html; charset=UTF-8'>
-					<title>Uber Eats Verify</title>
+					<title>Ban Eats Verify</title>
 					<style></style>
 				</head>
 				<body>

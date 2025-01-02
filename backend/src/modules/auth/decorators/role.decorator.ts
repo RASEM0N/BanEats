@@ -1,6 +1,6 @@
 import { USER_ROLE } from '@/modules/users/entities/user.entity';
 import { CustomDecorator, SetMetadata } from '@nestjs/common';
-import { UBER_EATS_ERROR, UberEastsException } from '@ubereats/common/error';
+import { BAN_EATS_ERROR, BanEastsException } from '@baneats/common/error';
 
 type AnyRole = 'any';
 export type AllowedRoles = USER_ROLE | AnyRole;
@@ -22,7 +22,7 @@ export const Roles: RolesFunction = (value) => {
 	}
 
 	if (!value.length) {
-		throw new UberEastsException({ errorCode: UBER_EATS_ERROR.server_error });
+		throw new BanEastsException({ errorCode: BAN_EATS_ERROR.server_error });
 	}
 
 	return SetMetadata(META_KEY, value);

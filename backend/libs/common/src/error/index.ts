@@ -1,1 +1,1 @@
-export * from './uber-easts-exception';
+export * from './ban-easts-exception';

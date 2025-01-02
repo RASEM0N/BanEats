@@ -1,6 +1,6 @@
 import { ArgumentsHost, Catch, HttpException } from '@nestjs/common';
 import { BaseExceptionFilter } from '@nestjs/core';
-import { UberEastsException } from '@ubereats/common/error';
+import { BanEastsException } from '@baneats/common/error';
 
 // @TODO пока что вырубил его
 // - он нормально работает для http запросов
@@ -19,7 +19,7 @@ export class CatchEverythingFilter extends BaseExceptionFilter {
 	}
 
 	private _getErrorResult(exception: Error): { errorCode: number; message: string } {
-		if (exception instanceof UberEastsException) {
+		if (exception instanceof BanEastsException) {
 			return {
 				errorCode: exception.errorCode,
 				message: exception.message,

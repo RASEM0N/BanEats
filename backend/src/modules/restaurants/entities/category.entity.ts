@@ -1,7 +1,7 @@
 import { Field, ObjectType } from '@nestjs/graphql';
 import { Column, Entity, OneToMany } from 'typeorm';
 import { IsString, Length } from 'class-validator';
-import { CoreEntity } from '@ubereats/common/entities';
+import { CoreEntity } from '@baneats/common/entities';
 import { Restaurant } from './restaurant.entity';
 
 @ObjectType()

@@ -1,6 +1,6 @@
 import { BeforeInsert, Column, Entity, JoinColumn, OneToOne } from 'typeorm';
 import { Field, ObjectType } from '@nestjs/graphql';
-import { CoreEntity } from '@ubereats/common/entities';
+import { CoreEntity } from '@baneats/common/entities';
 import { v4 as uuidv4 } from 'uuid';
 import { User } from './user.entity';
 
