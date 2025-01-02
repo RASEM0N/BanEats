@@ -26,6 +26,10 @@ export class DishService implements DefaultCRUD<RestaurantDish> {
 		});
 	}
 
+	async getAllByRestaurantId(restaurantId: number): Promise<RestaurantDish[]> {
+		return this.dish.find({ where: { restaurant: { id: restaurantId } } });
+	}
+
 	async getAll(): Promise<RestaurantDish[]> {
 		throw new UberEastsException({
 			errorCode: UBER_EATS_ERROR.server_error,

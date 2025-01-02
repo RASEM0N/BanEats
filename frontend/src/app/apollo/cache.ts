@@ -1,5 +1,5 @@
 import { InMemoryCache, defaultDataIdFromObject } from '@apollo/client/core';
-import { getAuthToken, setAuthToken } from '@features/auth';
+import { getAuthToken, setAuthToken } from '@entities/auth';
 
 export const cache = new InMemoryCache({
 	typePolicies: {

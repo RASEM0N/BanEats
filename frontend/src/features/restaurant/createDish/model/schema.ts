@@ -42,6 +42,6 @@ export interface RestaurantDishCreateMutationVars {
     name: string;
     description: string;
     price: number;
-    restaurantId: string;
+    restaurantId: number;
     options: Omit<IRestaurantDishOptionFragment, 'choices'>[];
 }

@@ -7,7 +7,7 @@ import { useRestaurantDishCreate } from '../model/service';
 
 export const useRestaurantDishCreateForm = () => {
 	const route = useRoute();
-	const restaurantId = String(route.params.restaurantId);
+	const restaurantId = +route.params.restaurantId
 	const { create, loading, error } = useRestaurantDishCreate()
 
 	const { defineField, handleSubmit, errors: formErrors, meta } = useForm({

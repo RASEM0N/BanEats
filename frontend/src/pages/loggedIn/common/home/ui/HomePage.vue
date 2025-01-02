@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import HomeHeader from './HomeHeader.vue';
-import { useMe } from '@features/auth';
+import { useMe } from '@entities/user';
 import { EmptyPage } from '@shared/ui';
 import { watchEffect } from 'vue';
 import { useRoute, useRouter } from 'vue-router';

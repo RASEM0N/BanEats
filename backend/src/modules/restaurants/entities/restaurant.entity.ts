@@ -26,10 +26,6 @@ export class Restaurant extends CoreEntity {
 	@IsString()
 	@Length(5, 255)
 	address: string;
-
-	// @TODO сделать выдачу отдельно,
-	// что в по умолчанию не брало а через @Parent(Restaurant)
-	// - у нас тип такого есть уже с restaurantsCount
 	@Field(() => RestaurantsCategory)
 	@ManyToOne(() => RestaurantsCategory, (category) => category.restaurants, {
 		nullable: true,
@@ -38,23 +34,13 @@ export class Restaurant extends CoreEntity {
 	})
 	category: RestaurantsCategory;
 
-	// @TODO сделать выдачу отдельно,
-	// что в по умолчанию не брало а через @Parent(Restaurant)
-	// - у нас тип такого есть уже с restaurantsCount
-	@Field(() => [RestaurantDish])
 	@OneToMany(() => RestaurantDish, (dish) => dish.restaurant)
 	dishes: RestaurantDish[];
 
-	// @TODO сделать выдачу отдельно,
-	// что в по умолчанию не брало а через @Parent(Restaurant)
-	// - у нас тип такого есть уже с restaurantsCount
 	@Field(() => User)
 	@ManyToOne(() => User, (user) => user.restaurant, { onDelete: 'CASCADE' })
 	owner: User;
 
-	// @TODO сделать выдачу отдельно,
-	// что в по умолчанию не брало а через @Parent(Restaurant)
-	// - у нас тип такого есть уже с restaurantsCount
 	@Field(() => [Order])
 	@OneToMany(() => Order, (order) => order.restaurant, {
 		onDelete: 'SET NULL',

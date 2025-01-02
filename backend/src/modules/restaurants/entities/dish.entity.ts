@@ -1,6 +1,6 @@
 import { Field, InputType, ObjectType } from '@nestjs/graphql';
 import { Column, Entity, ManyToOne, RelationId } from 'typeorm';
-import { IsNumber, IsString, Length } from 'class-validator';
+import { IsNumber, IsString, Length, IsOptional } from 'class-validator';
 import { CoreEntity } from '@ubereats/common/entities';
 import { Restaurant } from './restaurant.entity';
 
@@ -45,10 +45,11 @@ export class RestaurantDish extends CoreEntity {
 	@IsNumber()
 	price: number;
 
-	@Field(() => String)
-	@Column()
+	@Field(() => String, { nullable: true })
+	@Column({ nullable: true })
+	@IsOptional()
 	@IsString()
-	photo: string;
+	photo?: string;
 
 	@Field(() => Restaurant)
 	@ManyToOne(() => Restaurant, (restaurant) => restaurant.dishes, {

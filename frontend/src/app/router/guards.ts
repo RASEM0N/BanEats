@@ -1,6 +1,7 @@
 import { NavigationGuardWithThis } from 'vue-router';
-import { getAuthToken } from '@features/auth';
-import { USER_ROLE } from '@entities/user';
+import { getAuthToken } from '@entities/auth';
+import { me } from '@entities/user';
+import { apolloClient } from '@app/apollo';
 
 export const actualizeTitle: NavigationGuardWithThis<void> = (to, _, next) => {
 	document.title = String(to.meta.title ?? document.title);
@@ -42,8 +43,8 @@ export const role: NavigationGuardWithThis<void> = async (to, _, next) => {
 		return next();
 	}
 
-	// @TODO добавить логику обращения к GQL
-	const user = await { role: USER_ROLE.owner };
+	// @TODO надо ошибку еще будет отрабоать
+	const { data: { UserMe: { user } } } = await me(apolloClient)
 
 	if (to.meta.role === user.role) {
 		return next();

@@ -1,3 +1,4 @@
-export { default as EmptyPage } from './EmptyPage.vue';
-export * from './myButton';
-export * from './pagination';
+export * from './MyButton'
+export * from './MyForm'
+export * from './Pagination'
+export * from './EmptyPage'

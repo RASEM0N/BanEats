@@ -4,7 +4,7 @@ import { RestaurantDish } from '../entities/dish.entity';
 @ArgsType()
 export class CreateDishArgs extends PickType(
 	RestaurantDish,
-	['name', 'price', 'description', 'options'],
+	['name', 'price', 'description', 'options', 'photo'],
 	ArgsType,
 ) {
 	@Field(() => Number)

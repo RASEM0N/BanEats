@@ -1,5 +1,6 @@
 <script lang="ts" setup>
 import { useRestaurantGetMyAll } from '@features/restaurant/get';
+import { Restaurant } from '@entities/restaurant';
 
 const { restaurants } = useRestaurantGetMyAll();
 </script>

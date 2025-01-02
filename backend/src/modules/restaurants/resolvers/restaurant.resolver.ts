@@ -1,4 +1,4 @@
-import { Args, Mutation, Query, Resolver } from '@nestjs/graphql';
+import { Args, Mutation, Parent, Query, ResolveField, Resolver } from '@nestjs/graphql';
 import { PaginationArgs } from '@ubereats/common/dto';
 import { Roles } from '@/modules/auth/decorators/role.decorator';
 import { AuthUser } from '@/modules/auth/decorators/auth-user.decorator';
@@ -20,10 +20,16 @@ import {
 	RestaurantsGetAllMyOutput,
 	RestaurantsGetAllOutput,
 } from '../dto/restaurant-get.dto';
+import { Restaurant } from '../entities/restaurant.entity';
+import { RestaurantDish } from '../entities/dish.entity';
+import { DishService } from '../services/dish.service';
 
-@Resolver(() => Number)
+@Resolver(() => Restaurant)
 export class RestaurantResolver {
-	constructor(private readonly restaurantService: RestaurantService) {}
+	constructor(
+		private readonly restaurantService: RestaurantService,
+		private readonly dishService: DishService,
+	) {}
 
 	@Query(() => RestaurantGetOutput, { name: 'RestaurantGet' })
 	async get(
@@ -75,5 +81,12 @@ export class RestaurantResolver {
 	): Promise<boolean> {
 		await this.restaurantService.delete(user, args);
 		return true;
+	}
+
+	// Можно такое для других полей сделать,
+	// но мне пока такого не надо
+	@ResolveField(() => [RestaurantDish])
+	async dishes(@Parent() restaurant: Restaurant): Promise<RestaurantDish[]> {
+		return this.dishService.getAllByRestaurantId(restaurant.id);
 	}
 }

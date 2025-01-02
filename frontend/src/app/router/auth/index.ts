@@ -1,5 +1,5 @@
 import { RouteRecordRaw } from 'vue-router';
-import { HomePage } from '@pages/home';
+import { HomePage } from '@pages/loggedIn/common/home';
 import { commonRoutes } from './commonRoutes';
 import { ownerRoutes } from './role/ownerRoutes';
 import { deliveryRoutes } from './role/deliveryRoutes';
@@ -22,6 +22,8 @@ export const authRoutes: RouteRecordRaw[] = [
 			// ЩА ДЛЯ ОДИНАКОВЫХ РОУТОВ НЕ ЗАГРУЗИТСЯ НИЧЕ
 			// ЕСЛИ В CLIENT И OWNER ОДИНАКОВЫЕ РОУТЫ
 			// НИХУЯ НЕ БУДЭ
+
+			// какая-та залупа тут
 
 			...roleMeta(clientRoutes, USER_ROLE.client),
 			...roleMeta(adminRoutes, USER_ROLE.admin),

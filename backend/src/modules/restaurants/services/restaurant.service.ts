@@ -29,9 +29,7 @@ export class RestaurantService implements DefaultCRUD<Restaurant> {
 
 	async get(user: User, id: number): Promise<Restaurant> {
 		const restaurant = await this.restaurant.findOne({
-			where: {
-				id,
-			},
+			where: { id },
 		});
 
 		if (!restaurant) {

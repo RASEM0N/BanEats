@@ -3,7 +3,7 @@ import { useMutation, useQuery } from '@vue/apollo-composable';
 import gql from 'graphql-tag';
 import { useRoute } from 'vue-router';
 import { computed } from 'vue';
-import { useMe } from '@features/auth';
+import { useMe } from '@entities/user';
 import { USER_ROLE } from '@entities/user';
 
 interface OrderUpdateSubscriptionVars {

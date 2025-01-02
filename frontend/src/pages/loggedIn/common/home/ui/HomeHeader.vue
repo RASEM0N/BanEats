@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { LogoIcon } from '@shared/ui/icons';
-import { useMe } from '@features/auth';
+import { useMe } from '@entities/user';
 
 const { user } = useMe();
 </script>

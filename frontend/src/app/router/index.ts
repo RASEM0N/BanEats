@@ -1,6 +1,6 @@
 import { createRouter, createWebHistory } from 'vue-router';
-import { LoginPage } from '@pages/common/login';
-import { RegisterPage } from '@pages/common/register';
+import { LoginPage } from '@pages/loggedOut/login';
+import { RegisterPage } from '@pages/loggedOut/register';
 import { NotFoundPage } from '@pages/common/404';
 import { actualizeTitle, requiredAuth, role } from './guards';
 import { authRoutes } from './auth';
