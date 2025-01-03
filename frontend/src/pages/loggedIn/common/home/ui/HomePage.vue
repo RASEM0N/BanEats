@@ -31,7 +31,11 @@ const redirectByRole = () => {
 }
 
 /** Загрузилась/Изменилась роль надо обновить наш роут */
-watch(() => user.value?.role, redirectByRole);
+watch(() => user.value?.role, redirectByRole, {
+
+	// после авторизации информация о пользователя есть сразу же
+	immediate: true
+});
 
 /** Путь снова стал /. Допустим перешли по /login, когда авторизованы уже */
 watch(() => route.path, redirectByRole)
