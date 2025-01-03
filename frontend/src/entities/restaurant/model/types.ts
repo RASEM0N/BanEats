@@ -36,7 +36,7 @@ export interface IRestaurantDish extends CoreEntity {
 	restaurantId: IRestaurant['id'];
 	restaurant: IRestaurant;
 
-	options?: IRestaurantDishOption[];
+	options: IRestaurantDishOption[];
 }
 
 // ---- -------- ----

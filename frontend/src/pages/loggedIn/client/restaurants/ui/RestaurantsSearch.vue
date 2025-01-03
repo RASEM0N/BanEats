@@ -4,7 +4,9 @@ import { toTypedSchema } from '@vee-validate/zod';
 import { object, string } from 'zod';
 import { nullishWithTransform } from '@shared/lib/zod';
 
-const emits = defineEmits(['search']);
+const emits = defineEmits<{
+	search: [query: string]
+}>();
 
 const { defineField, handleSubmit } = useForm({
 	initialValues: {
@@ -16,7 +18,7 @@ const { defineField, handleSubmit } = useForm({
 });
 
 const [value, valueProps] = defineField('value');
-const submit = handleSubmit(({ value }) => emits('search', value));
+const submit = handleSubmit(({ value }) => emits('search', value!));
 
 </script>
 <template>

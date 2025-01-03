@@ -15,21 +15,14 @@ export const requiredAuth: NavigationGuardWithThis<void> = (to, _, next) => {
 		return next();
 	}
 
-	// для страницы требуется авторизация + мы авторизированы уже
-	if (to.meta.requiredAuth && getAuthToken()) {
-		return next();
-	}
-
-	// мы просто авторизированы
+	// заходим туда где должна быть авторизация
 	if (to.meta.requiredAuth) {
-		return next({
-			path: '/login',
-			query: { redirect: to.fullPath },
-		});
+		return getAuthToken()
+			? next()
+			: next({ path: '/login', query: { redirect: to.fullPath } });
 	}
 
-	// если мы авторизированы уже
-	// и заходим на с айты которым не нужна авторизация
+	// заходим туда где не дожна быть авторизация
 	if (getAuthToken()) {
 		return next({ path: '/' });
 	}
@@ -39,16 +32,23 @@ export const requiredAuth: NavigationGuardWithThis<void> = (to, _, next) => {
 
 export const role: NavigationGuardWithThis<void> = async (to, _, next) => {
 
+	// спокойно пропускаем все чему не надо роли
 	if (!to.meta.role) {
 		return next();
 	}
 
-	// @TODO надо ошибку еще будет отрабоать
-	const { data: { UserMe: { user } } } = await me(apolloClient)
+	try {
 
-	if (to.meta.role === user.role) {
-		return next();
+		const { data: { UserMe: { user } } } = await me(apolloClient);
+
+		if (to.meta.role === user.role) {
+			return next();
+		}
+
+		return next('/');
+	} catch (e) {
+
+		// тут относительно ошибки должно быть... Ладно
+		next('/404');
 	}
-
-	return next({ path: '/' });
 };

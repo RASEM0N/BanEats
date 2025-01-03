@@ -7,19 +7,16 @@ interface Props {
 
 const { totalPages } = defineProps<Props>();
 const page = defineModel({ default: 1 });
-const emits = defineEmits(['prev', 'next', 'load']);
+const emits = defineEmits<{
+	prev: [page: number],
+	next: [page: number],
+	load: [page: number]
+}>();
 
 const calcPage = computed(() => totalPages < 1 ? 0 : page.value);
 
-const prev = () => {
-	emits('prev');
-	page.value--;
-};
-
-const next = () => {
-	emits('next');
-	page.value++;
-};
+const prev = () => emits('prev', --page.value)
+const next = () => emits('next', ++page.value)
 
 watch(page, (value) => emits('load', value));
 
