@@ -3,7 +3,6 @@ import { LoginPage } from '@pages/loggedOut/login';
 import { RegisterPage } from '@pages/loggedOut/register';
 import { NotFoundPage } from '@pages/common/404';
 import { actualizeTitle, requiredAuth, role } from './guards';
-import { authRoutes } from './auth';
 import { HomePage } from '@pages/loggedIn/common/home';
 import { ConfirmEmailPage } from '@pages/loggedIn/common/confirmEmail';
 import { EditProfilePage } from '@pages/loggedIn/common/editProfile';
@@ -16,6 +15,7 @@ import { MyRestaurantsPage } from '@pages/loggedIn/owner/myRestaurants';
 import { AddRestaurantPage } from '@pages/loggedIn/owner/addRestaurant';
 import { MyRestaurantPage } from '@pages/loggedIn/owner/myRestaurant';
 import { AddDishPage } from '@pages/loggedIn/owner/addDIsh';
+import TestPage from '@pages/TestPage.vue';
 
 
 /**
@@ -137,11 +137,14 @@ export const router = createRouter({
 			component: NotFoundPage,
 			meta: { title: '404 | BanEats' },
 		},
+		{
+			path: '/test',
+			component: TestPage,
+			meta: { title: 'Test | BanEats' },
+		},
 	],
 });
 
 router.beforeEach(actualizeTitle);
 router.beforeEach(requiredAuth);
 router.beforeEach(role);
-
-window.router = router;
