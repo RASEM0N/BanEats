@@ -12,8 +12,8 @@ const count2 = ref(0)
 		------ можно ручками сделать 1 рендер через v-once
 	</h1>
 
-	<h1>
-		- Count №1: {{ count }}
+	<h1 class="py-5">
+		- Count №1: {{ count }}. <mark>ЕДИНСТВЕННЫЙ КТО ПЕРЕНДАРИТСЯ</mark>
 		<button class="border border-black rounded-s p-2" @click="count++">
 			Increment
 		</button>
